@@ -1,0 +1,485 @@
+@import "tailwindcss";
+
+/* Tailwind v4 Ultra-Advanced Configuration */
+
+/* Cascade Layers for better CSS organization */
+@layer theme, utilities, components, overrides;
+
+/* Content sources for optimized scanning */
+@source "./src/**/*.{ts,tsx}";
+@source "./index.html";
+
+/* Registered Custom Properties (type-safe CSS variables) */
+@property --terminal-glow-intensity {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 1;
+}
+
+@property --terminal-scan-speed {
+  syntax: '<time>';
+  inherits: true;
+  initial-value: 8s;
+}
+
+@property --terminal-hue-rotate {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+@layer theme {
+  @theme {
+    /* OKLCH color space for perceptually uniform colors */
+    --color-terminal-bg: oklch(5% 0 0);
+    --color-terminal-surface: oklch(10% 0 0);
+    --color-terminal-border: oklch(25% 0 0);
+
+    /* Green accent in OKLCH - more vibrant and consistent */
+    --color-terminal-green: oklch(70% 0.2 142);
+    --color-terminal-green-dark: oklch(45% 0.15 142);
+    --color-terminal-green-glow: oklch(70% 0.2 142 / 0.2);
+
+    /* Text colors for dark themes */
+    --color-text-primary: oklch(95% 0 0);
+    --color-text-secondary: oklch(70% 0 0);
+    --color-text-muted: oklch(50% 0 0);
+
+    /* Additional semantic colors */
+    --color-terminal-success: oklch(75% 0.15 142);
+    --color-terminal-warning: oklch(75% 0.18 85);
+    --color-terminal-error: oklch(65% 0.22 25);
+
+  /* Semantic color aliases */
+  --color-bg-ultra-dark: var(--color-terminal-bg);
+  --color-bg-dark: var(--color-terminal-surface);
+  --color-accent: var(--color-terminal-green);
+  --color-accent-dark: var(--color-terminal-green-dark);
+
+  /* Animation timing functions */
+  --ease-terminal: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Custom spacing for terminal aesthetics */
+  --spacing-terminal: 0.75rem;
+
+  /* Border radius for terminal windows */
+  --radius-terminal: 0.5rem;
+  --radius-terminal-lg: 0.75rem;
+
+  /* Animation definitions */
+  @keyframes scanline-flicker {
+    0%, 100% { opacity: 0.15; }
+    50% { opacity: 0.18; }
+  }
+
+  @keyframes terminal-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px var(--color-terminal-green-glow);
+    }
+    50% {
+      box-shadow: 0 0 30px var(--color-terminal-green-glow),
+                  0 0 40px var(--color-terminal-green-glow);
+    }
+  }
+  }
+}
+
+/* Custom Utilities using @utility */
+@utility terminal-card {
+  background-color: var(--color-terminal-surface);
+  border: 1px solid var(--color-terminal-border);
+  border-radius: var(--radius-terminal-lg);
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+@utility terminal-border {
+  border: 1px solid var(--color-terminal-border);
+}
+
+@utility flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@utility flex-center-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@utility terminal-text {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: rgb(212 212 212 / 1);
+}
+
+@utility terminal-glow {
+  box-shadow: 0 0 20px var(--color-terminal-green-glow);
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Custom Variants using @variant */
+@variant terminal (&.terminal-active) {
+  /* Applied when element has terminal-active class */
+}
+
+@variant crt (&.crt-effect) {
+  /* Applied when CRT mode is active */
+}
+
+/* Enhanced CRT Monitor Effect with CSS Variables */
+.crt-effect {
+    position: relative;
+    overflow: hidden;
+
+    /* Phosphor glow using CSS variables */
+    text-shadow:
+        0 0 5px color-mix(in srgb, var(--color-terminal-green) 50%, transparent),
+        0 0 10px color-mix(in srgb, var(--color-terminal-green) 30%, transparent),
+        0 0 20px color-mix(in srgb, var(--color-terminal-green) 20%, transparent);
+}
+
+.crt-effect::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 1px,
+        rgb(0 0 0 / 0.8) 2px,
+        rgb(0 0 0 / 0.8) 3px
+    );
+    pointer-events: none;
+    z-index: 9998;
+    animation: scanline-flicker 8s linear infinite;
+}
+
+.crt-effect::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        transparent 40%,
+        rgb(0 0 0 / 0.3) 70%,
+        rgb(0 0 0 / 0.7) 100%
+    );
+    pointer-events: none;
+    z-index: 9997;
+}
+
+/* RGB chromatic aberration with color-mix */
+.crt-effect * {
+    text-shadow:
+        -0.5px 0px 1px color-mix(in srgb, red 30%, transparent),
+        0.5px 0px 1px color-mix(in srgb, cyan 30%, transparent),
+        0 0 3px color-mix(in srgb, var(--color-terminal-green) 40%, transparent);
+}
+
+/* Container Query Support for Responsive Terminal Cards */
+@utility terminal-container {
+  container-type: inline-size;
+  container-name: terminal;
+}
+
+/* Container query utilities */
+@container terminal (min-width: 640px) {
+  .terminal-responsive-text {
+    font-size: 1rem;
+  }
+}
+
+@container terminal (max-width: 639px) {
+  .terminal-responsive-text {
+    font-size: 0.875rem;
+  }
+}
+
+/* Advanced Color Utilities with color-mix() */
+@utility terminal-surface-hover {
+  background-color: color-mix(in srgb, var(--color-terminal-surface) 90%, var(--color-terminal-green) 10%);
+}
+
+@utility terminal-accent-subtle {
+  color: color-mix(in srgb, var(--color-terminal-green) 70%, white 30%);
+}
+
+@utility terminal-border-glow {
+  border-color: color-mix(in srgb, var(--color-terminal-border) 80%, var(--color-terminal-green) 20%);
+}
+
+/* State-based utilities with modern selectors */
+@utility terminal-interactive {
+  transition: all 0.2s var(--ease-terminal);
+
+  &:hover {
+    border-color: color-mix(in srgb, var(--color-terminal-green) 50%, transparent);
+    background-color: color-mix(in srgb, var(--color-terminal-surface) 95%, var(--color-terminal-green) 5%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-terminal-green);
+    outline-offset: 2px;
+  }
+}
+
+/* Gradient utilities using CSS variables */
+@utility terminal-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    var(--color-terminal-bg) 0%,
+    color-mix(in srgb, var(--color-terminal-bg) 95%, var(--color-terminal-green) 5%) 100%
+  );
+}
+
+/* Text glow utilities with animation */
+@utility terminal-text-glow {
+  color: var(--color-terminal-green);
+  text-shadow:
+    0 0 10px color-mix(in srgb, var(--color-terminal-green) 50%, transparent),
+    0 0 20px color-mix(in srgb, var(--color-terminal-green) 30%, transparent);
+  animation: terminal-pulse 2s ease-in-out infinite;
+}
+
+/* Responsive spacing using custom properties */
+@utility terminal-spacing {
+  padding: var(--spacing-terminal);
+}
+
+/* Glass morphism effect */
+@utility terminal-glass {
+  background: color-mix(in srgb, var(--color-terminal-surface) 80%, transparent);
+  backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--color-terminal-border) 50%, transparent);
+}
+
+/* Neon border effect */
+@utility terminal-neon {
+  border: 1px solid var(--color-terminal-green);
+  box-shadow:
+    0 0 5px var(--color-terminal-green),
+    inset 0 0 5px var(--color-terminal-green);
+
+  &:hover {
+    box-shadow:
+      0 0 10px var(--color-terminal-green),
+      0 0 20px var(--color-terminal-green),
+      inset 0 0 10px var(--color-terminal-green);
+  }
+}
+
+/* View Transitions API Support */
+@utility terminal-transition {
+  view-transition-name: terminal-content;
+}
+
+@utility terminal-transition-card {
+  view-transition-name: terminal-card;
+}
+
+/* Scroll-Driven Animations */
+@utility terminal-scroll-fade {
+  animation: terminal-fade-in linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
+}
+
+@utility terminal-scroll-slide {
+  animation: terminal-slide-up linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+}
+
+@utility terminal-parallax {
+  animation: terminal-parallax linear;
+  animation-timeline: scroll();
+}
+
+/* Scroll animation keyframes */
+@keyframes terminal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes terminal-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes terminal-parallax {
+  to {
+    transform: translateY(-50px);
+  }
+}
+
+/* Logical Properties for Internationalization */
+@utility terminal-spacing-inline {
+  padding-inline: var(--spacing-terminal);
+}
+
+@utility terminal-spacing-block {
+  padding-block: var(--spacing-terminal);
+}
+
+@utility terminal-border-inline-start {
+  border-inline-start: 2px solid var(--color-terminal-green);
+}
+
+/* Advanced Grid with Subgrid Support */
+@utility terminal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-terminal);
+}
+
+@utility terminal-subgrid {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-template-rows: subgrid;
+}
+
+/* CSS Anchor Positioning (Future) */
+@utility terminal-anchor {
+  position: absolute;
+  position-anchor: --terminal-tooltip;
+  top: anchor(bottom);
+  left: anchor(center);
+}
+
+/* Modern Focus Styles */
+@utility terminal-focus {
+  &:focus-visible {
+    outline: 2px solid var(--color-terminal-green);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Dynamic Theme System with CSS Variables */
+:root {
+  /* Default theme values are set in @theme */
+}
+
+/* Matrix Theme Variant - Intense green with darker background */
+:root[data-theme="matrix"] {
+  --color-terminal-green: oklch(80% 0.28 142);
+  --color-terminal-green-dark: oklch(55% 0.2 142);
+  --color-terminal-green-glow: oklch(80% 0.28 142 / 0.3);
+  --color-terminal-bg: oklch(2% 0.05 142);
+  --color-terminal-surface: oklch(6% 0.05 142);
+  --color-terminal-border: oklch(20% 0.1 142);
+  --color-text-primary: oklch(90% 0.1 142);
+  --color-text-secondary: oklch(70% 0.08 142);
+  --color-text-muted: oklch(50% 0.05 142);
+}
+
+/* Cyberpunk Theme Variant - Magenta/purple futuristic */
+:root[data-theme="cyberpunk"] {
+  --color-terminal-green: oklch(75% 0.25 330);
+  --color-terminal-green-dark: oklch(50% 0.2 330);
+  --color-terminal-green-glow: oklch(75% 0.25 330 / 0.3);
+  --color-terminal-bg: oklch(8% 0.04 280);
+  --color-terminal-surface: oklch(15% 0.05 280);
+  --color-terminal-border: oklch(30% 0.1 300);
+  --color-text-primary: oklch(95% 0.05 320);
+  --color-text-secondary: oklch(75% 0.08 320);
+  --color-text-muted: oklch(55% 0.06 320);
+}
+
+/* Light Mode (for accessibility) - Complete color inversion */
+:root[data-theme="light"] {
+  --color-terminal-bg: oklch(98% 0 0);
+  --color-terminal-surface: oklch(95% 0 0);
+  --color-terminal-border: oklch(80% 0 0);
+  --color-terminal-green: oklch(40% 0.2 142);
+  --color-terminal-green-dark: oklch(30% 0.18 142);
+  --color-terminal-green-glow: oklch(40% 0.2 142 / 0.15);
+  --color-text-primary: oklch(10% 0 0);
+  --color-text-secondary: oklch(25% 0 0);
+  --color-text-muted: oklch(45% 0 0);
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --color-terminal-green: oklch(85% 0.28 142);
+    --color-terminal-border: oklch(50% 0 0);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .crt-effect,
+  .terminal-glow,
+  .terminal-neon {
+    filter: none !important;
+    animation: none !important;
+  }
+}
+
+/* Utility Class for Theme-Aware Components */
+@utility terminal-theme-transition {
+  transition: background-color 0.3s var(--ease-terminal),
+              color 0.3s var(--ease-terminal),
+              border-color 0.3s var(--ease-terminal);
+}
+
+/* Theme-Aware Text Color Utilities */
+@utility text-primary {
+  color: var(--color-text-primary);
+}
+
+@utility text-secondary {
+  color: var(--color-text-secondary);
+}
+
+@utility text-muted {
+  color: var(--color-text-muted);
+}
+
+/* Theme-Aware Background Utilities */
+@utility bg-surface {
+  background-color: var(--color-terminal-surface);
+}
+
+@utility bg-surface-dark {
+  background-color: var(--color-terminal-bg);
+}
+
+/* Theme-Aware Border Utilities */
+@utility border-default {
+  border-color: var(--color-terminal-border);
+}
