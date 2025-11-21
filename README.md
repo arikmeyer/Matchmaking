@@ -1,319 +1,376 @@
 # Switchup Product Engineer Job Board
 
-An interactive web application showcasing the Product Engineer / Product-minded Fullstack Engineer position at Switchup.
+An interactive web application showcasing the Product Engineer position at Switchup through an immersive terminal-themed experience.
 
 ## Overview
 
-This repository contains both the job description documentation and an interactive preview application that presents the role in an engaging, modern format. Switchup is rethinking how service-led B2C businesses operate - automation and AI-first, based on smart, safe, and lifelong trust-based relationships with users.
+This is a client-side React application that presents a job opportunity through an engaging, gamified interface. Switchup is rethinking how service-led B2C businesses operate - automation and AI-first, based on smart, safe, and lifelong trust-based relationships with users.
 
 ## What's Inside
 
-- **Interactive Job Board** - A React-based web application with smooth animations and modern UI
-- **Job Descriptions** - Detailed markdown documentation of the role, requirements, and company mission
+- **Interactive Terminal** - Full CLI interface with commands, easter eggs, and a culture quiz
+- **Behind the Scenes** - Vimeo-hosted videos showing real engineering challenges
+- **Job Documentation** - Detailed markdown docs in `/docs`
+
+## Tech Stack
+
+- **React 19** - Concurrent features (`useTransition`, `useOptimistic`, `useDeferredValue`)
+- **TypeScript** - Full type coverage with centralized definitions
+- **Vite** - Fast development and optimized builds
+- **Tailwind CSS v4** - CSS-first configuration with OKLCH colors
+- **Framer Motion** - Smooth animations and transitions
+- **Lucide React** - Icon library
+
+## Quick Start
+
+```bash
+npm install    # Install dependencies
+npm run dev    # Start dev server at http://localhost:5173
+npm run build  # Production build to /dist
+```
 
 ## Project Structure
 
 ```
-/
-├── src/
-│   ├── components/             # React UI components
-│   │   ├── ApplicationModal.tsx
-│   │   ├── BootSequence.tsx
-│   │   ├── GlitchText.tsx
-│   │   ├── SectionHeader.tsx
-│   │   ├── VideoModal.tsx
-│   │   └── index.ts
-│   ├── constants/              # Data & configuration
-│   │   ├── engineeringBets.ts
-│   │   ├── logMessages.ts
-│   │   ├── quizQuestions.ts
-│   │   ├── techStack.ts
-│   │   └── index.ts
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── useQuizState.ts
-│   │   ├── useShutdown.ts
-│   │   ├── useTerminalLogs.ts
-│   │   ├── useTheme.ts
-│   │   └── index.ts
-│   ├── types/                  # TypeScript definitions
-│   │   ├── terminal.types.ts
-│   │   └── index.ts
-│   ├── swup-operating-system.tsx  # Main app component (~1500 lines)
-│   ├── main.tsx                   # React entry point
-│   └── index.css                  # Tailwind & CRT effects
-├── docs/                       # Job description documents
-│   ├── job-description.md
-│   ├── job-description_alt.md
-│   ├── LEVERAGE-STRATEGY.md
-│   └── UTILITIES-GUIDE.md
-├── index.html                  # HTML entry point
-├── package.json                # Dependencies
-├── vite.config.ts              # Vite configuration
-├── postcss.config.js           # PostCSS/Tailwind config
-└── CLAUDE.md                   # Project development guide
+src/
+├── components/          # React UI components
+├── constants/           # Data files (logs, tech stack, quiz, videos)
+├── hooks/               # Custom React hooks
+├── types/               # TypeScript definitions
+├── swup-operating-system.tsx  # Main app component
+├── main.tsx             # Entry point
+└── index.css            # Tailwind v4 configuration
 ```
-
-## Tech Stack
-
-- **React 19** - UI library with modern concurrent features
-- **TypeScript** - Type safety and developer experience
-- **Vite 7** - Lightning-fast build tool and dev server
-- **Tailwind CSS v4** - Modern CSS-first configuration
-- **Framer Motion** - Smooth animations and transitions
-- **Lucide React** - Icon library
 
 ## Architecture
 
-This project has been refactored from a monolithic single-file component (~2000 lines) into a clean, modular architecture:
+### Components
 
-### Component Organization
+**Application Flow**
 
-**Components** (`src/components/`)
-- `BootSequence` - Animated terminal boot screen with password authentication
-- `ApplicationModal` - Multi-step application flow with token generation
-- `VideoModal` - Placeholder for work session recordings
-- `GlitchText` - Reusable glitch text effect component
-- `SectionHeader` - Consistent section headers throughout the app
+| Component              | Purpose                                      |
+| ---------------------- | -------------------------------------------- |
+| `BootSequence`         | Password-protected boot animation            |
+| `ApplicationModal`     | Multi-step application with token generation |
+| `BehindTheScenesModal` | Vimeo video player with navigation           |
+| `GlitchText`           | Animated glitch text effect                  |
+| `SectionHeader`        | Consistent section headers                   |
+| `ErrorBoundary`        | Graceful error handling                      |
 
-**Custom Hooks** (`src/hooks/`)
-- `useTheme` - Theme and CRT mode management with React 19's `useTransition`
-- `useTerminalLogs` - Auto-scrolling system log simulation
-- `useQuizState` - Quiz flow state machine and score tracking
-- `useShutdown` - Shutdown animation sequence with progress tracking
+**Reusable Window System**
 
-**Constants** (`src/constants/`)
-- `logMessages` - ~100 system log entries for terminal realism
-- `techStack` - Technology choices with rationale and specs
-- `engineeringBets` - Engineering bets (work-in-progress technical directions)
-- `quizQuestions` - Culture quiz questions with branching feedback
+| Component              | Purpose                                         |
+| ---------------------- | ----------------------------------------------- |
+| `TerminalWindow`       | Complete window with all controls (recommended) |
+| `TerminalWindowHeader` | macOS-style traffic light buttons               |
+| `FullscreenModal`      | Fullscreen overlay wrapper                      |
+| `ExitConfirmDialog`    | Exit confirmation with humor                    |
 
-**Types** (`src/types/`)
-- Centralized TypeScript definitions for terminal, quiz, and component types
-- Ensures type safety across the entire application
+### Custom Hooks
 
-### Design Principles
+| Hook                | React 19 Feature   | Purpose                                    |
+| ------------------- | ------------------ | ------------------------------------------ |
+| `useTheme`          | `useTransition`    | Theme & CRT mode with non-blocking updates |
+| `useTerminalLogs`   | `useDeferredValue` | Auto-scrolling log simulation              |
+| `useQuizState`      | `useOptimistic`    | Quiz state with instant UI feedback        |
+| `useShutdown`       | -                  | Shutdown animation sequence                |
+| `useWindowControls` | -                  | Window state (fullscreen, minimize, exit)  |
 
-- **Modular & Maintainable** - Each concern separated into focused files
-- **Type-Safe** - Comprehensive TypeScript coverage with centralized types
-- **Reusable** - Custom hooks encapsulate complex state logic
-- **Scalable** - Clear separation makes future enhancements straightforward
-- **Performance-Conscious** - React 19 features like `useTransition` for non-blocking updates
+### Data Constants
 
-## Key Features
+| File                 | Content                                                             |
+| -------------------- | ------------------------------------------------------------------- |
+| `logMessages.ts`     | System log entries with levels (INFO, WARN, ERROR, SUCCESS, SYSTEM) |
+| `techStack.ts`       | Technology choices with rationale and specs                         |
+| `engineeringBets.ts` | Work-in-progress technical directions                               |
+| `quizQuestions.ts`   | Culture quiz with branching feedback                                |
+| `behindTheScenes.ts` | Vimeo video metadata and authors                                    |
 
-### Interactive Terminal System
-- **Full CLI Interface** - Custom command-line with `help`, `stack`, `mission`, `apply`, and more
-- **Culture Quiz** - 10-question assessment with branching feedback based on score
-- **Easter Eggs** - Hidden commands and achievements for curious explorers
-- **Live System Logs** - Realistic terminal output with auto-scrolling and level indicators
+### TypeScript Types
 
-### Visual Experience
-- **Boot Sequence** - Password-protected boot animation (`SwitchMeUp`)
-- **CRT Mode Toggle** - Optional vintage terminal aesthetic with scanlines and glow
-- **Shutdown Sequence** - Animated power-down with progress tracking
-- **Smooth Animations** - Framer Motion for all transitions and interactions
-
-### Engagement Mechanics
-- **Visit Tracking** - Console messages at milestones (3, 5, 10, 15, 20+ visits)
-- **Persistent State** - localStorage for boot skip and visit history
-- **Application Flow** - Two-step modal with session token generation
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v18 or higher recommended)
-- npm or pnpm
-
-### Installation
-
-```bash
-# Install dependencies
-npm install
+```typescript
+type LogEntry = { id, timestamp, level, message }
+type StackItem = { category, tool, rationale, specs[], status, icon }
+type EngineeringBet = { id, title, context, tradeoff }
+type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
+type BehindTheScenesVideo = { id, vimeoId, title, description, author, topics[], duration, featured? }
+type TerminalLine = { type: 'input' | 'output' | 'system', content }
+type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
 ```
 
-### Development
+## Terminal Commands
 
-```bash
-# Start development server (auto-opens browser on port 5173)
-npm run dev
+### Standard Commands
+
+| Command                | Description                 |
+| ---------------------- | --------------------------- |
+| `help`                 | Show available commands     |
+| `stack`                | Display tech stack          |
+| `mission`              | Show company mission        |
+| `challenges`           | List engineering challenges |
+| `culture` / `quiz`     | Start culture assessment    |
+| `ls`                   | List "directory" contents   |
+| `whoami`               | Show user info              |
+| `apply` / `./apply.sh` | Open application modal      |
+| `clear`                | Clear terminal              |
+| `exit`                 | Trigger shutdown sequence   |
+
+### Theme Commands
+
+| Command           | Description                        |
+| ----------------- | ---------------------------------- |
+| `theme`           | Show current theme                 |
+| `theme default`   | Classic terminal green             |
+| `theme matrix`    | Intense green on green-tinted dark |
+| `theme cyberpunk` | Magenta/purple futuristic          |
+| `theme light`     | Light mode for accessibility       |
+
+### Easter Eggs
+
+| Command              | Effect                   |
+| -------------------- | ------------------------ |
+| `konami`             | Classic code reward      |
+| `health`             | System health check      |
+| `matrix`             | Enter the matrix theme   |
+| `salary`             | Humorous response        |
+| `hire me` / `hireme` | Eager candidate response |
+| `sudo`               | Permission denied joke   |
+
+## State Management
+
+### localStorage Keys
+
+| Key                 | Purpose                          |
+| ------------------- | -------------------------------- |
+| `switchup_shutdown` | Skip boot on reload if `true`    |
+| `switchup_visits`   | Visit tracking `{count, days[]}` |
+| `switchup-theme`    | Persisted theme preference       |
+| `switchup-crt-mode` | CRT effect toggle                |
+
+### sessionStorage Keys
+
+| Key                     | Purpose                       |
+| ----------------------- | ----------------------------- |
+| `shutdown_console_hint` | One-time console message flag |
+
+## Visual Features
+
+### Boot Sequence
+- Password: `SwitchMeUp`
+- Animated line-by-line boot messages
+- Skipped automatically if shutdown flag set
+
+### CRT Mode
+- Scanline overlay with flicker animation
+- Phosphor glow effect on text
+- Screen curvature vignette
+- Chromatic aberration (RGB split)
+
+### Themes (OKLCH Color Space)
+- **Default** - Green (#22c55e equivalent) on ultra-dark
+- **Matrix** - Intense green with green-tinted backgrounds
+- **Cyberpunk** - Magenta/purple on purple-tinted dark
+- **Light** - Full inversion for accessibility
+
+### Animations
+- Framer Motion for all transitions
+- Boot/shutdown sequences with progress
+- Log entries fade in with blur effect
+- Modal scale/opacity animations
+- Rotating gradient borders
+
+## Engagement Mechanics
+
+- **Visit Tracking** - Console messages at 3, 5, 10, 15, 20+ visits
+- **Logo Clicks** - Hidden achievements at 5 and 10 clicks
+- **Quiz Scoring** - Branching feedback at 8+, 6-7, <6 correct
+- **Shutdown Delay** - Reboot link appears after 20+ seconds
+
+## Tailwind CSS v4 Configuration
+
+### Features Used
+- `@import "tailwindcss"` - Single import
+- `@source` - Optimized content scanning
+- `@theme` - CSS-native configuration
+- `@utility` - Custom utilities
+- `@variant` - Custom state variants
+- `@layer` - Cascade layer organization
+- `@property` - Type-safe CSS custom properties
+- OKLCH colors - Perceptually uniform
+- `color-mix()` - Dynamic color manipulation
+- CSS nesting - Modern selectors
+- Container queries - Component-level responsive
+- View Transitions API - Page transitions
+- Scroll-driven animations - Scroll-tied effects
+- Logical properties - i18n support
+
+### Custom Utilities
+```css
+terminal-card       /* Complete card with border, shadow, radius */
+flex-center         /* display: flex; align-items: center */
+flex-center-col     /* Vertical centered flex */
+terminal-interactive /* Hover/focus states with color-mix */
+terminal-glass      /* Backdrop blur glass effect */
+terminal-neon       /* Neon border with glow */
+terminal-text-glow  /* Pulsing green text */
+scrollbar-hide      /* Cross-browser scrollbar hiding */
+tag-bg              /* Chip/tag background */
+warning-header      /* Warning banner styling */
+text-primary        /* Theme-aware primary text */
+text-secondary      /* Theme-aware secondary text */
+text-muted          /* Theme-aware muted text */
+bg-surface          /* Theme-aware surface background */
+bg-surface-dark     /* Theme-aware dark background */
+border-default      /* Theme-aware border color */
 ```
 
-The application will be available at `http://localhost:5173` (or the next available port).
-
-### Building for Production
-
-```bash
-# Create production build
-npm run build
-
-# Preview production build locally
-npm run preview
-```
+### Accessibility
+- `prefers-reduced-motion` - Disables animations
+- `prefers-contrast: high` - Enhanced colors
+- Print styles - Disables visual effects
 
 ## Development Guide
 
-### Making Content Updates
-
-**Add/Edit System Logs**
+### Add System Log
 ```typescript
 // src/constants/logMessages.ts
-export const LOG_MESSAGES = [
-  { level: 'INFO', message: 'Your new log message' },
-  // ...
-];
+{ level: 'INFO', message: 'Your message' }
+// Levels: INFO, WARN, ERROR, SUCCESS, SYSTEM
 ```
 
-**Update Tech Stack**
+### Add Tech Stack Item
 ```typescript
 // src/constants/techStack.ts
 {
-  category: 'Category Name',
+  category: 'Category',
   tool: 'Tool Name',
-  rationale: 'What we use it for and why',
+  rationale: 'Why we use it',
   specs: ['Use case 1', 'Use case 2'],
-  status: 'CORE' | 'EXPLORING',
-  icon: IconComponent
+  status: 'CORE',  // or 'EXPLORING'
+  icon: LucideIcon
 }
 ```
 
-**Add Quiz Questions**
+### Add Quiz Question
 ```typescript
 // src/constants/quizQuestions.ts
 {
-  q: 'Your question?',
+  q: 'Question text?',
   a: 'Option A',
   b: 'Option B',
-  correct: 'a' | 'b',
-  feedback_pass: 'Correct feedback',
-  feedback_fail: 'Incorrect feedback'
+  correct: 'a',
+  feedback_pass: 'Correct response',
+  feedback_fail: 'Incorrect response'
 }
 ```
 
-**Add Terminal Commands**
+### Add Behind the Scenes Video
 ```typescript
-// src/swup-operating-system.tsx - in InteractiveTerminal component
-// Find handleCommand function and add new case to switch statement
+// src/constants/behindTheScenes.ts
+{
+  id: 'unique-slug',
+  vimeoId: '1139231458',  // From vimeo.com/1139231458
+  title: 'Video Title',
+  description: 'What the video covers...',
+  author: {
+    name: 'Name',
+    role: 'Role at SwitchUp',
+    avatarInitials: 'XX',
+  },
+  topics: ['Topic 1', 'Topic 2'],
+  duration: '8:42',
+  featured: true,  // Optional: spans 2 columns
+}
 ```
 
-### Component Customization
+### Add Terminal Command
+```typescript
+// src/swup-operating-system.tsx - handleCommand function
+case 'mycommand':
+  addLine({ type: 'output', content: 'Output text' });
+  break;
+```
 
-Each component is self-contained and can be easily modified:
+### Change Boot Password
+```typescript
+// src/components/BootSequence.tsx
+if (password === 'YourNewPassword') {
+```
 
-- **BootSequence** - Change password, boot messages, or animation timing
-- **ApplicationModal** - Modify application flow or token generation
-- **Theme System** - Add new themes in `useTheme` hook
-- **Quiz Flow** - Adjust scoring logic in `useQuizState` hook
+### Use TerminalWindow Component
+```tsx
+import { TerminalWindow } from './components';
 
-### File Organization Best Practices
+<TerminalWindow
+  title="window-title"
+  height="400px"
+  showCloseButton={false}
+  minimizedContent={<CustomMinimizedView />}
+  onClose={handleClose}
+>
+  <YourContent />
+</TerminalWindow>
+```
 
-- **Components**: One component per file, export via `index.ts`
-- **Hooks**: Single responsibility, reusable across components
-- **Constants**: Data-only files, no business logic
-- **Types**: Shared type definitions, imported where needed
+**Props:**
+
+| Prop                   | Type             | Default                |
+| ---------------------- | ---------------- | ---------------------- |
+| `title`                | string           | `'terminal'`           |
+| `height`               | string           | `'400px'`              |
+| `fullscreenHeight`     | string           | `'calc(100vh-120px)'`  |
+| `minimizedContent`     | ReactNode        | Default placeholder    |
+| `onClose`              | `() => void`     | Shows exit dialog      |
+| `onMinimizedChange`    | `(bool) => void` | -                      |
+| `showCloseButton`      | boolean          | `true`                 |
+| `showMinimizeButton`   | boolean          | `true`                 |
+| `showFullscreenButton` | boolean          | `true`                 |
+| `exitDialogTitle`      | string           | `'Close this window?'` |
+
+For granular control, use individual components:
+- `useWindowControls` - State management hook
+- `TerminalWindowHeader` - Just the header bar
+- `FullscreenModal` - Fullscreen overlay
+- `ExitConfirmDialog` - Exit confirmation
 
 ## About the Role
 
-Switchup is hiring Product Engineers to help build an AI-first technical platform that:
-
+Switchup is hiring Product Engineers to build an AI-first platform that:
 - Automates manual operational touchpoints
-- Scales across multiple subscription types (energy, telco, streaming)
-- Creates an environment where AI agents and humans work together seamlessly
-- Serves hundreds of thousands of households with excellent service
+- Scales across energy, telco, and streaming subscriptions
+- Creates seamless AI-human collaboration
+- Serves hundreds of thousands of households
 
 ### Key Challenges
+- Provider and market-agnostic architecture
+- Highly configurable yet robust workflows
+- Balancing experimentation with stability
 
-- Building **provider and market-agnostic** architecture
-- Creating **highly configurable yet robust** automated workflows
-- Balancing experimentation needs with system stability
+### Switchup Tech Stack
 
-### Tech Stack at Switchup
-
-- **Languages**: TypeScript (primary), Python, Rust/Go
-- **AI**: Claude Code, Langfuse
-- **Workflow Engine**: Windmill.dev
-- **Browser Automation**: Playwright
-- **Database**: Neon DB
-
-## Documentation
-
-Full job descriptions and guides are available in the [`/docs`](./docs) directory:
-
-- [Primary Job Description](./docs/job-description.md)
-- [Alternative Version](./docs/job-description_alt.md)
-- [Development Guide](./CLAUDE.md) - Comprehensive project documentation for developers
-
-## Technical Highlights
-
-### Modern React Patterns
-- **React 19** - Leveraging `useTransition` for non-blocking state updates
-- **Custom Hooks** - Encapsulated state logic for reusability
-- **Type Safety** - Full TypeScript coverage with centralized type definitions
-- **Barrel Exports** - Clean imports via `index.ts` files
-
-### Performance Optimizations
-- **Vite 7** - Sub-second hot module replacement
-- **Code Splitting** - Automatic chunk optimization
-- **Lazy Loading** - Components loaded on demand
-- **Memoization** - Optimized re-renders with React 19 features
-
-### Tailwind CSS v4 Features
-- **CSS-First Configuration** - Modern `@theme` directive in CSS
-- **Custom Utilities** - Reusable utility classes for terminal aesthetic
-- **Container Queries** - Component-level responsiveness
-- **Color Mixing** - Dynamic color manipulation with `color-mix()`
-
-### State Management
-- **localStorage** - Persistent boot state and visit tracking
-- **sessionStorage** - One-time hints and console messages
-- **React State** - Component-level state with custom hooks
-- **No External Libraries** - Clean React-only state management
+| Category   | Technologies                          |
+| ---------- | ------------------------------------- |
+| Languages  | TypeScript (primary), Python, Rust/Go |
+| AI         | Claude Code, Langfuse                 |
+| Workflows  | Windmill.dev                          |
+| Automation | Playwright                            |
+| Database   | Neon DB                               |
 
 ## Deployment
 
-### Production Build
+Static files build to `/dist`. Zero-config deployment to:
+- Vercel
+- Netlify
+- Cloudflare Pages
+- GitHub Pages
 
-The application builds to static files in `/dist`:
+No environment variables required - fully client-side.
 
-```bash
-npm run build
-# Output: dist/ directory ready for deployment
-```
+## Documentation
 
-### Hosting Platforms
-
-Zero-config deployment to modern platforms:
-
-- **Vercel** - Auto-detects Vite config, instant deploys
-- **Netlify** - Automatic builds from Git pushes
-- **Cloudflare Pages** - Edge-optimized static hosting
-- **GitHub Pages** - Free hosting for public repositories
-
-### Build Configuration
-
-- **Entry**: `index.html`
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-- **Node Version**: 18+
-
-No environment variables required - fully client-side application.
-
-## Project Evolution
-
-This codebase has undergone a complete architectural refactor:
-
-**Before**: Single-file component (~2000 lines)
-- All logic, data, and UI in one file
-- Difficult to navigate and maintain
-- Hard to reuse components
-
-**After**: Modular architecture (~1500 lines main + focused modules)
-- Clear separation of concerns
-- Reusable components and hooks
-- Easy to test and extend
-- Better developer experience
-
-The refactor maintains 100% feature parity while improving code quality and maintainability.
+- [Primary Job Description](./docs/job-description.md)
+- [Alternative Version](./docs/job-description_alt.md)
+- [Development Guide](./CLAUDE.md)
 
 ## License
 
@@ -321,6 +378,4 @@ Private - Not for redistribution
 
 ---
 
-**Built with care by the Switchup team**
-
-*Showcasing modern React architecture, TypeScript best practices, and engaging user experience design.*
+**Built by the Switchup team** - Showcasing React 19, Tailwind CSS v4, and engaging UX design.
