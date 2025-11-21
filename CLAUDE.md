@@ -6,6 +6,45 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is an interactive job board application for Switchup, built as a single-page React app with a terminal/operating system theme. The entire application is client-side only (no backend) and designed to showcase a Product Engineer position through an immersive, gamified experience.
 
+**Tech Stack**: React 19, TypeScript, Vite 7, Tailwind CSS v4, Framer Motion
+
+## Quick Reference
+
+### File Locations (Most Common)
+- **Main Component**: `src/swup-operating-system.tsx` (~1500 lines)
+- **System Logs**: `src/constants/logMessages.ts`
+- **Tech Stack**: `src/constants/techStack.ts`
+- **Quiz Questions**: `src/constants/quizQuestions.ts`
+- **Engineering Bets**: `src/constants/engineeringBets.ts`
+- **Behind the Scenes Videos**: `src/constants/behindTheScenes.ts`
+- **Types**: `src/types/terminal.types.ts`
+
+### Common Tasks
+```bash
+# Add system log → edit src/constants/logMessages.ts
+# Add quiz question → edit src/constants/quizQuestions.ts
+# Add behind the scenes video → edit src/constants/behindTheScenes.ts
+# Add terminal command → edit handleCommand in src/swup-operating-system.tsx
+# Change boot password → edit src/components/BootSequence.tsx
+# Add new component → create in src/components/, export via index.ts
+# Add new hook → create in src/hooks/, export via index.ts
+```
+
+### Import Patterns
+```typescript
+// Components
+import { BootSequence, ApplicationModal, BehindTheScenesModal } from './components';
+
+// Hooks
+import { useTheme, useQuizState } from './hooks';
+
+// Constants
+import { LOG_MESSAGES, TECH_STACK, BEHIND_THE_SCENES_VIDEOS } from './constants';
+
+// Types
+import type { LogEntry, QuizQuestion, BehindTheScenesVideo } from './types';
+```
+
 ## Development Commands
 
 ```bash
@@ -21,22 +60,70 @@ npm run preview
 
 ## High-Level Architecture
 
-### Single-File Component Design
+### Modular Component Design
 
-The entire application lives in `src/swup-operating-system.tsx` (~2000 lines). This is intentional - it's a standalone presentation piece, not a production app with multiple routes or features.
+The application has been refactored from a single-file monolith into a clean, modular architecture:
 
-**Key architectural decision**: All components, data, and logic are colocated in one file for easy portability and deployment as a self-contained artifact.
+**Main Component**: `src/swup-operating-system.tsx` (~1500 lines)
+- Core application logic and InteractiveTerminal component
+- Page layout and section rendering
+
+**Extracted Modules**:
+- `src/components/` - Reusable UI components (5 files)
+- `src/constants/` - Data and configuration (4 files)
+- `src/hooks/` - Custom React hooks (4 files)
+- `src/types/` - TypeScript type definitions (1 file)
 
 ### Component Hierarchy
 
 ```
 SwitchupOperatingSystem (root)
-├── BootSequence (password-protected boot animation)
-├── InteractiveTerminal (main CLI interface with commands & quiz)
-├── VideoModal (placeholder for work session recording)
-├── ApplicationModal (two-step application flow with token generation)
-└── Main content sections (Hero, Logs, Tech Stack, Decisions, etc.)
+├── BootSequence (src/components/BootSequence.tsx)
+│   └── Password-protected boot animation
+├── InteractiveTerminal (inline in main component)
+│   ├── CLI interface with commands
+│   └── Culture quiz (useQuizState hook)
+├── BehindTheScenesModal (src/components/BehindTheScenesModal.tsx)
+│   └── Vimeo video player with multi-video navigation
+├── ApplicationModal (src/components/ApplicationModal.tsx)
+└── Main content sections
+    ├── Hero with GlitchText
+    ├── Live system logs (useTerminalLogs hook)
+    ├── Tech Stack grid
+    ├── Behind the Scenes video grid
+    ├── Engineering Bets cards
+    └── Footer CTA
 ```
+
+### Module Organization
+
+**Components** (`src/components/`):
+- `BootSequence.tsx` - Boot animation with password auth
+- `ApplicationModal.tsx` - Multi-step application flow
+- `BehindTheScenesModal.tsx` - Vimeo video modal with multi-video navigation
+- `GlitchText.tsx` - Reusable glitch effect
+- `SectionHeader.tsx` - Consistent section headers
+- `TerminalWindow.tsx` - **Reusable** complete window wrapper with all controls (recommended)
+- `TerminalWindowHeader.tsx` - **Reusable** macOS-style window header with traffic light buttons
+- `FullscreenModal.tsx` - **Reusable** fullscreen modal overlay for terminal windows
+- `ExitConfirmDialog.tsx` - **Reusable** exit confirmation dialog with terminal styling
+
+**Hooks** (`src/hooks/`):
+- `useTheme.ts` - Theme & CRT mode with React 19's `useTransition`
+- `useTerminalLogs.ts` - Auto-scrolling log simulation
+- `useQuizState.ts` - Quiz state machine & scoring
+- `useShutdown.ts` - Shutdown sequence with progress
+- `useWindowControls.ts` - **Reusable** window state management (fullscreen, minimize, exit)
+
+**Constants** (`src/constants/`):
+- `logMessages.ts` - ~100 system log entries
+- `techStack.ts` - Technology choices with rationale
+- `engineeringBets.ts` - Engineering bets (work-in-progress technical directions)
+- `quizQuestions.ts` - Culture quiz Q&A
+- `behindTheScenes.ts` - Behind the scenes Vimeo videos from team members
+
+**Types** (`src/types/`):
+- `terminal.types.ts` - Centralized TypeScript definitions
 
 ### State Management Patterns
 
@@ -50,7 +137,7 @@ SwitchupOperatingSystem (root)
 **Component State** (React hooks):
 - Boot/shutdown sequences
 - Modal visibility
-- Active decision cards
+- Active engineering bet cards
 - Terminal command history
 - Quiz state (active, step, score)
 - Live log entries
@@ -80,18 +167,33 @@ Heavy use of **Framer Motion** for:
 
 ### Data Structures
 
-Three main data arrays define content:
+Content is now separated into dedicated constant files:
 
-1. **LOG_MESSAGES** (~100 entries): System log messages with `level` and `message`
+1. **LOG_MESSAGES** (`src/constants/logMessages.ts`)
+   - ~100 system log entries with `level` and `message`
    - Randomly displayed every 2 seconds when booted
    - Humor mixed with technical authenticity
 
-2. **TECH_STACK** (6 items): Technology choices with rationale
-   - Each has: `category`, `tool`, `rationale`, `specs[]`, `status`, `icon`
+2. **TECH_STACK** (`src/constants/techStack.ts`)
+   - 6 technology choices with rationale
+   - Structure: `{ category, tool, rationale, specs[], status, icon }`
+   - Displayed in tech stack grid
 
-3. **DECISIONS** (6 items): Architectural decision records
-   - Format: `title`, `context`, `tradeoff`
+3. **ENGINEERING_BETS** (`src/constants/engineeringBets.ts`)
+   - 6 engineering bets (work-in-progress technical directions)
+   - Structure: `{ id, title, context, tradeoff }`
    - Expandable cards in UI
+
+4. **QUIZ_QUESTIONS** (`src/constants/quizQuestions.ts`)
+   - 10 culture quiz questions
+   - Structure: `{ q, a, b, correct, feedback_pass, feedback_fail }`
+   - Used by `useQuizState` hook
+
+5. **BEHIND_THE_SCENES_VIDEOS** (`src/constants/behindTheScenes.ts`)
+   - Team member video insights (Vimeo-hosted)
+   - Structure: `{ id, vimeoId, title, description, author: { name, role, avatarInitials }, topics[], duration, featured? }`
+   - Displayed in "Behind the Scenes" section as a responsive grid
+   - Featured videos span 2 columns on larger screens
 
 ### Easter Eggs & Engagement Mechanics
 
@@ -106,52 +208,135 @@ Three main data arrays define content:
 ## Key Technical Patterns
 
 ### Boot Sequence Authentication
-Password is hardcoded: `"SwitchMeUp"`
-- On correct password: completes boot, shows main interface
+`src/components/BootSequence.tsx`:
+- Password hardcoded: `"SwitchMeUp"`
+- On correct password: triggers `onComplete` callback
 - Skip boot if `localStorage.getItem('switchup_shutdown') === 'true'`
 
+### Theme & CRT Mode
+`src/hooks/useTheme.ts`:
+- React 19's `useTransition` for non-blocking theme changes
+- Persists to localStorage: `switchup-theme` and `switchup-crt-mode`
+- Applies `data-theme` attribute and `crt-effect` class to document root
+- Returns: `{ currentTheme, crtMode, isPending, changeTheme, toggleCrtMode }`
+
+### Terminal Logs System
+`src/hooks/useTerminalLogs.ts`:
+- Auto-scrolling log container with ref pattern
+- Random log selection every 2 seconds
+- Returns: `{ logs, logsContainerRef, addLog, clearLogs }`
+
+### Quiz State Machine
+`src/hooks/useQuizState.ts`:
+- Manages quiz flow: inactive → active → complete
+- Tracks current step (0-9) and score
+- Branching feedback: 8+/6-7/<6 thresholds
+- Returns: `{ quizActive, step, score, feedback, startQuiz, answerQuestion, resetQuiz }`
+
+### Shutdown Sequence
+`src/hooks/useShutdown.ts`:
+- Phase-based: idle → initiating → shutting-down → complete
+- Progress tracking (0-100%)
+- Returns: `{ phase, progress, isActive, isComplete, initiate, cancel, forceShutdown }`
+
 ### Modal State Management
-Both VideoModal and ApplicationModal:
+`src/components/ApplicationModal.tsx` and `BehindTheScenesModal.tsx`:
 - Accept `isOpen` and `onClose` props
-- ApplicationModal has internal state machine: `INIT` → `ROLE_SELECT` → `GENERATING` → `COMPLETE`
-- Generates random session tokens: `SWUP-${random 9-char string}`
-
-### Log Auto-Scroll
-Uses `ref` pattern with `useEffect` to auto-scroll logs container:
-```typescript
-useEffect(() => {
-  if (logsContainerRef.current) {
-    logsContainerRef.current.scrollTop = logsContainerRef.current.scrollHeight;
-  }
-}, [logs]);
-```
-
-### CRT Mode Toggle
-Applies CSS class `crt-effect` to root element (assumed to be defined in `index.css`)
+- ApplicationModal state machine: `INIT` → `ROLE_SELECT` → `GENERATING` → `COMPLETE`
+- Generates session tokens: `SWUP-${random 9-char string}`
+- BehindTheScenesModal supports multiple videos with navigation and Vimeo embedding
 
 ## Important Implementation Notes
 
 ### File Paths
-When editing code, the main file is:
-- `/src/swup-operating-system.tsx` (1978 lines)
+**Main Application**:
+- `src/swup-operating-system.tsx` (~1500 lines) - Core app logic and InteractiveTerminal
 
-Supporting files:
-- `/src/main.tsx` (simple React root mount)
-- `/src/index.css` (Tailwind + custom CRT effects)
-- `/index.html` (minimal HTML shell)
+**Components**:
+- `src/components/BootSequence.tsx` - Boot animation
+- `src/components/ApplicationModal.tsx` - Application flow
+- `src/components/BehindTheScenesModal.tsx` - Vimeo video modal
+- `src/components/GlitchText.tsx` - Glitch effect
+- `src/components/SectionHeader.tsx` - Section headers
+
+**Hooks**:
+- `src/hooks/useTheme.ts` - Theme management
+- `src/hooks/useTerminalLogs.ts` - Log simulation
+- `src/hooks/useQuizState.ts` - Quiz state
+- `src/hooks/useShutdown.ts` - Shutdown sequence
+
+**Constants**:
+- `src/constants/logMessages.ts` - System logs
+- `src/constants/techStack.ts` - Tech stack data
+- `src/constants/engineeringBets.ts` - Engineering bets
+- `src/constants/quizQuestions.ts` - Quiz questions
+- `src/constants/behindTheScenes.ts` - Behind the scenes videos
+
+**Supporting Files**:
+- `src/types/terminal.types.ts` - TypeScript definitions
+- `src/main.tsx` - React root mount
+- `src/index.css` - Tailwind + CRT effects
+- `index.html` - HTML shell
 
 ### Content Updates
-To update job description content:
-- **System logs**: Edit `LOG_MESSAGES` array
-- **Tech stack**: Edit `TECH_STACK` array
-- **Decisions**: Edit `DECISIONS` array
-- **Quiz questions**: Edit `QUESTIONS` array inside `InteractiveTerminal` component (starts line ~486)
+
+**System Logs**:
+```typescript
+// src/constants/logMessages.ts
+export const LOG_MESSAGES: LogMessage[] = [
+  { level: 'INFO', message: 'Your new log message' },
+  // ...
+];
+```
+
+**Tech Stack**:
+```typescript
+// src/constants/techStack.ts
+export const TECH_STACK: StackItem[] = [
+  {
+    category: 'Category',
+    tool: 'Tool Name',
+    rationale: 'What we use it for and why',
+    specs: ['Use case 1', 'Use case 2'],
+    status: 'CORE',  // or 'EXPLORING'
+    icon: IconComponent
+  },
+];
+```
+
+**Engineering Bets**:
+```typescript
+// src/constants/engineeringBets.ts
+export const ENGINEERING_BETS: EngineeringBet[] = [
+  {
+    id: 'unique-id',
+    title: 'Bet Title',
+    context: 'Background and current direction',
+    tradeoff: 'Trade-offs we\'re navigating'
+  },
+];
+```
+
+**Quiz Questions**:
+```typescript
+// src/constants/quizQuestions.ts
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    q: 'Your question?',
+    a: 'Option A',
+    b: 'Option B',
+    correct: 'a',
+    feedback_pass: 'Correct feedback',
+    feedback_fail: 'Incorrect feedback'
+  },
+];
+```
 
 ### Password Changes
-The boot password is hardcoded at line ~265:
+Boot password in `src/components/BootSequence.tsx`:
 ```typescript
 if (password === 'SwitchMeUp') {
-  // grant access
+  onComplete();
 }
 ```
 
@@ -300,57 +485,206 @@ All colors support dynamic mixing:
 - **color-mix()** - No runtime JavaScript for color manipulation
 - **Container queries** - Faster than media queries for component-level responsiveness
 
+## Reusable Window Controls
+
+### TerminalWindow Component (Recommended)
+The easiest way to add window controls to any content. Handles fullscreen, minimize, and close with all animations built-in.
+
+```tsx
+import { TerminalWindow } from './components';
+
+<TerminalWindow
+    title="tail -f /var/log/app.log"
+    height="400px"
+    showCloseButton={false}  // Hide close button for display-only windows
+    minimizedContent={
+        <div className="h-[200px] flex items-center justify-center">
+            <span>Window minimized - click to restore</span>
+        </div>
+    }
+>
+    <div className="p-6 h-full overflow-y-auto">
+        {/* Your content here */}
+    </div>
+</TerminalWindow>
+```
+
+**Props:**
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `title` | string | 'terminal' | Window title in header |
+| `children` | ReactNode | required | Content to render |
+| `height` | string | '400px' | Content area height |
+| `fullscreenHeight` | string | 'calc(100vh-120px)' | Height when fullscreen |
+| `minimizedContent` | ReactNode | default placeholder | Custom minimized view |
+| `onClose` | () => void | shows dialog | Close button handler |
+| `onMinimizedChange` | (bool) => void | - | Callback for minimize state |
+| `showCloseButton` | boolean | true | Show red button |
+| `showMinimizeButton` | boolean | true | Show amber button |
+| `showFullscreenButton` | boolean | true | Show green button |
+| `exitDialogTitle` | string | 'Close this window?' | Exit dialog title |
+
+### Low-Level Components (For Custom Implementations)
+
+For more control, use these individual components:
+
+**useWindowControls Hook** - State management for window controls:
+```typescript
+import { useWindowControls } from './hooks';
+const { state, actions } = useWindowControls({ onExit, onMinimizedChange });
+```
+
+**TerminalWindowHeader** - Just the macOS-style header bar:
+```tsx
+import { TerminalWindowHeader } from './components';
+<TerminalWindowHeader title="my-window" onClose={...} onMinimize={...} onFullscreenToggle={...} />
+```
+
+**FullscreenModal** - Fullscreen overlay wrapper:
+```tsx
+import { FullscreenModal } from './components';
+<FullscreenModal isOpen={isFullscreen} onClose={...}>{children}</FullscreenModal>
+```
+
+**ExitConfirmDialog** - Exit confirmation dialog:
+```tsx
+import { ExitConfirmDialog } from './components';
+<ExitConfirmDialog isOpen={showConfirm} onCancel={...} onConfirm={...} />
+```
+
 ## Common Development Tasks
 
-### Add a new terminal command
+### Add a New Terminal Command
 1. Open `src/swup-operating-system.tsx`
-2. Find the `handleCommand` function in `InteractiveTerminal` component
-3. Add new case to the switch statement (~line 654-1043)
+2. Find `handleCommand` function in `InteractiveTerminal` component
+3. Add new case to the switch statement
 4. Add command to help text output
 
-### Update tech stack
-Edit the `TECH_STACK` array (~line 119), following existing structure:
+Example:
 ```typescript
-{
-  category: string,
-  tool: string,
-  rationale: string,
-  specs: string[],
-  status: 'ONLINE' | 'SCALING' | 'OPTIMIZED',
-  icon: React.ElementType
-}
+case 'mycommand':
+  addLine({ type: 'output', content: 'Command output here' });
+  break;
 ```
 
-### Add new quiz question
-Edit `QUESTIONS` array inside `InteractiveTerminal` (~line 486):
+### Update Tech Stack
+Edit `src/constants/techStack.ts`:
 ```typescript
-{
-  q: string,      // The question
-  a: string,      // Option A text
-  b: string,      // Option B text
-  correct: 'a' | 'b',
-  feedback_pass: string,
-  feedback_fail: string
-}
+import { Network } from 'lucide-react';
+
+export const TECH_STACK: StackItem[] = [
+  {
+    category: 'Workflow Engine',
+    tool: 'Windmill.dev',
+    rationale: 'What we use it for and why',
+    specs: ['Use case 1', 'Use case 2'],
+    status: 'CORE',  // or 'EXPLORING'
+    icon: Network
+  },
+  // ...
+];
 ```
 
-### Modify boot sequence
-Edit `BootSequence` component (~line 227):
+### Add Quiz Questions
+Edit `src/constants/quizQuestions.ts`:
+```typescript
+export const QUIZ_QUESTIONS: QuizQuestion[] = [
+  {
+    q: 'Your question text?',
+    a: 'First option',
+    b: 'Second option',
+    correct: 'a',
+    feedback_pass: 'Great answer! Here\'s why...',
+    feedback_fail: 'Not quite. Consider this...'
+  },
+  // ... (10 total questions)
+];
+```
+
+### Modify Boot Sequence
+Edit `src/components/BootSequence.tsx`:
 - Change `bootText` array for different boot messages
-- Change password check logic for different authentication
+- Modify password check logic
+- Adjust timing in `useEffect` delays
+
+### Add System Logs
+Edit `src/constants/logMessages.ts`:
+```typescript
+export const LOG_MESSAGES: LogMessage[] = [
+  { level: 'INFO', message: 'New log message' },
+  { level: 'WARN', message: 'Warning message' },
+  { level: 'ERROR', message: 'Error message' },
+  // ...
+];
+```
+
+### Add Behind the Scenes Video
+Edit `src/constants/behindTheScenes.ts`:
+```typescript
+export const BEHIND_THE_SCENES_VIDEOS: BehindTheScenesVideo[] = [
+  {
+    id: 'unique-id',           // URL-safe unique identifier
+    vimeoId: '1139231458',     // Get from Vimeo URL (vimeo.com/XXXXXXXXX)
+    title: 'Video Title',
+    description: 'What the video covers and why it matters...',
+    author: {
+      name: 'Name',
+      role: 'Role at SwitchUp',
+      avatarInitials: 'XX',    // 2-letter initials for avatar
+    },
+    topics: ['Topic 1', 'Topic 2', 'Topic 3'],
+    duration: '8:42',          // Format: M:SS or MM:SS
+    featured: true,            // Optional: spans 2 columns in grid
+  },
+];
+```
+
+### Create New Custom Hook
+1. Create file in `src/hooks/useYourHook.ts`
+2. Export hook function
+3. Add export to `src/hooks/index.ts`
+4. Import in main component: `import { useYourHook } from './hooks';`
+
+### Add New Component
+1. Create file in `src/components/YourComponent.tsx`
+2. Export component
+3. Add export to `src/components/index.ts`
+4. Import in main component: `import { YourComponent } from './components';`
 
 ## Architecture Philosophy
 
-This codebase prioritizes:
-1. **Self-containment**: Single file = easy to understand, deploy, share
-2. **Engagement over convention**: Unusual patterns (one giant file) serve the goal of creating memorable experience
-3. **Performance is secondary**: Heavy animations and effects - this is a showcase piece, not a production SaaS
-4. **Easter eggs as signal**: Visit tracking and hidden features filter for curious, persistent candidates
+This codebase has evolved to balance engagement with maintainability:
 
-If refactoring for production use, consider:
-- Breaking into multiple component files
-- Extracting data to separate content files
-- Adding proper TypeScript types (currently using inline types)
-- Implementing proper routing if expanding beyond single page
-- Adding analytics tracking
-- Optimizing animation performance
+### Design Principles
+1. **Modular & Maintainable** - Clean separation of concerns for easy navigation
+2. **Type-Safe** - Comprehensive TypeScript coverage with centralized types
+3. **Reusable** - Custom hooks and components prevent duplication
+4. **Engagement-First** - Heavy animations and easter eggs create memorable experience
+5. **Developer Experience** - Clear file organization and barrel exports
+
+### Production Considerations
+This is a showcase piece, not production SaaS. Performance is secondary to visual impact:
+- **Heavy Animations** - Multiple Framer Motion effects, rotating gradients
+- **No Optimization** - Large bundle size acceptable for job board
+- **Easter Eggs** - Visit tracking and hidden features filter curious candidates
+- **Client-Only** - No backend, no SSR, purely static hosting
+
+### Future Enhancements
+If expanding beyond job board:
+- Add proper routing (React Router)
+- Implement analytics tracking
+- Optimize animation performance for lower-end devices
+- Add testing suite (Vitest + React Testing Library)
+- Consider code splitting for larger features
+
+### Refactor History
+**Before** (~2000 lines, single file):
+- All logic, data, UI in one file
+- Difficult to navigate and maintain
+- Hard to reuse components
+
+**After** (~1500 lines main + modules):
+- Modular architecture with clear boundaries
+- Reusable hooks and components
+- Easy to test and extend
+- 100% feature parity maintained
