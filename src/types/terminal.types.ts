@@ -21,21 +21,21 @@ export type LogEntry = {
 };
 
 /**
- * Tech stack item displayed in the architecture section
+ * Tech stack item displayed in the tech stack section
  */
 export type StackItem = {
     category: string;
     tool: string;
     rationale: string;
     specs: string[];
-    status: 'ONLINE' | 'SCALING' | 'OPTIMIZED';
+    status: 'CORE' | 'EXPLORING';
     icon: ElementType;
 };
 
 /**
- * Engineering decision for the decision log
+ * Engineering bet for the engineering bets section
  */
-export type Decision = {
+export type EngineeringBet = {
     id: string;
     title: string;
     context: string;
@@ -60,4 +60,23 @@ export type QuizQuestion = {
     correct: 'a' | 'b';
     feedback_pass: string;
     feedback_fail: string;
+};
+
+/**
+ * Behind the Scenes video entry
+ * Supports multiple videos from different team members
+ */
+export type BehindTheScenesVideo = {
+    id: string;
+    vimeoId: string;
+    title: string;
+    description: string;
+    author: {
+        name: string;
+        role: string;
+        avatarInitials: string;
+    };
+    topics: string[];
+    duration: string;
+    featured?: boolean;
 };

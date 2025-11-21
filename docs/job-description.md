@@ -75,6 +75,6 @@ Imagine a service that has the full overview of all your subscriptions \- energy
 
    Why it works: Engineers who love solving real problems will be hooked by the specificity. Plus, it doesn’t get much more transparent than that,
 
-2. “Engineering decision log”. Discuss 3 important architectural decisions you’ve made. For example: DDD; Windmill; xxx? Explain the context, what you evaluated, the choice, the trade offs, the open questions. Allow watchers to easily submit feedback if they feel compelled to do so. 
+2. "Engineering bets". Discuss important architectural bets you're making. For example: DDD; Windmill; xxx? Explain the context, what you're exploring, the tensions you're navigating, the open questions. Allow watchers to easily submit feedback if they feel compelled to do so. 
 
    Why it works: Shows how you think. Demonstrates learning culture (and desire to be challenged). Filters for people who love ambiguity vs. need certainty.
