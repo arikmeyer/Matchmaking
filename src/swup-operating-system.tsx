@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Cpu, Globe, Shield, Zap, Activity, Command, ChevronRight, Lock, Search, Play, Pause, RotateCcw, Check, X, Server, AlertTriangle, BookOpen, Eye, XCircle, CheckCircle } from 'lucide-react';
+import { Terminal, Cpu, Globe, Shield, Zap, Activity, Command, ChevronRight, Lock, Search, Play, Pause, RotateCcw, Check, X, Server, AlertTriangle, BookOpen, Eye, XCircle, CheckCircle, ArrowDown, Database, TrendingUp, GitPullRequest, User } from 'lucide-react';
 
 // Import hooks
 import { useTheme, useTerminalLogs, useShutdown, useQuizState } from './hooks';
@@ -12,7 +12,7 @@ const BehindTheScenesModal = lazy(() => import('./components/BehindTheScenesModa
 const ApplicationModal = lazy(() => import('./components/ApplicationModal').then(m => ({ default: m.ApplicationModal })));
 
 // Import utility components (small, used everywhere)
-import { GlitchText, SectionHeader, ErrorBoundary, TerminalWindow, TerminalWindowHeader, FullscreenModal, ExitConfirmDialog } from './components';
+import { GlitchText, SectionHeader, ErrorBoundary, TerminalWindow, TerminalWindowHeader, FullscreenModal, ExitConfirmDialog, ProblemSpaces } from './components';
 
 // Import constants
 import { LOG_MESSAGES, TECH_STACK, ENGINEERING_BETS, QUIZ_QUESTIONS, BEHIND_THE_SCENES_VIDEOS } from './constants';
@@ -688,7 +688,7 @@ const InteractiveTerminal = ({ onExit, onThemeChange, onMinimizedChange, onFulls
                                 transition={{ delay: 0.2 }}
                                 className="text-green-500/80 text-xs leading-tight"
                             >
-{`
+                                {`
     /\\_____/\\
    /  o   o  \\
   ( ==  ^  == )
@@ -1282,7 +1282,7 @@ export default function SwitchupOperatingSystem() {
                                     transition={{ delay: 0.2 }}
                                     className="text-amber-500/80 text-xs leading-tight"
                                 >
-{`
+                                    {`
       ) )
     ( ( )
   ........
@@ -1350,6 +1350,102 @@ export default function SwitchupOperatingSystem() {
                     </TerminalWindow>
                 </section>
 
+                {/* --- CORE CHALLENGE --- */}
+                <section className="space-y-8 terminal-scroll-fade">
+                    <SectionHeader title="Core Challenge: Operational Scalability" icon={Activity} />
+
+                    <div className="grid md:grid-cols-2 gap-12 items-center">
+                        <div className="space-y-6">
+                            <div className="p-6 border border-red-900/30 bg-red-950/5 rounded-lg relative overflow-hidden">
+                                <div className="absolute top-0 right-0 px-2 py-1 bg-red-900/20 text-red-400 text-[10px] font-mono uppercase tracking-wider">Current Bottleneck</div>
+                                <h3 className="text-xl font-bold text-red-400 mb-4 flex items-center gap-2">
+                                    <AlertTriangle size={20} /> Manual Dependency
+                                </h3>
+                                <p className="text-secondary text-sm leading-relaxed mb-4">
+                                    Our operations are process-driven but rely heavily on manual intervention.
+                                    Handling failed orders, extracting data from PDFs, and answering repetitive user queries
+                                    limits our ability to serve millions of users, flipping dysfunctional markets that bet on users being to lazy to deal with their subscriptions.
+                                </p>
+                                <ul className="space-y-2 text-xs text-muted font-mono">
+                                    <li className="flex items-center gap-2"><X size={12} className="text-red-500" /> Manual Workflow Execution</li>
+                                    <li className="flex items-center gap-2"><X size={12} className="text-red-500" /> Human Data Extraction</li>
+                                    <li className="flex items-center gap-2"><X size={12} className="text-red-500" /> Reactive Customer Service</li>
+                                </ul>
+                            </div>
+
+                            <div className="flex justify-center">
+                                <div className="p-2 rounded-full bg-surface border border-default text-muted">
+                                    <ArrowDown size={20} />
+                                </div>
+                            </div>
+
+                            <div className="p-6 border border-green-900/30 bg-green-950/5 rounded-lg relative overflow-hidden">
+                                <div className="absolute top-0 right-0 px-2 py-1 bg-green-900/20 text-green-400 text-[10px] font-mono uppercase tracking-wider">Target State</div>
+                                <h3 className="text-xl font-bold text-green-400 mb-4 flex items-center gap-2">
+                                    <Zap size={20} /> AI Orchestration
+                                </h3>
+                                <p className="text-secondary text-sm leading-relaxed mb-4">
+                                    We are moving from "Admin as Operator" to "Admin as Supervisor".
+                                    AI agents handle the execution, learning from exceptions. Humans focus on
+                                    strategic direction and handling novel edge cases.
+                                </p>
+                                <ul className="space-y-2 text-xs text-muted font-mono">
+                                    <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Autonomous Agents</li>
+                                    <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Self-Healing Workflows</li>
+                                    <li className="flex items-center gap-2"><Check size={12} className="text-green-500" /> Predictive Service</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className="relative h-full min-h-[300px] border border-default rounded-lg bg-black/50 p-6 font-mono text-xs overflow-hidden">
+                            <div className="absolute top-0 left-0 right-0 h-8 bg-surface border-b border-default flex items-center px-4 text-muted">
+                                <span>migration_status.log</span>
+                            </div>
+                            <div className="mt-8 space-y-3">
+                                <div className="flex justify-between text-muted">
+                                    <span>SCALABILITY_SCORE</span>
+                                    <span>[||||||----] 62%</span>
+                                </div>
+                                <div className="h-px bg-default w-full" />
+
+                                <div className="space-y-1">
+                                    <div className="text-green-500">SUCCESS: Energy Market (DE)</div>
+                                    <div className="pl-4 text-muted">Automated switching: 92%</div>
+                                    <div className="pl-4 text-muted">Doc processing: 99.2%</div>
+                                </div>
+
+                                <div className="space-y-1 pt-2">
+                                    <div className="text-amber-500">WARNING: Telco Market</div>
+                                    <div className="pl-4 text-muted">Provider API coverage: 15%</div>
+                                    <div className="pl-4 text-muted">Manual intervention: HIGH</div>
+                                </div>
+
+                                <div className="space-y-1 pt-2">
+                                    <div className="text-blue-400">INFO: Active Initiatives</div>
+                                    <div className="pl-4 text-muted">- Universal Offer Ontology</div>
+                                    <div className="pl-4 text-muted">- LLM-based PDF Extraction</div>
+                                    <div className="pl-4 text-muted">- Self-Service Portal v2</div>
+                                </div>
+
+                                <div className="mt-6 p-3 border border-green-500/30 bg-green-500/5 text-green-400">
+                                    &gt; REQUIRED: Engineers who can build systems that build themselves.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* --- PROBLEM SPACES --- */}
+                <section className="space-y-8 terminal-scroll-fade">
+                    <SectionHeader title="Problem Spaces" icon={Globe} />
+                    <p className="text-secondary max-w-3xl">
+                        We are not just building a website. We are mapping the entire consumer service economy
+                        into a unified digital ontology. Here are the domains you will own.
+                    </p>
+
+                    <ProblemSpaces />
+                </section>
+
                 {/* --- TECH STACK --- */}
                 <section className="space-y-8 terminal-scroll-fade">
                     <SectionHeader title="Tech Stack" icon={Cpu} />
@@ -1359,55 +1455,55 @@ export default function SwitchupOperatingSystem() {
                             const isCore = item.status === 'CORE';
                             const statusColor = isCore ? 'green' : 'blue';
                             return (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: i * 0.1 }}
-                                className={`group relative bg-surface/50 border border-default hover:border-${statusColor}-500/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(${isCore ? '34,197,94' : '59,130,246'},0.1)]`}
-                            >
-                                {/* Status Indicator */}
-                                <div className="absolute top-4 right-4 flex items-center gap-2">
-                                    <div className={`w-2 h-2 rounded-full ${isCore ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-blue-500 shadow-[0_0_10px_#3b82f6]'} animate-pulse`} />
-                                    <span className={`text-[10px] font-mono ${isCore ? 'text-green-500' : 'text-blue-500'} tracking-wider`}>{item.status}</span>
-                                </div>
-
-                                <div className="p-6 space-y-6">
-                                    {/* Header */}
-                                    <div className="flex items-start gap-1">
-                                        <div className={`p-3 bg-surface-dark/50 rounded-lg ${isCore ? 'group-hover:bg-green-500/10 group-hover:text-green-400' : 'group-hover:bg-blue-500/10 group-hover:text-blue-400'} transition-colors`}>
-                                            <item.icon size={24} />
-                                        </div>
-                                        <div>
-                                            <h3 className={`text-xl font-bold text-primary ${isCore ? 'group-hover:text-green-400' : 'group-hover:text-blue-400'} transition-colors`}>{item.tool}</h3>
-                                            <p className="text-xs text-muted font-mono uppercase tracking-wider mt-1">{item.category}</p>
-                                        </div>
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className={`group relative bg-surface/50 border border-default hover:border-${statusColor}-500/50 rounded-xl overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(${isCore ? '34,197,94' : '59,130,246'},0.1)]`}
+                                >
+                                    {/* Status Indicator */}
+                                    <div className="absolute top-4 right-4 flex items-center gap-2">
+                                        <div className={`w-2 h-2 rounded-full ${isCore ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 'bg-blue-500 shadow-[0_0_10px_#3b82f6]'} animate-pulse`} />
+                                        <span className={`text-[10px] font-mono ${isCore ? 'text-green-500' : 'text-blue-500'} tracking-wider`}>{item.status}</span>
                                     </div>
 
-                                    {/* Specs */}
-                                    <div className="grid grid-cols-2 gap-2">
-                                        {item.specs.map((spec, j) => (
-                                            <div key={j} className="tag-bg border border-default rounded px-2 py-1 text-[10px] font-mono text-secondary flex items-center gap-2">
-                                                <div className={`w-1 h-1 rounded-full ${isCore ? 'bg-green-500/50' : 'bg-blue-500/50'}`} />
-                                                {spec}
+                                    <div className="p-6 space-y-6">
+                                        {/* Header */}
+                                        <div className="flex items-start gap-1">
+                                            <div className={`p-3 bg-surface-dark/50 rounded-lg ${isCore ? 'group-hover:bg-green-500/10 group-hover:text-green-400' : 'group-hover:bg-blue-500/10 group-hover:text-blue-400'} transition-colors`}>
+                                                <item.icon size={24} />
                                             </div>
-                                        ))}
+                                            <div>
+                                                <h3 className={`text-xl font-bold text-primary ${isCore ? 'group-hover:text-green-400' : 'group-hover:text-blue-400'} transition-colors`}>{item.tool}</h3>
+                                                <p className="text-xs text-muted font-mono uppercase tracking-wider mt-1">{item.category}</p>
+                                            </div>
+                                        </div>
+
+                                        {/* Specs */}
+                                        <div className="grid grid-cols-2 gap-2">
+                                            {item.specs.map((spec, j) => (
+                                                <div key={j} className="tag-bg border border-default rounded px-2 py-1 text-[10px] font-mono text-secondary flex items-center gap-2">
+                                                    <div className={`w-1 h-1 rounded-full ${isCore ? 'bg-green-500/50' : 'bg-blue-500/50'}`} />
+                                                    {spec}
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Rationale */}
+                                        <div className="relative">
+                                            <div className={`absolute left-0 top-0 bottom-0 w-0.5 bg-surface-dark ${isCore ? 'group-hover:bg-green-500' : 'group-hover:bg-blue-500'} transition-colors`} />
+                                            <p className="pl-4 text-sm text-secondary leading-relaxed group-hover:text-primary transition-colors">
+                                                {item.rationale}
+                                            </p>
+                                        </div>
                                     </div>
 
-                                    {/* Rationale */}
-                                    <div className="relative">
-                                        <div className={`absolute left-0 top-0 bottom-0 w-0.5 bg-surface-dark ${isCore ? 'group-hover:bg-green-500' : 'group-hover:bg-blue-500'} transition-colors`} />
-                                        <p className="pl-4 text-sm text-secondary leading-relaxed group-hover:text-primary transition-colors">
-                                            {item.rationale}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* Scanline Effect */}
-                                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity" />
-                            </motion.div>
-                        );
+                                    {/* Scanline Effect */}
+                                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity" />
+                                </motion.div>
+                            );
                         })}
                     </div>
                 </section>
@@ -1438,7 +1534,7 @@ export default function SwitchupOperatingSystem() {
                                     transition={{ delay: 0.2 }}
                                     className="text-blue-400/80 text-xs leading-tight"
                                 >
-{`
+                                    {`
     .----.
    ( o  o )
     |    |

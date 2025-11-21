@@ -269,7 +269,7 @@ border-default      /* Theme-aware border color */
 // src/constants/behindTheScenes.ts
 {
   id: 'unique-slug',
-  vimeoId: '1139231458',  // From vimeo.com/1139231458
+  vimeoId: '1139421319',  // From vimeo.com/1139231458
   title: 'Video Title',
   description: 'What the video covers...',
   author: {
