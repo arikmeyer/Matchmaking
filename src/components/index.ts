@@ -14,3 +14,4 @@ export * from './TerminalWindowHeader';
 export * from './FullscreenModal';
 export * from './ExitConfirmDialog';
 export * from './TerminalWindow';
+export * from './ProblemSpaces';

@@ -12,7 +12,7 @@ import type { BehindTheScenesVideo } from '../types';
 export const BEHIND_THE_SCENES_VIDEOS: BehindTheScenesVideo[] = [
     {
         id: 'arik-windmill-intro',
-        vimeoId: '1139275629',
+        vimeoId: '1139421319',
         title: 'How We Use Windmill to Solve Real Problems',
         description: 'A walkthrough of how we approach complex automation challenges at SwitchUp. See how we use Windmill to orchestrate workflows that handle thousands of provider interactions daily.',
         author: {
@@ -25,7 +25,7 @@ export const BEHIND_THE_SCENES_VIDEOS: BehindTheScenesVideo[] = [
             'Real-world Challenges',
             'Automation Patterns',
         ],
-        duration: '8:42',
+        duration: '4:41',
         featured: true,
     },
     // Add more videos here as the team grows
