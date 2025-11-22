@@ -14,4 +14,20 @@ export * from './TerminalWindowHeader';
 export * from './FullscreenModal';
 export * from './ExitConfirmDialog';
 export * from './TerminalWindow';
+
+// Problem Spaces / System Architecture Explorer
+export * from './ExplorerSidebar';
+export * from './ExplorerMainContent';
 export * from './ProblemSpaces';
+
+// Terminals
+export * from './DecisionTerminal';
+export * from './Terminal';
+export * from './TerminalOutput';
+
+// Shared effects
+export * from './TerminalGlowEffect';
+
+// Tech Stack with flip cards
+export * from './FlipCard';
+export * from './TechStackCard';

@@ -85,7 +85,7 @@ export function BehindTheScenesModal({
                         <div className="p-6 space-y-4 bg-surface">
                             {/* Author */}
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-green-500/20 border border-green-500/50 flex items-center justify-center text-green-500 font-bold text-sm">
+                                <div className="w-10 h-10 rounded-full bg-nested border border-border flex items-center justify-center text-terminal-green font-bold text-sm">
                                     {currentVideo.author.avatarInitials}
                                 </div>
                                 <div>
@@ -132,8 +132,8 @@ export function BehindTheScenesModal({
                                                 onClick={() => setCurrentIndex(i)}
                                                 className={`w-2 h-2 rounded-full transition-all ${
                                                     i === currentIndex
-                                                        ? 'bg-green-500 w-6'
-                                                        : 'bg-neutral-700 hover:bg-neutral-600'
+                                                        ? 'bg-terminal-green w-6'
+                                                        : 'bg-dot-inactive hover:bg-dot-inactive-hover'
                                                 }`}
                                             />
                                         ))}

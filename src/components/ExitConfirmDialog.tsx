@@ -57,7 +57,7 @@ export function ExitConfirmDialog({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[200] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+                    className="fixed inset-0 z-[200] bg-overlay backdrop-blur-sm flex items-center justify-center p-4"
                     onClick={onCancel}
                 >
                     <motion.div
@@ -91,7 +91,7 @@ export function ExitConfirmDialog({
                             <div className="flex gap-3 pt-2">
                                 <button
                                     onClick={onCancel}
-                                    className="flex-1 px-4 py-2 border border-default text-secondary hover:border-green-500 hover:text-green-400 transition-colors text-sm"
+                                    className="flex-1 px-4 py-2 border border-default text-secondary hover:border-border-hover hover:text-primary transition-colors text-sm"
                                 >
                                     {cancelText}
                                 </button>

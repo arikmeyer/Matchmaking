@@ -4,11 +4,62 @@
  * Uses shared components for header, fullscreen modal, and exit dialog.
  */
 
-import { ReactNode, useState, useEffect, useCallback } from 'react';
+import { ReactNode, useState, useEffect, useCallback, useRef, createContext, useContext } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { TerminalWindowHeader } from './TerminalWindowHeader';
 import { FullscreenModal } from './FullscreenModal';
 import { ExitConfirmDialog } from './ExitConfirmDialog';
+
+/**
+ * Context to provide fullscreen state to children of TerminalWindow.
+ * This allows nested components to know if they're being rendered in fullscreen mode,
+ * which is essential for proper input ref management.
+ */
+export const TerminalWindowContext = createContext<{ isFullscreenMode: boolean }>({ isFullscreenMode: false });
+
+/**
+ * Hook to access the current fullscreen mode from TerminalWindow context.
+ * Returns { isFullscreenMode: boolean }
+ */
+export const useTerminalWindowContext = () => useContext(TerminalWindowContext);
+
+/**
+ * Context-aware input wrapper that automatically uses the correct ref based on fullscreen mode.
+ * Use this for inputs inside TerminalWindow children that need focus management.
+ */
+export interface ContextAwareInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    getInputRef: (isFullscreenMode: boolean) => React.RefObject<HTMLInputElement | null>;
+}
+
+export const ContextAwareInput: React.FC<ContextAwareInputProps> = ({ getInputRef, ...props }) => {
+    const { isFullscreenMode } = useTerminalWindowContext();
+    return <input ref={getInputRef(isFullscreenMode)} {...props} />;
+};
+
+/**
+ * Context-aware click area wrapper that automatically uses the correct focus handler based on fullscreen mode.
+ * Use this for click-to-focus areas inside TerminalWindow children.
+ */
+export interface ContextAwareClickAreaProps {
+    getClickHandler: (isFullscreenMode: boolean) => () => void;
+    disabled?: boolean;
+    className?: string;
+    children: ReactNode;
+}
+
+export const ContextAwareClickArea: React.FC<ContextAwareClickAreaProps> = ({
+    getClickHandler,
+    disabled,
+    className,
+    children,
+}) => {
+    const { isFullscreenMode } = useTerminalWindowContext();
+    return (
+        <div className={className} onClick={() => !disabled && getClickHandler(isFullscreenMode)()}>
+            {children}
+        </div>
+    );
+};
 
 export interface TerminalWindowProps {
     /** Window title displayed in header */
@@ -17,14 +68,14 @@ export interface TerminalWindowProps {
     children: ReactNode;
     /** Height of the content area (default: '400px') */
     height?: string;
-    /** Height when in fullscreen mode (default: 'calc(100vh-120px)') */
-    fullscreenHeight?: string;
     /** Content to show when minimized (if not provided, window just hides) */
     minimizedContent?: ReactNode;
-    /** Callback when close button is clicked (if not provided, shows exit dialog) */
+    /** Callback when user confirms exit dialog (close always shows confirmation first) */
     onClose?: () => void;
     /** Callback when minimized state changes (for parent to sync effects like backgrounds) */
     onMinimizedChange?: (isMinimized: boolean) => void;
+    /** Callback when fullscreen state changes (for parent to sync effects like backgrounds) */
+    onFullscreenChange?: (isFullscreen: boolean) => void;
     /** Custom callback when fullscreen button is clicked (overrides default fullscreen behavior) */
     onFullscreenClick?: () => void;
     /** Controlled minimize state - when provided, parent controls minimize */
@@ -47,6 +98,8 @@ export interface TerminalWindowProps {
     minimizeDelay?: number;
     /** Animation timing - delay before backgrounds restore */
     restoreDelay?: number;
+    /** Custom content to display on the right side of the header (e.g., status indicators) */
+    headerRightContent?: ReactNode;
 }
 
 /**
@@ -68,10 +121,10 @@ export function TerminalWindow({
     title = 'terminal',
     children,
     height = '400px',
-    fullscreenHeight = 'calc(100vh-120px)',
     minimizedContent,
     onClose,
     onMinimizedChange,
+    onFullscreenChange,
     onFullscreenClick,
     isMinimizedControlled,
     onMinimizeClick,
@@ -83,6 +136,7 @@ export function TerminalWindow({
     className = '',
     minimizeDelay = 250,
     restoreDelay = 750,
+    headerRightContent,
 }: TerminalWindowProps) {
     // If custom fullscreen handler provided, don't use internal fullscreen state
     const useInternalFullscreen = !onFullscreenClick;
@@ -95,16 +149,29 @@ export function TerminalWindow({
     // Use controlled state if provided, otherwise internal
     const isMinimized = useInternalMinimize ? isMinimizedInternal : isMinimizedControlled;
 
+    // Timer ref for cleanup on unmount
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, []);
+
     // Handle escape key to close fullscreen
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape' && isFullscreen) {
                 setIsFullscreen(false);
+                onFullscreenChange?.(false);
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isFullscreen]);
+    }, [isFullscreen, onFullscreenChange]);
 
     // Handle minimize with animation sequencing
     const handleMinimizeToggle = useCallback(() => {
@@ -113,59 +180,95 @@ export function TerminalWindow({
             onMinimizeClick();
             return;
         }
+        // Clear any pending timer
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
         // Otherwise use internal state
         if (!isMinimized) {
             onMinimizedChange?.(true);
-            setTimeout(() => setIsMinimizedInternal(true), minimizeDelay);
+            timerRef.current = setTimeout(() => setIsMinimizedInternal(true), minimizeDelay);
         } else {
             setIsMinimizedInternal(false);
-            setTimeout(() => onMinimizedChange?.(false), restoreDelay);
+            timerRef.current = setTimeout(() => onMinimizedChange?.(false), restoreDelay);
         }
     }, [isMinimized, onMinimizedChange, onMinimizeClick, minimizeDelay, restoreDelay]);
 
-    // Handle close button
+    // Handle close button - always show confirmation dialog for consistency
     const handleClose = useCallback(() => {
-        if (onClose) {
-            onClose();
-        } else {
-            setShowExitConfirm(true);
-        }
-    }, [onClose]);
+        setShowExitConfirm(true);
+    }, []);
 
     // Handle fullscreen toggle
     const handleFullscreenToggle = useCallback(() => {
         if (onFullscreenClick) {
             onFullscreenClick();
         } else {
-            setIsFullscreen(!isFullscreen);
+            const newState = !isFullscreen;
+            setIsFullscreen(newState);
+            onFullscreenChange?.(newState);
         }
-    }, [onFullscreenClick, isFullscreen]);
+    }, [onFullscreenClick, isFullscreen, onFullscreenChange]);
 
-    // Handle minimize from fullscreen
+    // Handle minimize from fullscreen - DIRECT minimize (no intermediate normal window state)
     const handleMinimizeFromFullscreen = useCallback(() => {
-        setIsFullscreen(false);
-        handleMinimizeToggle();
-    }, [handleMinimizeToggle]);
+        if (onMinimizeClick) {
+            // If custom handler provided, let it handle everything
+            setIsFullscreen(false);
+            onFullscreenChange?.(false);
+            onMinimizeClick();
+        } else {
+            // Internal state: immediately set minimized BEFORE closing fullscreen
+            // This prevents the normal window from flashing during transition
+            onMinimizedChange?.(true);
+            setIsMinimizedInternal(true);  // No delay - immediate!
+            setIsFullscreen(false);
+            onFullscreenChange?.(false);
+        }
+    }, [onMinimizeClick, onMinimizedChange, onFullscreenChange]);
 
-    // Window content wrapper
+    // Window content wrapper - wraps children in context to provide fullscreen state
     const windowContent = (isFullscreenMode: boolean) => {
-        const contentHeight = isFullscreenMode ? fullscreenHeight : height;
+        // In fullscreen mode, use flex-1 to fill the modal's flex container
+        // In normal mode, use the specified fixed height
+        if (isFullscreenMode) {
+            return (
+                <TerminalWindowContext.Provider value={{ isFullscreenMode: true }}>
+                    <TerminalWindowHeader
+                        title={title}
+                        isFullscreen={isFullscreenMode}
+                        onClose={handleClose}
+                        onMinimize={handleMinimizeFromFullscreen}
+                        onFullscreenToggle={handleFullscreenToggle}
+                        showCloseButton={showCloseButton}
+                        showMinimizeButton={showMinimizeButton}
+                        showFullscreenButton={showFullscreenButton}
+                        rightContent={headerRightContent}
+                    />
+                    <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+                        {children}
+                    </div>
+                </TerminalWindowContext.Provider>
+            );
+        }
+
         return (
-            <>
+            <TerminalWindowContext.Provider value={{ isFullscreenMode: false }}>
                 <TerminalWindowHeader
                     title={title}
                     isFullscreen={isFullscreenMode}
                     onClose={handleClose}
-                    onMinimize={isFullscreenMode ? handleMinimizeFromFullscreen : handleMinimizeToggle}
+                    onMinimize={handleMinimizeToggle}
                     onFullscreenToggle={handleFullscreenToggle}
                     showCloseButton={showCloseButton}
                     showMinimizeButton={showMinimizeButton}
                     showFullscreenButton={showFullscreenButton}
+                    rightContent={headerRightContent}
                 />
-                <div style={contentHeight === 'auto' ? undefined : { height: contentHeight }}>
+                <div className="flex flex-col overflow-hidden" style={height === 'auto' ? undefined : { height }}>
                     {children}
                 </div>
-            </>
+            </TerminalWindowContext.Provider>
         );
     };
 
@@ -177,7 +280,7 @@ export function TerminalWindow({
             <motion.div
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="text-green-500 font-mono text-sm"
+                className="text-terminal-green font-mono text-sm"
             >
                 <span className="text-muted">$</span> await window.restore()
             </motion.div>

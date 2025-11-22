@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 
 export interface WindowControlsOptions {
     /** Callback when minimize state changes (for parent to sync background effects) */
@@ -53,6 +53,18 @@ export function useWindowControls(options: WindowControlsOptions = {}): {
     const [isMinimized, setIsMinimized] = useState(false);
     const [showExitConfirm, setShowExitConfirm] = useState(false);
 
+    // Timer ref for cleanup on unmount
+    const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    // Cleanup timer on unmount
+    useEffect(() => {
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+        };
+    }, []);
+
     // Handle escape key to close fullscreen
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -68,14 +80,19 @@ export function useWindowControls(options: WindowControlsOptions = {}): {
     // Minimize: backgrounds fade → terminal shrinks → placeholder appears
     // Restore: placeholder fades → terminal expands → backgrounds fade in
     const handleMinimizeToggle = useCallback(() => {
+        // Clear any pending timer
+        if (timerRef.current) {
+            clearTimeout(timerRef.current);
+        }
+
         if (!isMinimized) {
             // MINIMIZING: Fade backgrounds first, then trigger terminal shrink
             onMinimizedChange?.(true);
-            setTimeout(() => setIsMinimized(true), minimizeDelay);
+            timerRef.current = setTimeout(() => setIsMinimized(true), minimizeDelay);
         } else {
             // RESTORING: Expand terminal first, then fade in backgrounds
             setIsMinimized(false);
-            setTimeout(() => onMinimizedChange?.(false), restoreDelay);
+            timerRef.current = setTimeout(() => onMinimizedChange?.(false), restoreDelay);
         }
     }, [isMinimized, onMinimizedChange, minimizeDelay, restoreDelay]);
 
