@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export interface FullscreenModalProps {
@@ -29,7 +30,9 @@ export function FullscreenModal({
     contentClassName = '',
     closeOnBackdropClick = true,
 }: FullscreenModalProps) {
-    return (
+    // Use Portal to render at document body level, avoiding transform ancestor issues
+    // (position: fixed is relative to transformed ancestors, not viewport)
+    return createPortal(
         <AnimatePresence>
             {isOpen && (
                 <motion.div
@@ -37,29 +40,30 @@ export function FullscreenModal({
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.2 }}
-                    className="fixed top-10 left-0 right-0 bottom-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 md:p-8"
+                    className="fixed top-10 left-0 right-0 bottom-0 z-[100] bg-overlay-heavy backdrop-blur-md"
                     onClick={(e) => {
                         if (closeOnBackdropClick && e.target === e.currentTarget) {
                             onClose();
                         }
                     }}
                 >
+                    {/* Glow effect - sized to match content */}
+                    <div className="absolute inset-4 md:inset-8 bg-gradient-to-r from-terminal-green/20 via-surface/10 to-terminal-green/20 rounded-lg blur-xl opacity-50 pointer-events-none" />
+
+                    {/* Content container - uses absolute positioning for guaranteed sizing */}
                     <motion.div
-                        initial={{ scale: 0.9, opacity: 0 }}
+                        initial={{ scale: 0.95, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        exit={{ scale: 0.9, opacity: 0 }}
+                        exit={{ scale: 0.95, opacity: 0 }}
                         transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 30 }}
-                        className={`w-full max-w-6xl max-h-[90vh] overflow-hidden relative ${contentClassName}`}
+                        className={`absolute inset-4 md:inset-8 flex flex-col bg-terminal-surface rounded-lg overflow-hidden border border-border ${contentClassName}`}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Background glow effect */}
-                        <div className="absolute -inset-1 bg-gradient-to-r from-green-500/20 via-blue-500/10 to-green-500/20 rounded-lg blur-xl opacity-50" />
-                        <div className="relative bg-terminal-surface rounded-lg overflow-hidden border border-green-500/30">
-                            {children}
-                        </div>
+                        {children}
                     </motion.div>
                 </motion.div>
             )}
-        </AnimatePresence>
+        </AnimatePresence>,
+        document.body
     );
 }

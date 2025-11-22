@@ -21,6 +21,15 @@ export type LogEntry = {
 };
 
 /**
+ * Engineering bet associated with a tech stack item
+ */
+export type EngineeringBetContent = {
+    title: string;
+    context: string;
+    tradeoff: string;
+};
+
+/**
  * Tech stack item displayed in the tech stack section
  */
 export type StackItem = {
@@ -30,23 +39,15 @@ export type StackItem = {
     specs: string[];
     status: 'CORE' | 'EXPLORING';
     icon: ElementType;
+    bet?: EngineeringBetContent;
 };
 
-/**
- * Engineering bet for the engineering bets section
- */
-export type EngineeringBet = {
-    id: string;
-    title: string;
-    context: string;
-    tradeoff: string;
-};
 
 /**
  * Terminal history line
  */
 export type TerminalLine = {
-    type: 'input' | 'output' | 'system';
+    type: 'input' | 'output' | 'system' | 'error';
     content: ReactNode;
 };
 

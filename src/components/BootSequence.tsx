@@ -58,7 +58,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
     };
 
     return (
-        <div className="fixed inset-0 bg-surface-dark z-[100] font-mono text-green-500 p-8 text-sm md:text-base overflow-hidden flex flex-col justify-end pb-20">
+        <div className="fixed inset-0 bg-surface-dark z-[100] font-mono text-terminal-green p-8 text-sm md:text-base overflow-hidden flex flex-col justify-end pb-20">
             {lines.map((line, i) => (
                 <div key={i} className="mb-1">{`> ${line} `}</div>
             ))}
@@ -74,7 +74,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="bg-transparent border-none outline-none text-green-500 flex-1 placeholder:text-green-900"
+                            className="bg-transparent border-none outline-none text-terminal-green flex-1 placeholder:text-muted"
                             placeholder="Enter access code..."
                             autoFocus
                         />
