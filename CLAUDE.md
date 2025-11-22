@@ -21,30 +21,34 @@ npm run preview  # Preview production build
 | What                     | Where                                              |
 | ------------------------ | -------------------------------------------------- |
 | Main component           | `src/swup-operating-system.tsx`                    |
-| Terminal commands        | `handleCommand` function in main component         |
 | System logs              | `src/constants/logMessages.ts`                     |
-| Tech stack data          | `src/constants/techStack.ts`                       |
+| Tech stack + bets        | `src/constants/techStack.ts` (bets inline)         |
 | Quiz questions           | `src/constants/quizQuestions.ts`                   |
-| Engineering bets         | `src/constants/engineeringBets.ts`                 |
 | Behind the scenes videos | `src/constants/behindTheScenes.ts`                 |
-| Type definitions         | `src/types/terminal.types.ts`                      |
+| Problem spaces data      | `src/constants/problemSpaces.ts`                   |
+| Type definitions         | `src/types/` (barrel exported via index.ts)        |
 | Tailwind config          | `src/index.css` (CSS-first, no tailwind.config.js) |
 | Boot password            | `src/components/BootSequence.tsx`                  |
+| Terminal commands        | `src/commands/definitions/` (modular system)       |
+| Command registry         | `src/commands/registry.ts`                         |
+| Command parser           | `src/commands/parser.ts`                           |
+| Flip card component      | `src/components/FlipCard.tsx`                      |
+| Tech stack card          | `src/components/TechStackCard.tsx`                 |
 
 ## Import Patterns
 
 ```typescript
 // Components - barrel export
-import { BootSequence, ApplicationModal, TerminalWindow } from './components';
+import { BootSequence, ApplicationModal, TerminalWindow, ContextAwareInput, ContextAwareClickArea, ProblemSpaces } from './components';
 
 // Hooks - barrel export
-import { useTheme, useQuizState, useWindowControls } from './hooks';
+import { useTheme, useQuizState, useWindowControls, useTerminalFocus, useTerminalKeyboard, useTerminalCore } from './hooks';
 
 // Constants - barrel export
-import { LOG_MESSAGES, TECH_STACK, QUIZ_QUESTIONS } from './constants';
+import { LOG_MESSAGES, TECH_STACK, QUIZ_QUESTIONS, PROBLEM_SPACES } from './constants';
 
 // Types - use 'type' keyword
-import type { LogEntry, QuizQuestion, BehindTheScenesVideo } from './types';
+import type { LogEntry, QuizQuestion, ProblemSpace, ExplorerItem, ExplorerItemId } from './types';
 ```
 
 ## Architecture
@@ -67,11 +71,21 @@ src/
 ```
 SwitchupOperatingSystem (root)
 ├── BootSequence           # Password gate
-├── InteractiveTerminal    # Inline in main component
+├── InteractiveTerminal    # Hero terminal (inline, uses useTerminalCore)
+│   ├── useTerminalCore    # Shared terminal logic
 │   └── Quiz mode          # useQuizState hook
+├── ProblemSpaces          # System Architecture Explorer
+│   ├── ExplorerSidebar    # Left navigation panel
+│   └── ExplorerMainContent # Right content panel
+│       └── ArchitectureDocs # Doc content (Anatomy, Hierarchy, Evolution, Walkthrough)
+├── TechStackCard          # Tech stack with flip animation
+│   └── FlipCard           # Reusable 3D flip card (Framer Motion)
 ├── BehindTheScenesModal   # Vimeo videos
 ├── ApplicationModal       # Application flow
-└── Content sections       # Tech stack, logs, bets, footer
+├── DecisionTerminal       # Footer terminal (uses useTerminalCore)
+│   ├── useTerminalCore    # Shared terminal logic
+│   └── Scroll-triggered   # Loading animation on scroll into view
+└── Content sections       # Logs, convergence, mutual fit
 ```
 
 ### State Management
@@ -94,6 +108,24 @@ The hooks use React 19 concurrent features:
 | `useTheme`        | `useTransition`    | Non-blocking theme changes |
 | `useTerminalLogs` | `useDeferredValue` | Deferred log rendering     |
 | `useQuizState`    | `useOptimistic`    | Instant UI feedback        |
+
+**Terminal-specific hooks** (shared between InteractiveTerminal and DecisionTerminal):
+
+| Hook                 | Purpose                                                                   |
+| -------------------- | ------------------------------------------------------------------------- |
+| `useTerminalCore`    | **Main hook** - unified terminal logic (commands, history, tab completion)|
+| `useTerminalFocus`   | Manages input refs for normal/fullscreen modes, auto-focus                |
+| `useTerminalKeyboard`| Shared keyboard shortcuts (ArrowUp/Down, Ctrl+L/C)                        |
+
+The `useTerminalCore` hook centralizes ALL terminal logic and is used by both InteractiveTerminal and DecisionTerminal. Configuration options:
+- `enablePathCompletion` - Path completion for cd/cat/ls (InteractiveTerminal only)
+- `enableAdvancedShortcuts` - Ctrl+U/K/A/E/W shortcuts (InteractiveTerminal only)
+- `customApplyHandler` - Custom apply command behavior (DecisionTerminal's progress bar)
+- `quiz` - Quiz integration with `useQuizState`
+
+**Context-aware wrappers** (for TerminalWindow children):
+- `ContextAwareInput` - Input that auto-selects correct ref based on fullscreen mode
+- `ContextAwareClickArea` - Click area that auto-selects correct focus handler
 
 ## Tailwind CSS v4
 
@@ -123,15 +155,34 @@ This project uses Tailwind v4's CSS-first approach. All config is in `src/index.
 
 ### Add Terminal Command
 
-In `src/swup-operating-system.tsx`, find `handleCommand` switch statement:
+Commands are now modular. Create a new file or add to an existing one in `src/commands/definitions/`:
 
 ```typescript
-case 'mycommand':
-  addLine({ type: 'output', content: 'Output text' });
-  break;
+// src/commands/definitions/my-command.tsx
+import { defineCommand } from '../registry';
+
+export const myCommand = defineCommand({
+  name: 'mycommand',
+  aliases: ['mc', 'mycmd'],
+  description: 'Does something cool',
+  usage: 'mycommand [options]',
+  examples: ['mycommand', 'mycommand --flag'],
+  category: 'info', // info, navigation, system, action, theme, quiz, easter-egg, dev
+  hidden: false, // Set to true for easter eggs
+
+  handler: (parsed, ctx) => {
+    ctx.addOutput({
+      type: 'output',
+      content: 'Hello from my command!',
+    });
+    return { handled: true };
+  },
+});
 ```
 
-Also add to help text output in the `'help'` case.
+Then export from `src/commands/definitions/index.ts` and add to `ALL_COMMANDS` array.
+
+To show in main help, add to `PRIMARY_COMMANDS` in `src/commands/definitions/help.tsx`.
 
 ### Add System Log
 
@@ -141,7 +192,7 @@ Also add to help text output in the `'help'` case.
 // Levels: INFO, WARN, ERROR, SUCCESS, SYSTEM
 ```
 
-### Add Tech Stack Item
+### Add Tech Stack Item (with Engineering Bet)
 
 ```typescript
 // src/constants/techStack.ts
@@ -151,9 +202,16 @@ Also add to help text output in the `'help'` case.
   rationale: 'Why we use it',
   specs: ['Use case 1', 'Use case 2'],
   status: 'CORE',  // or 'EXPLORING'
-  icon: LucideIcon
+  icon: LucideIcon,
+  bet: {  // Optional - shows on card flip
+    title: 'Bet Title',
+    context: 'Background info',
+    tradeoff: 'Trade-offs'
+  }
 }
 ```
+
+Tech stack cards flip on hover to reveal the engineering bet. Uses `FlipCard` and `TechStackCard` components with Framer Motion 3D transforms.
 
 ### Add Quiz Question
 
@@ -169,17 +227,36 @@ Also add to help text output in the `'help'` case.
 }
 ```
 
-### Add Engineering Bet
+### Add Problem Space
 
 ```typescript
-// src/constants/engineeringBets.ts
+// src/constants/problemSpaces.ts - Add to existing domain or create new domain
 {
   id: 'unique-id',
-  title: 'Bet Title',
-  context: 'Background info',
-  tradeoff: 'Trade-offs'
+  title: 'Problem Space Title',
+  subtitle: 'Short Description',
+  problem: 'The problem statement...',
+  outcome: 'The desired outcome...',
+  intermediate: {
+    role: 'Admin as Operator',
+    description: 'How humans currently handle this...',
+    activities: ['Activity 1', 'Activity 2', 'Activity 3']
+  },
+  target: {
+    role: 'Admin as Supervisor',
+    description: 'How AI will assist...',
+    activities: ['AI activity 1', 'AI activity 2', 'Human oversight']
+  },
+  prerequisites: ['Prereq 1', 'Prereq 2', 'Prereq 3']
 }
 ```
+
+To add a new domain:
+1. Add the domain ID to `DomainId` type in `src/types/problemSpaces.types.ts`
+2. Add problem spaces to `PROBLEM_SPACES` in `src/constants/problemSpaces.ts`
+3. Add domain entry to `EXPLORER_ITEMS` in `src/components/ProblemSpaces.tsx`
+
+To add a new doc page, add the doc ID to `DocId` type and create content in `ArchitectureDocs.tsx`.
 
 ### Add Behind the Scenes Video
 
@@ -291,14 +368,30 @@ Check:
 ## Type Definitions
 
 ```typescript
+// Terminal types
 type LogEntry = { id, timestamp, level, message }
-type StackItem = { category, tool, rationale, specs[], status, icon }
-type EngineeringBet = { id, title, context, tradeoff }
-type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
-type BehindTheScenesVideo = { id, vimeoId, title, description, author, topics[], duration, featured? }
 type TerminalLine = { type: 'input' | 'output' | 'system', content }
 type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
 type ShutdownPhase = 'idle' | 'initiating' | 'shutting-down' | 'complete'
+
+// Content types
+type EngineeringBetContent = { title, context, tradeoff }
+type StackItem = { category, tool, rationale, specs[], status, icon, bet?: EngineeringBetContent }
+type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
+type BehindTheScenesVideo = { id, vimeoId, title, description, author, topics[], duration, featured? }
+
+// Problem Spaces types (discriminated union with typed IDs)
+type DomainId = 'offer' | 'optimisation' | 'case' | 'provider' | 'service' | 'growth'
+type DocId = 'anatomy' | 'hierarchy' | 'evolution' | 'walkthrough'
+type ExplorerItemId = DocId | DomainId  // Union of all valid item IDs
+type ExplorerColor = 'cyan' | 'orange' | 'blue' | 'purple' | 'amber' | 'red' | 'pink' | 'green'
+type ExplorerCategory = 'Architecture' | 'Resources' | 'Domains'
+type ViewMode = 'intermediate' | 'target'
+interface OperationalState { role, description, activities[] }
+interface ProblemSpace { id, title, subtitle, problem, outcome, intermediate: OperationalState, target: OperationalState, prerequisites[] }
+interface DocItem { type: 'doc', id: DocId, title, icon, color, category, content: ReactNode }
+interface DomainItem { type: 'domain', id: DomainId, title, icon, color, category, spaces: ProblemSpace[] }
+type ExplorerItem = DocItem | DomainItem  // Discriminated union
 ```
 
 ## Code Conventions

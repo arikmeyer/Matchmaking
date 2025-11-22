@@ -8,3 +8,6 @@ export * from './useTerminalLogs';
 export * from './useShutdown';
 export * from './useQuizState';
 export * from './useWindowControls';
+export * from './useTerminalFocus';
+export * from './useTerminalKeyboard';
+export * from './useTerminalCore';

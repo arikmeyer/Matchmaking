@@ -2,9 +2,6 @@
 
 /* Tailwind v4 Ultra-Advanced Configuration */
 
-/* Cascade Layers for better CSS organization */
-@layer theme, utilities, components, overrides;
-
 /* Content sources for optimized scanning */
 @source "./src/**/*.{ts,tsx}";
 @source "./index.html";
@@ -28,40 +25,25 @@
   initial-value: 0deg;
 }
 
-@layer theme {
-  @theme {
-    /* OKLCH color space for perceptually uniform colors */
-    --color-terminal-bg: oklch(5% 0 0);
-    --color-terminal-surface: oklch(10% 0 0);
-    --color-terminal-border: oklch(25% 0 0);
-
-    /* Green accent in OKLCH - more vibrant and consistent */
-    --color-terminal-green: oklch(70% 0.2 142);
-    --color-terminal-green-dark: oklch(45% 0.15 142);
-    --color-terminal-green-glow: oklch(70% 0.2 142 / 0.2);
-
-    /* Text colors for dark themes */
-    --color-text-primary: oklch(95% 0 0);
-    --color-text-secondary: oklch(70% 0 0);
-    --color-text-muted: oklch(50% 0 0);
-
-    /* Additional semantic colors */
-    --color-terminal-success: oklch(75% 0.15 142);
-    --color-terminal-warning: oklch(75% 0.18 85);
-    --color-terminal-error: oklch(65% 0.22 25);
-
-    /* Tag/chip background */
-    --color-tag-bg: oklch(15% 0 0 / 0.6);
-
-    /* Warning/danger header background */
-    --color-warning-header-bg: oklch(25% 0.15 25 / 0.5);
-    --color-warning-header-border: oklch(55% 0.2 25 / 0.3);
-
-  /* Semantic color aliases */
-  --color-bg-ultra-dark: var(--color-terminal-bg);
-  --color-bg-dark: var(--color-terminal-surface);
-  --color-accent: var(--color-terminal-green);
-  --color-accent-dark: var(--color-terminal-green-dark);
+/* @theme for Tailwind v4 - colors reference CSS variables for theme-awareness */
+@theme {
+  /* Colors reference CSS variables defined in :root (enables theme switching) */
+  --color-terminal-bg: var(--terminal-bg);
+  --color-terminal-surface: var(--terminal-surface);
+  --color-terminal-border: var(--terminal-border);
+  --color-surface: var(--surface);
+  --color-surface-dark: var(--surface-dark);
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-terminal-green: var(--terminal-green);
+  --color-terminal-green-dark: var(--terminal-green-dark);
+  --color-terminal-green-glow: var(--terminal-green-glow);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-tag-bg: var(--tag-bg);
+  --color-warning-header-bg: var(--warning-header-bg);
+  --color-warning-header-border: var(--warning-header-border);
 
   /* Animation timing functions */
   --ease-terminal: cubic-bezier(0.4, 0, 0.2, 1);
@@ -75,30 +57,46 @@
 
   /* Animation definitions */
   @keyframes scanline-flicker {
-    0%, 100% { opacity: 0.15; }
-    50% { opacity: 0.18; }
+
+    0%,
+    100% {
+      opacity: 0.15;
+    }
+
+    50% {
+      opacity: 0.18;
+    }
   }
 
   @keyframes terminal-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.7;
+    }
   }
 
   @keyframes glow-pulse {
-    0%, 100% {
-      box-shadow: 0 0 20px var(--color-terminal-green-glow);
+
+    0%,
+    100% {
+      box-shadow: 0 0 20px var(--terminal-green-glow);
     }
+
     50% {
-      box-shadow: 0 0 30px var(--color-terminal-green-glow),
-                  0 0 40px var(--color-terminal-green-glow);
+      box-shadow: 0 0 30px var(--terminal-green-glow),
+        0 0 40px var(--terminal-green-glow);
     }
-  }
   }
 }
 
 /* Custom Utilities using @utility */
 @utility terminal-card {
-  background-color: var(--color-terminal-surface);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-terminal-border);
   border-radius: var(--radius-terminal-lg);
   overflow: hidden;
@@ -122,7 +120,7 @@
 
 @utility terminal-text {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  color: rgb(212 212 212 / 1);
+  color: var(--text-secondary);
 }
 
 @utility terminal-glow {
@@ -131,10 +129,14 @@
 }
 
 @utility scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+
+  /* Firefox */
   &::-webkit-scrollbar {
-    display: none;           /* Chrome, Safari, Opera */
+    display: none;
+    /* Chrome, Safari, Opera */
   }
 }
 
@@ -158,55 +160,51 @@
 
 /* Enhanced CRT Monitor Effect with CSS Variables */
 .crt-effect {
-    position: relative;
-    overflow: hidden;
+  position: relative;
+  overflow: hidden;
 
-    /* Phosphor glow using CSS variables */
-    text-shadow:
-        0 0 5px color-mix(in srgb, var(--color-terminal-green) 50%, transparent),
-        0 0 10px color-mix(in srgb, var(--color-terminal-green) 30%, transparent),
-        0 0 20px color-mix(in srgb, var(--color-terminal-green) 20%, transparent);
+  /* Phosphor glow using CSS variables */
+  text-shadow:
+    0 0 5px color-mix(in srgb, var(--color-terminal-green) 50%, transparent),
+    0 0 10px color-mix(in srgb, var(--color-terminal-green) 30%, transparent),
+    0 0 20px color-mix(in srgb, var(--color-terminal-green) 20%, transparent);
 }
 
 .crt-effect::before {
-    content: " ";
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent 0px,
-        transparent 1px,
-        rgb(0 0 0 / 0.8) 2px,
-        rgb(0 0 0 / 0.8) 3px
-    );
-    pointer-events: none;
-    z-index: 9998;
-    animation: scanline-flicker 8s linear infinite;
+  content: " ";
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 1px,
+      rgb(0 0 0 / 0.8) 2px,
+      rgb(0 0 0 / 0.8) 3px);
+  pointer-events: none;
+  z-index: 9998;
+  animation: scanline-flicker 8s linear infinite;
 }
 
 .crt-effect::after {
-    content: " ";
-    display: block;
-    position: fixed;
-    inset: 0;
-    background: radial-gradient(
-        ellipse at center,
-        transparent 0%,
-        transparent 40%,
-        rgb(0 0 0 / 0.3) 70%,
-        rgb(0 0 0 / 0.7) 100%
-    );
-    pointer-events: none;
-    z-index: 9997;
+  content: " ";
+  display: block;
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center,
+      transparent 0%,
+      transparent 40%,
+      rgb(0 0 0 / 0.3) 70%,
+      rgb(0 0 0 / 0.7) 100%);
+  pointer-events: none;
+  z-index: 9997;
 }
 
 /* RGB chromatic aberration with color-mix */
 .crt-effect * {
-    text-shadow:
-        -0.5px 0px 1px color-mix(in srgb, red 30%, transparent),
-        0.5px 0px 1px color-mix(in srgb, cyan 30%, transparent),
-        0 0 3px color-mix(in srgb, var(--color-terminal-green) 40%, transparent);
+  text-shadow:
+    -0.5px 0px 1px color-mix(in srgb, red 30%, transparent),
+    0.5px 0px 1px color-mix(in srgb, cyan 30%, transparent),
+    0 0 3px color-mix(in srgb, var(--color-terminal-green) 40%, transparent);
 }
 
 /* Container Query Support for Responsive Terminal Cards */
@@ -230,7 +228,7 @@
 
 /* Advanced Color Utilities with color-mix() */
 @utility terminal-surface-hover {
-  background-color: color-mix(in srgb, var(--color-terminal-surface) 90%, var(--color-terminal-green) 10%);
+  background-color: color-mix(in srgb, var(--color-surface) 90%, var(--color-terminal-green) 10%);
 }
 
 @utility terminal-accent-subtle {
@@ -247,7 +245,7 @@
 
   &:hover {
     border-color: color-mix(in srgb, var(--color-terminal-green) 50%, transparent);
-    background-color: color-mix(in srgb, var(--color-terminal-surface) 95%, var(--color-terminal-green) 5%);
+    background-color: color-mix(in srgb, var(--color-surface) 95%, var(--color-terminal-green) 5%);
   }
 
   &:focus-visible {
@@ -258,11 +256,9 @@
 
 /* Gradient utilities using CSS variables */
 @utility terminal-gradient-bg {
-  background: linear-gradient(
-    135deg,
-    var(--color-terminal-bg) 0%,
-    color-mix(in srgb, var(--color-terminal-bg) 95%, var(--color-terminal-green) 5%) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--color-terminal-bg) 0%,
+      color-mix(in srgb, var(--color-terminal-bg) 95%, var(--color-terminal-green) 5%) 100%);
 }
 
 /* Text glow utilities with animation */
@@ -281,7 +277,7 @@
 
 /* Glass morphism effect */
 @utility terminal-glass {
-  background: color-mix(in srgb, var(--color-terminal-surface) 80%, transparent);
+  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
   backdrop-filter: blur(12px);
   border: 1px solid color-mix(in srgb, var(--color-terminal-border) 50%, transparent);
 }
@@ -334,6 +330,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -345,6 +342,7 @@
     opacity: 0;
     transform: translateY(40px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -401,68 +399,306 @@
 }
 
 /* Dynamic Theme System with CSS Variables */
+/* Base variables (without --color- prefix) are referenced by @theme for Tailwind utility generation */
 :root {
-  /* Default theme values are set in @theme */
+  /* Core colors */
+  --terminal-bg: oklch(5% 0 0);
+  --terminal-surface: oklch(16% 0 0);
+  --terminal-border: oklch(25% 0 0);
+
+  /* Semantic surface colors */
+  --surface: oklch(16% 0 0);
+  --surface-dark: oklch(5% 0 0);
+
+  /* Border colors */
+  --border: oklch(25% 0 0);
+  --border-hover: oklch(50% 0 0);
+
+  /* Accent colors */
+  --terminal-green: oklch(70% 0.2 142);
+  --terminal-green-dark: oklch(45% 0.15 142);
+  --terminal-green-glow: oklch(70% 0.2 142 / 0.2);
+
+  /* Text colors */
+  --text-primary: oklch(95% 0 0);
+  --text-secondary: oklch(70% 0 0);
+  --text-muted: oklch(50% 0 0);
+
+  /* Nested backgrounds - solid dark colors for clean appearance */
+  --nested-bg: oklch(14% 0 0);
+  --nested-deep-bg: oklch(10% 0 0);
+
+  /* UI colors */
+  --tag-bg: oklch(15% 0 0 / 0.6);
+  --warning-header-bg: oklch(25% 0.15 25 / 0.5);
+  --warning-header-border: oklch(55% 0.2 25 / 0.3);
+
+  /* Semantic Section Colors - Default Theme (Dark) */
+  --bg-section-planning: oklch(18% 0.04 260);
+  /* Blue */
+  --border-section-planning: oklch(30% 0.08 260);
+
+  --bg-section-success: oklch(18% 0.04 150);
+  --border-section-success: oklch(30% 0.08 150);
+
+  --bg-section-focus: oklch(98% 0.25 115 / 0.04);
+  /* Lemon-Yellow at 4% opacity */
+  --border-section-focus: oklch(98% 0.25 115 / 0.15);
+
+  --bg-section-problem: oklch(18% 0.04 25);
+  --border-section-problem: oklch(30% 0.08 25);
+
+  --bg-section-process: oklch(98% 0.25 115 / 0.04);
+  /* Matches Focus */
+  --border-section-process: oklch(98% 0.25 115 / 0.15);
+
+  /* Semantic Text Colors - Default Theme */
+  --text-section-planning: oklch(85% 0.15 260);
+  /* Bright Blue */
+  --text-section-success: oklch(85% 0.15 150);
+  /* Bright Green */
+  --text-section-focus: oklch(82% 0.18 85);
+  /* Amber (Restored) */
+  --text-section-problem: oklch(85% 0.15 25);
+  /* Bright Red */
+  --text-section-process: oklch(82% 0.18 85);
+  /* Amber (Restored) */
+
+  /* Card Border Colors - More visible variants for flip cards */
+  --border-card-success: oklch(55% 0.15 150);
+  /* Visible green */
+  --border-card-problem: oklch(55% 0.15 25);
+  /* Visible red */
+
+  /* Layout constants */
+  --navbar-height: 2.5rem;
+  /* 40px - height of top navigation bar (top-10) */
+
+  /* Venn Diagram - Dark Mode (Default) */
+  --venn-blend: screen;
+  --venn-product-text: oklch(90% 0.05 260);
+  /* Blue-200 */
+  --venn-product-bg: oklch(60% 0.15 260 / 0.2);
+  /* Blue-500/20 */
+  --venn-product-border: oklch(70% 0.15 260 / 0.4);
+  /* Blue-400/40 */
+
+  --venn-eng-text: oklch(90% 0.05 150);
+  /* Green-200 */
+  --venn-eng-bg: oklch(60% 0.15 150 / 0.2);
+  /* Green-500/20 */
+  --venn-eng-border: oklch(70% 0.15 150 / 0.4);
+  /* Green-400/40 */
+
+  --venn-design-text: oklch(90% 0.05 25);
+  /* Red-200 */
+  --venn-design-bg: oklch(60% 0.15 25 / 0.2);
+  /* Red-500/20 */
+  --venn-design-border: oklch(70% 0.15 25 / 0.4);
+  /* Red-400/40 */
 }
 
 /* Matrix Theme Variant - Intense green with darker background */
 :root[data-theme="matrix"] {
-  --color-terminal-green: oklch(80% 0.28 142);
-  --color-terminal-green-dark: oklch(55% 0.2 142);
-  --color-terminal-green-glow: oklch(80% 0.28 142 / 0.3);
-  --color-terminal-bg: oklch(2% 0.05 142);
-  --color-terminal-surface: oklch(6% 0.05 142);
-  --color-terminal-border: oklch(20% 0.1 142);
-  --color-text-primary: oklch(90% 0.1 142);
-  --color-text-secondary: oklch(70% 0.08 142);
-  --color-text-muted: oklch(50% 0.05 142);
-  --color-tag-bg: oklch(12% 0.05 142 / 0.7);
-  --color-warning-header-bg: oklch(20% 0.12 25 / 0.6);
-  --color-warning-header-border: oklch(45% 0.18 25 / 0.4);
+  --terminal-green: oklch(80% 0.28 142);
+  --terminal-green-dark: oklch(55% 0.2 142);
+  --terminal-green-glow: oklch(80% 0.28 142 / 0.3);
+  --terminal-bg: oklch(2% 0.05 142);
+  --terminal-surface: oklch(12% 0.05 142);
+  --terminal-border: oklch(20% 0.1 142);
+  --surface: oklch(12% 0.05 142);
+  --surface-dark: oklch(2% 0.05 142);
+  --border: oklch(20% 0.1 142);
+  --border-hover: oklch(45% 0.15 142);
+  --text-primary: oklch(90% 0.1 142);
+  --text-secondary: oklch(70% 0.08 142);
+  --text-muted: oklch(50% 0.05 142);
+  --nested-bg: oklch(10% 0.03 142);
+  --nested-deep-bg: oklch(6% 0.02 142);
+  --tag-bg: oklch(12% 0.05 142 / 0.7);
+  --warning-header-bg: oklch(20% 0.12 25 / 0.6);
+  --warning-header-border: oklch(45% 0.18 25 / 0.4);
+
+  /* Matrix Semantic Sections - Green-tinted variations */
+  --bg-section-planning: oklch(14% 0.05 240);
+  /* Blue-ish */
+  --border-section-planning: oklch(25% 0.1 240);
+
+  --bg-section-success: oklch(14% 0.05 142);
+  /* Pure green */
+  --border-section-success: oklch(25% 0.1 142);
+
+  --bg-section-focus: oklch(14% 0.05 120);
+  /* Yellow-ish green */
+  --border-section-focus: oklch(25% 0.1 120);
+
+  --bg-section-problem: oklch(14% 0.05 30);
+  /* Red-ish (muted) */
+  --border-section-problem: oklch(25% 0.1 30);
+
+  --bg-section-process: oklch(14% 0.05 120);
+  /* Yellow-ish green (Matches Focus) */
+  --border-section-process: oklch(25% 0.1 120);
+
+  /* Matrix Semantic Text */
+  --text-section-planning: oklch(80% 0.1 240);
+  --text-section-success: oklch(80% 0.1 142);
+  --text-section-focus: oklch(80% 0.1 120);
+  --text-section-problem: oklch(80% 0.1 30);
+  --text-section-process: oklch(80% 0.1 120);
+
+  /* Matrix Card Border Colors */
+  --border-card-success: oklch(60% 0.2 142);
+  --border-card-problem: oklch(55% 0.15 30);
 }
 
 /* Cyberpunk Theme Variant - Magenta/purple futuristic */
 :root[data-theme="cyberpunk"] {
-  --color-terminal-green: oklch(75% 0.25 330);
-  --color-terminal-green-dark: oklch(50% 0.2 330);
-  --color-terminal-green-glow: oklch(75% 0.25 330 / 0.3);
-  --color-terminal-bg: oklch(8% 0.04 280);
-  --color-terminal-surface: oklch(15% 0.05 280);
-  --color-terminal-border: oklch(30% 0.1 300);
-  --color-text-primary: oklch(95% 0.05 320);
-  --color-text-secondary: oklch(75% 0.08 320);
-  --color-text-muted: oklch(55% 0.06 320);
-  --color-tag-bg: oklch(20% 0.06 300 / 0.7);
-  --color-warning-header-bg: oklch(22% 0.1 25 / 0.6);
-  --color-warning-header-border: oklch(50% 0.15 25 / 0.4);
+  --terminal-green: oklch(75% 0.25 330);
+  --terminal-green-dark: oklch(50% 0.2 330);
+  --terminal-green-glow: oklch(75% 0.25 330 / 0.3);
+  --terminal-bg: oklch(8% 0.04 280);
+  --terminal-surface: oklch(20% 0.05 280);
+  --terminal-border: oklch(30% 0.1 300);
+  --surface: oklch(20% 0.05 280);
+  --surface-dark: oklch(8% 0.04 280);
+  --border: oklch(30% 0.1 300);
+  --border-hover: oklch(55% 0.15 300);
+  --text-primary: oklch(95% 0.05 320);
+  --text-secondary: oklch(75% 0.08 320);
+  --text-muted: oklch(55% 0.06 320);
+  --nested-bg: oklch(16% 0.03 280);
+  --nested-deep-bg: oklch(12% 0.02 280);
+  --tag-bg: oklch(20% 0.06 300 / 0.7);
+  --warning-header-bg: oklch(22% 0.1 25 / 0.6);
+  --warning-header-border: oklch(50% 0.15 25 / 0.4);
+
+  /* Cyberpunk Semantic Sections - Neon Neon Neon */
+  --bg-section-planning: oklch(20% 0.1 200);
+  /* Cyan */
+  --border-section-planning: oklch(40% 0.2 200);
+
+  --bg-section-success: oklch(20% 0.1 150);
+  /* Green */
+  --border-section-success: oklch(40% 0.2 150);
+
+  --bg-section-focus: oklch(20% 0.1 60);
+  /* Orange */
+  --border-section-focus: oklch(40% 0.2 60);
+
+  --bg-section-problem: oklch(20% 0.1 20);
+  /* Red */
+  --border-section-problem: oklch(40% 0.2 20);
+
+  --bg-section-process: oklch(20% 0.1 300);
+  /* Purple (Preserved) */
+  --border-section-process: oklch(40% 0.2 300);
+
+  /* Cyberpunk Semantic Text */
+  --text-section-planning: oklch(85% 0.15 200);
+  /* Cyan */
+  --text-section-success: oklch(85% 0.15 150);
+  /* Green */
+  --text-section-focus: oklch(85% 0.15 60);
+  /* Orange */
+  --text-section-problem: oklch(85% 0.15 20);
+  /* Red */
+  --text-section-process: oklch(85% 0.15 300);
+  /* Purple */
+
+  /* Cyberpunk Card Border Colors */
+  --border-card-success: oklch(60% 0.2 150);
+  --border-card-problem: oklch(60% 0.2 20);
+
+
 }
 
 /* Light Mode (for accessibility) - Complete color inversion */
 :root[data-theme="light"] {
-  --color-terminal-bg: oklch(98% 0 0);
-  --color-terminal-surface: oklch(95% 0 0);
-  --color-terminal-border: oklch(80% 0 0);
-  --color-terminal-green: oklch(40% 0.2 142);
-  --color-terminal-green-dark: oklch(30% 0.18 142);
-  --color-terminal-green-glow: oklch(40% 0.2 142 / 0.15);
-  --color-text-primary: oklch(10% 0 0);
-  --color-text-secondary: oklch(25% 0 0);
-  --color-text-muted: oklch(45% 0 0);
-  --color-tag-bg: oklch(88% 0 0);
-  --color-warning-header-bg: oklch(92% 0.05 25);
-  --color-warning-header-border: oklch(75% 0.12 25);
+  --terminal-bg: oklch(98% 0 0);
+  --terminal-surface: oklch(95% 0 0);
+  --terminal-border: oklch(80% 0 0);
+  --surface: oklch(95% 0 0);
+  --surface-dark: oklch(98% 0 0);
+  --border: oklch(80% 0 0);
+  --border-hover: oklch(40% 0 0);
+  --terminal-green: oklch(40% 0.2 142);
+  --terminal-green-dark: oklch(30% 0.18 142);
+  --terminal-green-glow: oklch(40% 0.2 142 / 0.15);
+  --text-primary: oklch(10% 0 0);
+  --text-secondary: oklch(25% 0 0);
+  --text-muted: oklch(45% 0 0);
+  /* Light theme: nested = solid lighter colors */
+  --nested-bg: oklch(96% 0 0);
+  --nested-deep-bg: oklch(93% 0 0);
+  --tag-bg: oklch(94% 0 0);
+  --warning-header-bg: oklch(92% 0.05 25);
+  --warning-header-border: oklch(75% 0.12 25);
+
+  /* Light Semantic Sections - Pastel */
+  --bg-section-planning: oklch(92% 0.05 260);
+  /* Blue */
+  --border-section-planning: oklch(80% 0.1 260);
+
+  --bg-section-success: oklch(92% 0.05 150);
+  --border-section-success: oklch(80% 0.1 150);
+
+  --bg-section-focus: oklch(92% 0.05 85);
+  --border-section-focus: oklch(80% 0.1 85);
+
+  --bg-section-problem: oklch(92% 0.05 25);
+  --border-section-problem: oklch(80% 0.1 25);
+
+  --bg-section-process: oklch(92% 0.05 85);
+  /* Amber (Matches Focus) */
+  --border-section-process: oklch(80% 0.1 85);
+
+  /* Light Semantic Text - Darker for contrast */
+  --text-section-planning: oklch(45% 0.15 260);
+  --text-section-success: oklch(40% 0.15 150);
+  --text-section-focus: oklch(45% 0.15 85);
+  --text-section-problem: oklch(45% 0.15 25);
+  --text-section-process: oklch(45% 0.15 85);
+
+  /* Light Card Border Colors */
+  --border-card-success: oklch(50% 0.2 150);
+  --border-card-problem: oklch(50% 0.2 25);
+
+  /* Venn Diagram - Light Mode */
+  --venn-blend: multiply;
+  --venn-product-text: oklch(30% 0.15 260);
+  /* Blue-900 */
+  --venn-product-bg: oklch(60% 0.15 260 / 0.4);
+  /* Blue-500/40 */
+  --venn-product-border: oklch(50% 0.15 260 / 0.5);
+  /* Blue-600/50 */
+
+  --venn-eng-text: oklch(30% 0.15 150);
+  /* Green-900 */
+  --venn-eng-bg: oklch(60% 0.15 150 / 0.4);
+  /* Green-500/40 */
+  --venn-eng-border: oklch(50% 0.15 150 / 0.5);
+  /* Green-600/50 */
+
+  --venn-design-text: oklch(30% 0.15 25);
+  /* Red-900 */
+  --venn-design-bg: oklch(60% 0.15 25 / 0.4);
+  /* Red-500/40 */
+  --venn-design-border: oklch(50% 0.15 25 / 0.5);
+  /* Red-600/50 */
 }
 
 /* High Contrast Mode Support */
 @media (prefers-contrast: high) {
   :root {
-    --color-terminal-green: oklch(85% 0.28 142);
-    --color-terminal-border: oklch(50% 0 0);
+    --terminal-green: oklch(85% 0.28 142);
+    --terminal-border: oklch(50% 0 0);
   }
 }
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -475,6 +711,7 @@
 
 /* Print Styles */
 @media print {
+
   .crt-effect,
   .terminal-glow,
   .terminal-neon {
@@ -486,33 +723,216 @@
 /* Utility Class for Theme-Aware Components */
 @utility terminal-theme-transition {
   transition: background-color 0.3s var(--ease-terminal),
-              color 0.3s var(--ease-terminal),
-              border-color 0.3s var(--ease-terminal);
+    color 0.3s var(--ease-terminal),
+    border-color 0.3s var(--ease-terminal);
 }
 
 /* Theme-Aware Text Color Utilities */
 @utility text-primary {
-  color: var(--color-text-primary);
+  color: var(--text-primary);
 }
 
 @utility text-secondary {
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
 }
 
 @utility text-muted {
-  color: var(--color-text-muted);
+  color: var(--text-muted);
 }
 
 /* Theme-Aware Background Utilities */
 @utility bg-surface {
-  background-color: var(--color-terminal-surface);
+  background-color: var(--surface);
 }
 
 @utility bg-surface-dark {
-  background-color: var(--color-terminal-bg);
+  background-color: var(--surface-dark);
+}
+
+@utility bg-terminal-bg {
+  background-color: var(--terminal-bg);
+}
+
+@utility bg-terminal-surface {
+  background-color: var(--terminal-surface);
 }
 
 /* Theme-Aware Border Utilities */
 @utility border-default {
-  border-color: var(--color-terminal-border);
+  border-color: var(--terminal-border);
+}
+
+@utility border-border {
+  border-color: var(--border);
+}
+
+@utility border-border-hover {
+  border-color: var(--border-hover);
+}
+
+/*
+ * Semantic card backgrounds for content sections
+ * These provide subtle tints while remaining theme-aware
+ */
+@utility bg-card-subtle {
+  background-color: color-mix(in oklch, var(--surface) 80%, transparent);
+}
+
+@utility bg-card-elevated {
+  background-color: var(--surface);
+}
+
+@utility bg-card-inset {
+  background-color: color-mix(in oklch, var(--surface-dark) 90%, var(--surface) 10%);
+}
+
+/* More transparent surface backgrounds */
+@utility bg-card-muted {
+  background-color: color-mix(in oklch, var(--surface) 50%, transparent);
+}
+
+@utility bg-navbar {
+  background-color: color-mix(in oklch, var(--terminal-bg) 90%, transparent);
+}
+
+/* Theme-aware nested card backgrounds - explicit per-theme colors for proper elevation */
+@utility bg-nested {
+  background-color: var(--nested-bg);
+}
+
+@utility bg-nested-deep {
+  background-color: var(--nested-deep-bg);
+}
+
+/* ===========================================
+   EXPLORER SEMANTIC COLOR SYSTEM
+   5 core semantic colors for explorer pages:
+   - Planning (cyan): Architecture, blueprints, hypothesis
+   - Success (green): Positive outcomes, target states
+   - Focus (amber): Metrics, optimization, current state
+   - Problem (red): Challenges, dysfunction, danger
+   - Process (purple): Workflows, domains, execution
+   =========================================== */
+
+/* Section backgrounds - Using explicit semantic variables */
+@utility bg-section-planning {
+  background-color: var(--bg-section-planning);
+}
+
+@utility bg-section-success {
+  background-color: var(--bg-section-success);
+}
+
+@utility bg-section-focus {
+  background-color: var(--bg-section-focus);
+}
+
+@utility bg-section-problem {
+  background-color: var(--bg-section-problem);
+}
+
+@utility bg-section-process {
+  background-color: var(--bg-section-process);
+}
+
+/* Overlay backdrops - semi-transparent for modals */
+@utility bg-overlay {
+  background-color: color-mix(in oklch, var(--terminal-bg) 80%, transparent);
+}
+
+@utility bg-overlay-heavy {
+  background-color: color-mix(in oklch, var(--terminal-bg) 90%, transparent);
+}
+
+/* Video player / media backgrounds */
+@utility bg-media {
+  background-color: var(--surface-dark);
+}
+
+/* Badge/chip backgrounds */
+@utility bg-badge {
+  background-color: color-mix(in oklch, var(--surface-dark) 85%, transparent);
+}
+
+/* Very subtle text colors (for decorative text) */
+@utility text-subtle {
+  color: color-mix(in oklch, var(--text-muted) 70%, transparent);
+}
+
+@utility text-faint {
+  color: color-mix(in oklch, var(--text-muted) 50%, transparent);
+}
+
+/* Pagination dot inactive state */
+@utility bg-dot-inactive {
+  background-color: color-mix(in oklch, var(--border) 80%, transparent);
+}
+
+@utility bg-dot-inactive-hover {
+  background-color: color-mix(in oklch, var(--border-hover) 80%, transparent);
+}
+
+/* Border variants for semantic sections - Using explicit semantic variables */
+@utility border-section-planning {
+  border-color: var(--border-section-planning);
+}
+
+@utility border-section-success {
+  border-color: var(--border-section-success);
+}
+
+@utility border-section-focus {
+  border-color: var(--border-section-focus);
+}
+
+@utility border-section-problem {
+  border-color: var(--border-section-problem);
+}
+
+@utility border-section-process {
+  border-color: var(--border-section-process);
+}
+
+/* Card Border Utilities - More visible borders for flip cards */
+/* !important ensures these override Tailwind's default border color */
+@utility border-card-success {
+  border-color: var(--border-card-success) !important;
+}
+
+@utility border-card-problem {
+  border-color: var(--border-card-problem) !important;
+}
+
+/* Semantic Text Utilities */
+@utility text-section-planning {
+  color: var(--text-section-planning);
+}
+
+@utility text-section-success {
+  color: var(--text-section-success);
+}
+
+@utility text-section-focus {
+  color: var(--text-section-focus);
+}
+
+@utility text-section-problem {
+  color: var(--text-section-problem);
+}
+
+@utility text-section-process {
+  color: var(--text-section-process);
+}
+
+/* Terminal input styling - consistent across all terminals */
+@utility terminal-input {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text-primary);
+  caret-color: var(--color-terminal-green);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
 }

@@ -1,15 +1,30 @@
 /**
- * useTheme Hook
- * Manages theme and CRT mode state with React 19's useTransition for non-blocking updates
+ * useTheme Hook + ThemeProvider
+ * Manages theme and CRT mode state with React 19's useTransition for non-blocking updates.
+ * Uses React Context so all components share the same theme state.
  */
 
-import { useState, useCallback, useTransition, useEffect } from 'react';
+import { useState, useCallback, useTransition, useEffect, createContext, useContext } from 'react';
+import type { ReactNode } from 'react';
 import type { TerminalTheme } from '../types';
 
 const THEME_STORAGE_KEY = 'switchup-theme';
 const CRT_STORAGE_KEY = 'switchup-crt-mode';
 
-export function useTheme() {
+interface ThemeContextValue {
+    currentTheme: TerminalTheme;
+    crtMode: boolean;
+    isPending: boolean;
+    changeTheme: (theme: TerminalTheme, crt: boolean) => void;
+    toggleCrtMode: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextValue | null>(null);
+
+/**
+ * ThemeProvider - Wrap your app with this to enable useTheme() everywhere
+ */
+export function ThemeProvider({ children }: { children: ReactNode }) {
     // Initialize from localStorage or defaults
     const [currentTheme, setCurrentTheme] = useState<TerminalTheme>(() => {
         const stored = localStorage.getItem(THEME_STORAGE_KEY);
@@ -55,11 +70,20 @@ export function useTheme() {
         });
     }, []);
 
-    return {
-        currentTheme,
-        crtMode,
-        isPending,
-        changeTheme,
-        toggleCrtMode
-    };
+    return (
+        <ThemeContext.Provider value={{ currentTheme, crtMode, isPending, changeTheme, toggleCrtMode }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+}
+
+/**
+ * useTheme - Access shared theme state from anywhere in the app
+ */
+export function useTheme(): ThemeContextValue {
+    const context = useContext(ThemeContext);
+    if (!context) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
 }
