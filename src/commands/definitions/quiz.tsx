@@ -36,7 +36,7 @@ export const cultureCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">
             (Not a test. No scores. Just honest questions to surface whether we'd enjoy working together.)
           </div>
-          <div className="text-muted text-xs">Answer A or B. Type "exit" anytime — no hard feelings.</div>
+          <div className="text-muted text-xs">Answer A or B. Type "exit" anytime – no hard feelings.</div>
           <div className="mt-4">
             <div className="text-primary font-bold">Q1: {firstQuestion.q}</div>
             <div className="pl-4 text-secondary">A) {firstQuestion.a}</div>

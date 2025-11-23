@@ -925,7 +925,7 @@ We believe technology can transform markets toward fairness.
 
 HOW: FREUNDSCHAFTSPRINZIP
 What would a good friend do? We recommend what's best
-for users—even if we don't earn anything.
+for users – even if we don't earn anything.
 
 WHAT: NEVER OVERCHARGED AGAIN
 Not a switching service. An operating system that monitors,

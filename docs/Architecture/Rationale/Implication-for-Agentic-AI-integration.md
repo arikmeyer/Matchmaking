@@ -60,7 +60,7 @@ This architecture changes your relationship with the AI from "programmer" to "su
 
 - **The Rich Context:** Concepts like the "Timeline Projection" and "Rich State Transition Events" provide the AI with a deep, temporal understanding of the situation. It's not just looking at the current state; it can see the past and the projected future, allowing it to make far more intelligent decisions.
 - **The Explicit Tools:** The three layers of capabilities (Processes, Tools, and Commands) give the AI a clear, tiered set of options. This makes its "Chain of Thought" output readable and understandable. You can see *why* it chose to use a high-level tool versus a low-level command.
-- **The Safety Rails:** The architecture itself—the Hub and Spoke model, the Command Handlers, the Process Manifest—acts as a set of powerful safety rails. It guides the AI towards correct, safe, and auditable actions.
+- **The Safety Rails:** The architecture itself – the Hub and Spoke model, the Command Handlers, the Process Manifest – acts as a set of powerful safety rails. It guides the AI towards correct, safe, and auditable actions.
 
 **Conclusion:**
 

@@ -40,14 +40,14 @@ This document proposes **4 foundation layers** to add during greenfield platform
 
 ### Key Insight
 
-**Business Intents are already the right abstraction for AI**—they are:
+**Business Intents are already the right abstraction for AI** – they are:
 - Atomic and self-contained
 - Discoverable via registry
 - Self-documenting with Zod schemas
 - Validated at runtime
 - Side-effect explicit
 
-We don't need a separate "AI command layer"—we need to expose what we're already building with metadata that enables AI consumption.
+We don't need a separate "AI command layer" – we need to expose what we're already building with metadata that enables AI consumption.
 
 ### Foundation vs Future
 
@@ -66,7 +66,7 @@ We don't need a separate "AI command layer"—we need to expose what we're alrea
 
 The strategic vision for AI operationalization:
 
-> "AI agents autonomously execute workflows end-to-end: classify user requests, fetch provider data, calculate savings, execute switches, respond to users—with minimal human intervention."
+> "AI agents autonomously execute workflows end-to-end: classify user requests, fetch provider data, calculate savings, execute switches, respond to users – with minimal human intervention."
 
 This requires:
 1. **Discovery**: AI agents must enumerate available capabilities
@@ -399,7 +399,7 @@ export async function createContract(input: {
 - Trust: Runtime validation means AI output is ALWAYS validated
 - Extensibility: New service types get validation automatically
 
-**Greenfield Work**: ALREADY DESIGNED—no additional work needed. Just follow existing pattern.
+**Greenfield Work**: ALREADY DESIGNED – no additional work needed. Just follow existing pattern.
 
 ---
 
@@ -644,7 +644,7 @@ await submitCancellation({
 })
 ```
 
-**Key Insight**: AI agents don't hardcode market rules—they query `marketRegistry` and adapt.
+**Key Insight**: AI agents don't hardcode market rules – they query `marketRegistry` and adapt.
 
 ---
 
@@ -684,7 +684,7 @@ await executeBusinessIntent('report_price_increase', {
 })
 ```
 
-**Key Insight**: Business Intents are ALREADY the right abstraction—atomic, discoverable, self-documenting, validated.
+**Key Insight**: Business Intents are ALREADY the right abstraction – atomic, discoverable, self-documenting, validated.
 
 ---
 
@@ -827,7 +827,7 @@ if (!result.success) {
    - A/B test AI strategies
    - Requires: Experimentation framework, metrics pipeline
 
-**Key Principle**: Don't build these NOW—validate that Phase 1 foundation enables them.
+**Key Principle**: Don't build these NOW – validate that Phase 1 foundation enables them.
 
 ---
 
@@ -841,7 +841,7 @@ if (!result.success) {
 
 **Foundation Approach**: Add metadata and audit trail NOW
 - Cost: 2-3 weeks (part of Tier 1 refactoring)
-- Risk: Low—metadata is useful even without AI
+- Risk: Low – metadata is useful even without AI
 
 **Why Better**: Build what's needed for greenfield platform, enable AI later.
 

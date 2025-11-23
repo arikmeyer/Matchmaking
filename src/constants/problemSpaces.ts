@@ -18,7 +18,7 @@ export const PROBLEM_SPACES: Record<DomainId, ProblemSpace[]> = {
             title: 'State Integrity',
             subtitle: 'Single Source of Truth',
             problem: 'Without a canonical source of truth, different systems develop conflicting views of business state, leading to data inconsistencies and reconciliation nightmares.',
-            outcome: 'One authoritative, validated, auditable record of all core business entities—Contracts, Users, Tasks—that all other layers trust implicitly.',
+            outcome: 'One authoritative, validated, auditable record of all core business entities – Contracts, Users, Tasks – that all other layers trust implicitly.',
             intermediate: {
                 role: 'Lifecycle Admin as Operator',
                 description: 'Humans maintain data models, write migration scripts, and manually ensure consistency across dependent services.',
@@ -44,7 +44,7 @@ export const PROBLEM_SPACES: Record<DomainId, ProblemSpace[]> = {
             title: 'Business Intent Catalog',
             subtitle: 'Validated Operations',
             problem: 'Generic CRUD operations allow invalid state transitions, bypass business rules, and create states that "should never happen."',
-            outcome: 'An intent-driven API of atomic business operations that encode all rules—every caller uses validated verbs like ConfirmActivation, not raw field updates.',
+            outcome: 'An intent-driven API of atomic business operations that encode all rules – every caller uses validated verbs like ConfirmActivation, not raw field updates.',
             intermediate: {
                 role: 'Lifecycle Admin as Operator',
                 description: 'Humans define intent operations, manually validate preconditions, and test state transitions for edge cases.',
@@ -69,7 +69,7 @@ export const PROBLEM_SPACES: Record<DomainId, ProblemSpace[]> = {
             id: 'temporal-projections',
             title: 'Temporal Projections',
             subtitle: 'Past, Present & Future',
-            problem: 'Systems only know current state—they can\'t answer "what was the state on March 1st?" or "what will happen if no action is taken?"',
+            problem: 'Systems only know current state – they can\'t answer "what was the state on March 1st?" or "what will happen if no action is taken?"',
             outcome: 'Rich temporal queries that reveal how state evolved, provide complete audit trails, and project deterministic future states.',
             intermediate: {
                 role: 'Lifecycle Admin as Operator',

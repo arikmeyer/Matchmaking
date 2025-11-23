@@ -84,7 +84,7 @@ export function ExitConfirmDialog({
 
                             <div className="text-amber-500 text-xs italic">
                                 "With great power comes great responsibility to not click red buttons."
-                                <br />— A wise developer, probably
+                                <br /> – A wise developer, probably
                             </div>
 
                             {/* Actions */}

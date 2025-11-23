@@ -54,7 +54,7 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
                 <div className="space-y-2">
                     <div className="text-amber-400 font-bold">&gt;&gt; SOME CLICKS, SOME TENSION</div>
                     <div className="text-primary">We agree on some things, differ on others.</div>
-                    <div className="text-secondary">That's not necessarily bad—diverse perspectives can strengthen a team.</div>
+                    <div className="text-secondary">That's not necessarily bad – diverse perspectives can strengthen a team.</div>
                     <div className="text-muted text-sm mt-2">If the tension feels interesting rather than exhausting, let's talk. Run <span className="text-primary">apply</span>.</div>
                 </div>
             ) : (
@@ -65,7 +65,7 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
                     <div className="text-muted text-sm pl-4">• Clear product specs and defined roadmaps</div>
                     <div className="text-muted text-sm pl-4">• Predictable scope and stable deliverables</div>
                     <div className="text-muted text-sm pl-4">• Separation between 'building' and 'deciding what to build'</div>
-                    <div className="text-amber-500 text-xs mt-3">Neither approach is wrong—different people thrive in different environments. Thanks for exploring with us.</div>
+                    <div className="text-amber-500 text-xs mt-3">Neither approach is wrong – different people thrive in different environments. Thanks for exploring with us.</div>
                 </div>
             )}
         </div>
@@ -269,7 +269,7 @@ export default function SwitchupOperatingSystem() {
             if (totalVisits === 3) {
                 console.log('%c🎯 Visit #3', 'color: #22c55e; font-size: 14px; font-weight: bold;');
                 console.log('%c"Oh hey, it\'s you again!"', 'color: #a3a3a3; font-size: 12px;');
-                console.log('%c— Our backend logs, probably', 'color: #737373; font-size: 10px; font-style: italic;');
+                console.log('%c – Our backend logs, probably', 'color: #737373; font-size: 10px; font-style: italic;');
             }
 
             if (totalVisits === 5) {
@@ -480,7 +480,7 @@ export default function SwitchupOperatingSystem() {
                                 <div className="text-secondary text-lg">
                                     "The best way to predict the future<br />is to build it."
                                 </div>
-                                <div className="text-muted text-sm">— someone who didn't take no for an answer</div>
+                                <div className="text-muted text-sm"> – someone who didn't take no for an answer</div>
                             </motion.div>
                         </motion.div>
 
@@ -605,7 +605,7 @@ export default function SwitchupOperatingSystem() {
                         </h1>
 
                         <p className="text-xl text-secondary max-w-lg leading-relaxed border-l-2 border-border pl-6">
-                            We're building the <strong className="text-primary">Universal Adapter</strong> — the world's first subscription infrastructure that works across any provider, any market.
+                            We're building the <strong className="text-primary">Universal Adapter</strong> – the world's first subscription infrastructure that works across any provider, any market.
                             <br /><br />
                             Where <span className="text-primary">AI Agents</span> negotiate with legacy systems. Where automation handles the noise, and humans handle the relationship.
                         </p>
@@ -919,7 +919,7 @@ export default function SwitchupOperatingSystem() {
                                             Different paths, same destination
                                         </h3>
                                         <p className="text-secondary leading-relaxed text-sm">
-                                            The world is beautifully diverse—and so are the environments where people thrive. What feels wrong for you might be perfect for someone else, and vice versa.
+                                            The world is beautifully diverse – and so are the environments where people thrive. What feels wrong for you might be perfect for someone else, and vice versa.
                                         </p>
                                         <p className="text-muted text-xs leading-relaxed border-t border-card-problem pt-4">
                                             The best matches start with honest self-reflection. Knowing what you need helps you find where you'll truly flourish.
@@ -959,14 +959,14 @@ export default function SwitchupOperatingSystem() {
                                             <span className="text-green-900 font-mono">03</span>
                                             <div>
                                                 <div className="text-primary mb-1">You experiment at every level</div>
-                                                <div className="text-muted text-xs">Product, process, tooling, ways of working. Fast learning loops aren't just for features — they're how we improve everything.</div>
+                                                <div className="text-muted text-xs">Product, process, tooling, ways of working. Fast learning loops aren't just for features – they're how we improve everything.</div>
                                             </div>
                                         </li>
                                         <li className="flex gap-3">
                                             <span className="text-green-900 font-mono">04</span>
                                             <div>
                                                 <div className="text-primary mb-1">AI/LLM tools are your daily workflow</div>
-                                                <div className="text-muted text-xs">Claude, skills & sub-agents, LLM ops aren't buzzwords—they're how you work.</div>
+                                                <div className="text-muted text-xs">Claude, skills & sub-agents, LLM ops aren't buzzwords – they're how you work.</div>
                                             </div>
                                         </li>
                                         <li className="flex gap-3">
@@ -991,7 +991,7 @@ export default function SwitchupOperatingSystem() {
                                             Welcome to the starting line
                                         </h3>
                                         <p className="text-secondary leading-relaxed text-sm">
-                                            If you're nodding along, that's not coincidence—it's signal. We're a small team building something ambitious, and the best collaborations start with mutual recognition.
+                                            If you're nodding along, that's not coincidence – it's signal. We're a small team building something ambitious, and the best collaborations start with mutual recognition.
                                         </p>
                                         <p className="text-muted text-xs leading-relaxed border-t border-card-success pt-4">
                                             Your curiosity brought you here. Let's see where it leads.

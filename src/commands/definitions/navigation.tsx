@@ -285,12 +285,12 @@ You're exploring whether we'd be a good match. (We're doing the same.)
 
 ## WHY: Marktfairänderung (Market Fairness Transformation)
 Why is loyalty punished, not rewarded? We believe markets can be
-transformed toward fairness—through technology that shifts power
+transformed toward fairness – through technology that shifts power
 back to consumers.
 
 ## HOW: Freundschaftsprinzip (Friendship Principle)
 What would a good friend do? A good friend recommends what's best
-for you—even if they don't earn anything.
+for you – even if they don't earn anything.
 
 ## WHAT: Never Overcharged Again
 Not a switching service. An operating system that monitors, detects,
@@ -547,7 +547,7 @@ export const alertConfig = {
   [`${HOME_DIR}/docs/culture.md`]: `# Team Setup at Switchup
 
 ## Small by Design
-We choose to stay small—a closely knit team of talented people
+We choose to stay small – a closely knit team of talented people
 who trust each other deeply. No silos. No politics. High context.
 
 ## Problem Space Ownership
@@ -563,7 +563,7 @@ AI executes at scale. You provide judgment and direction.
 ## Our Beliefs
 
 ### Small Team Belief
-A small team can flip entire markets—if energy is channeled
+A small team can flip entire markets – if energy is channeled
 correctly. AI changes the math. What once required hundreds
 can now be done by a focused few.
 
@@ -577,7 +577,7 @@ says we're wrong.
 - Level 1: AI as Tool (human decides, AI executes)
 - Level 2: AI as Assistant (AI suggests, human approves)
 - Level 3: AI as Copilot (AI handles routine, humans handle exceptions)
-- Level 4: AI as Colleague (future—we're experimenting)
+- Level 4: AI as Colleague (future – we're experimenting)
 
 Curious if we'd click? Run 'culture' for mutual discovery.`,
 
