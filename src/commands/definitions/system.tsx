@@ -11,35 +11,36 @@ import { joinArgs } from '../parser';
  * Environment variables for the virtual system
  */
 const ENV_VARIABLES: Record<string, string> = {
-  USER: 'candidate',
-  HOME: '/home/candidate',
-  PWD: '/home/candidate/switchup',
+  USER: 'explorer',
+  HOME: '/home/explorer',
+  PWD: '/home/explorer/switchup',
   SHELL: '/bin/bash',
   TERM: 'xterm-256color',
   LANG: 'en_US.UTF-8',
 
-  // Company values as env vars
+  // Philosophy (WHY/HOW/WHAT)
   COMPANY: 'Switchup',
-  MISSION: 'The Universal Adapter for subscriptions',
-  TEAM_SIZE: 'Small but mighty',
-  STAGE: 'Series A',
-  LOCATION: 'Remote-first (EU timezone friendly)',
+  WHY: 'Marktfairänderung (Market Fairness Transformation)',
+  HOW: 'Freundschaftsprinzip (What would a good friend do?)',
+  WHAT: 'Subscription Operating System',
+  TEAM_SIZE: 'Small by design (high trust, no silos)',
+  LOCATION: 'Berlin HQ @ Maybachufer (flexible setup)',
 
-  // Tech stack
-  TECH_STACK: 'React,TypeScript,Neon,Windmill,Langfuse',
+  // Tech stack (CORE + EXPLORING)
+  TECH_STACK: 'Windmill,TypeScript+ZOD,Playwright,Gemini,Claude,Langfuse',
+  DATABASE: 'Neon (EXPLORING)',
   NODE_VERSION: '20.x',
-  DATABASE: 'PostgreSQL (Neon)',
 
   // Culture
-  CULTURE: 'High ownership, low ego',
+  CULTURE: 'Problem space ownership, build to learn',
+  ROLE_MODEL: 'AI Orchestrator (you direct AI, AI executes)',
   MEETINGS: 'Minimal',
-  DOCS: 'Extensive',
   DEPLOY_FREQUENCY: 'Multiple times daily',
 
   // Easter egg hints
-  PATH: '/usr/local/bin:/usr/bin:/bin:/home/candidate/.cargo/bin',
+  PATH: '/usr/local/bin:/usr/bin:/bin:/home/explorer/.cargo/bin',
   SECRET_COMMAND: 'Try running "konami" or "42"',
-  HIRING_STATUS: 'ACTIVELY_RECRUITING',
+  MATCHMAKING_MODE: 'MUTUAL_DISCOVERY',
 };
 
 /**
@@ -155,7 +156,7 @@ export const envCommand = defineCommand({
     ctx.addOutput({
       type: 'output',
       content: (
-        <pre className="whitespace-pre-wrap font-mono text-sm text-terminal-green">
+        <pre className="whitespace-pre-wrap break-all font-mono text-sm text-terminal-green">
           {envOutput}
         </pre>
       ),
@@ -182,11 +183,11 @@ export const clearCommand = defineCommand({
 
 /**
  * WHOAMI - Show current user info
- * Full detailed output matching original implementation
+ * Mutual matchmaking framing - you're evaluating us too
  */
 export const whoamiCommand = defineCommand({
   name: 'whoami',
-  description: 'Your profile + permissions',
+  description: 'Your explorer profile',
   category: 'info',
 
   handler: (_parsed, ctx) => {
@@ -194,58 +195,50 @@ export const whoamiCommand = defineCommand({
       type: 'output',
       content: (
         <div className="font-mono text-sm space-y-2">
-          <div className="text-secondary">USER: guest@switchup.tech</div>
-          <div className="text-secondary">ROLE: Potential Product Engineer</div>
-          <div className="text-secondary">STATUS: Evaluating cultural fit...</div>
-          <div className="text-muted text-xs">SESSION_START: {new Date().toISOString()}</div>
+          <div className="text-cyan-400 font-bold border-b border-default pb-1">WHOAMI :: EXPLORER PROFILE</div>
+          <div className="text-muted text-xs italic mb-2">(We're both figuring out if this makes sense. No pressure.)</div>
 
-          <div className="mt-3 border-t border-default pt-2">
-            <div className="text-primary font-bold mb-1">PERMISSIONS:</div>
-            <div className="pl-4 text-terminal-green">✓ Read job description</div>
-            <div className="pl-4 text-terminal-green">✓ Explore tech stack</div>
-            <div className="pl-4 text-terminal-green">✓ Run culture diagnostic</div>
-            <div className="pl-4 text-terminal-green">✓ Challenge our bets</div>
-            <div className="pl-4 text-red-400">✗ Access production</div>
-            <div className="pl-4 text-red-400">✗ Merge to main</div>
+          <div className="space-y-1">
+            <div className="text-secondary">USER: explorer@switchup.tech</div>
+            <div className="text-secondary">ROLE: Potential Problem Space Owner</div>
+            <div className="text-secondary">MODE: Mutual Discovery</div>
+            <div className="text-muted text-xs">SESSION: {new Date().toISOString()}</div>
           </div>
 
           <div className="mt-3 border-t border-default pt-2">
-            <div className="text-primary font-bold mb-1">MATCH PROFILE:</div>
-            <div className="pl-4 text-secondary mb-2">Core traits we're looking for:</div>
-
-            <div className="pl-4 text-secondary text-xs font-bold mt-2">1. Deep Engineering + Builder DNA</div>
-            <div className="pl-6 text-muted text-xs">You've seen failures. You learn from them. Others learn from you.</div>
-
-            <div className="pl-4 text-secondary text-xs font-bold mt-2">2. AI Mastery (The Multiplier)</div>
-            <div className="pl-6 text-muted text-xs">You're genuinely excited about AI as a force multiplier, not a buzzword.</div>
-            <div className="pl-6 text-muted text-xs">You know how to engineer the right context for AI, design agent workflows, debug LLM failures.</div>
-            <div className="pl-6 text-muted text-xs">You experiment with new models in your spare time because you can't help yourself.</div>
-
-            <div className="pl-4 text-secondary text-xs font-bold mt-2">3. Positive Can-Do Mindset</div>
-            <div className="pl-6 text-muted text-xs">"How can we make this work?" not "Why this won't work."</div>
-            <div className="pl-6 text-muted text-xs">Blockers are puzzles to solve, not excuses to wait.</div>
-
-            <div className="pl-4 text-secondary text-xs font-bold mt-2">4. Mission-Driven Impact</div>
-            <div className="pl-6 text-muted text-xs">You care deeply about making a real difference in people's lives.</div>
-            <div className="pl-6 text-muted text-xs">Our North Star: Building lifelong relationships with our users.</div>
-            <div className="pl-6 text-muted text-xs">Current stat: Near-zero churn (despite our product's imperfections).</div>
-
-            <div className="pl-4 text-red-400 mt-3 mb-2">Not a match if you're:</div>
-            <div className="pl-6 text-muted text-xs">• Someone who needs detailed specs</div>
-            <div className="pl-6 text-muted text-xs">• A "that's not my job" person</div>
-            <div className="pl-6 text-muted text-xs">• Skeptical of AI or treating it as hype</div>
-            <div className="pl-6 text-muted text-xs">• Optimizing for resume bullets over growth & learning</div>
-
-            <div className="pl-4 text-secondary mt-3 mb-1 text-xs font-bold">You might be our person if:</div>
-            <div className="pl-6 text-muted text-xs mt-1">✓ You've "gone rogue" to ship value at a previous job</div>
-            <div className="pl-6 text-muted text-xs mt-1">✓ You've reverse-engineered a vendor's undocumented API</div>
-            <div className="pl-6 text-muted text-xs mt-1">✓ You care more about impact than code purity</div>
-            <div className="pl-6 text-muted text-xs mt-1">✓ You're building AI side projects because it's genuinely fun</div>
-            <div className="pl-6 text-muted text-xs mt-1">✓ You want to wake up knowing your work matters to real people</div>
+            <div className="text-cyan-400 font-bold mb-1">WHAT YOU'RE EXPLORING:</div>
+            <div className="pl-4 text-terminal-green text-xs">✓ Our architecture (is this sane?)</div>
+            <div className="pl-4 text-terminal-green text-xs">✓ Our bets (would you make the same ones?)</div>
+            <div className="pl-4 text-terminal-green text-xs">✓ Our warts (we have them, see 'warts')</div>
+            <div className="pl-4 text-terminal-green text-xs">✓ Our team (would you enjoy working with us?)</div>
           </div>
 
-          <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run 'culture' to see if we're a match. (Spoiler: It's harder than LeetCode, but more fun.)
+          <div className="mt-3 border-t border-default pt-2">
+            <div className="text-cyan-400 font-bold mb-1">WHAT WE'RE EXPLORING:</div>
+            <div className="pl-4 text-amber-400 text-xs">◇ Your meta skills (how you think)</div>
+            <div className="pl-4 text-amber-400 text-xs">◇ Your AI craft (how you work with AI)</div>
+            <div className="pl-4 text-amber-400 text-xs">◇ Your builder DNA (how you ship)</div>
+            <div className="pl-4 text-amber-400 text-xs">◇ Your mission resonance (does our "why" matter to you?)</div>
+          </div>
+
+          <div className="mt-3 border-t border-default pt-2">
+            <div className="text-cyan-400 font-bold mb-1">MUTUAL FIT SIGNALS:</div>
+
+            <div className="pl-4 text-secondary text-xs font-bold mt-2">You might love it here if:</div>
+            <div className="pl-6 text-muted text-xs">• You already tinker with AI outside of work</div>
+            <div className="pl-6 text-muted text-xs">• "That's not my job" makes you cringe</div>
+            <div className="pl-6 text-muted text-xs">• You'd rather own outcomes than execute tasks</div>
+            <div className="pl-6 text-muted text-xs">• Small team agility sounds exciting, not scary</div>
+
+            <div className="pl-4 text-secondary text-xs font-bold mt-2">You might not love it here if:</div>
+            <div className="pl-6 text-muted text-xs">• You prefer detailed specs before starting</div>
+            <div className="pl-6 text-muted text-xs">• AI feels like hype to you (we're all-in)</div>
+            <div className="pl-6 text-muted text-xs">• You optimize for resume polish over learning</div>
+            <div className="pl-6 text-muted text-xs">• "Move fast" sounds exhausting, not energizing</div>
+          </div>
+
+          <div className="mt-3 border-t border-default pt-2 text-muted text-xs">
+            <span className="text-cyan-400">Explore:</span> 'mission' 'team' 'warts' 'culture' — then decide if you want to 'apply'
           </div>
         </div>
       ),
@@ -279,7 +272,7 @@ export const uptimeCommand = defineCommand({
 
     ctx.addOutput({
       type: 'output',
-      content: ` ${currentTime} up ${days} days, 47 providers, load average: high-growth, seeking-talent, building-future`,
+      content: ` ${currentTime} up ${days} days, 7 domains, 21 problem spaces, load average: building-to-learn, exploring-together, transforming-markets`,
     });
 
     return { handled: true };
@@ -298,7 +291,7 @@ export const hostnameCommand = defineCommand({
   handler: (_parsed, ctx) => {
     ctx.addOutput({
       type: 'output',
-      content: 'switchup-recruitment-terminal',
+      content: 'switchup-matchmaking-terminal',
     });
     return { handled: true };
   },

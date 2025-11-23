@@ -1,25 +1,29 @@
-# Switchup Product Engineer Job Board
+# Switchup Product Engineer Matchmaking
 
-An interactive web application showcasing the Product Engineer position at Switchup through an immersive terminal-themed experience.
+An interactive web application for mutual discovery between Switchup and potential Product Engineers through an immersive terminal-themed experience.
 
 ## Overview
 
-This is a client-side React application that presents a job opportunity through an engaging, gamified interface. Switchup is rethinking how service-led B2C businesses operate - automation and AI-first, based on smart, safe, and lifelong trust-based relationships with users.
+This is a client-side React application that facilitates mutual exploration through an engaging, gamified interface. Switchup is rethinking how service-led B2C businesses operate - automation and AI-first, based on smart, safe, and lifelong trust-based relationships with users.
 
 ## What's Inside
 
-- **Interactive Terminal** - Full CLI interface with commands, easter eggs, and a culture quiz
+- **Interactive Terminal** - Full CLI interface with 50+ commands, easter eggs, and a culture quiz
+- **System Architecture Explorer** - Interactive explorer with 7 domains, 21 problem spaces, and architecture documentation
 - **Behind the Scenes** - Vimeo-hosted videos showing real engineering challenges
+- **Tech Stack Cards** - Flip cards revealing engineering bets and rationale
 - **Job Documentation** - Detailed markdown docs in `/docs`
 
 ## Tech Stack
 
-- **React 19** - Concurrent features (`useTransition`, `useOptimistic`, `useDeferredValue`)
-- **TypeScript** - Full type coverage with centralized definitions
-- **Vite** - Fast development and optimized builds
-- **Tailwind CSS v4** - CSS-first configuration with OKLCH colors
-- **Framer Motion** - Smooth animations and transitions
-- **Lucide React** - Icon library
+| Category    | Technology                                                          |
+| ----------- | ------------------------------------------------------------------- |
+| Framework   | React 19.2.0 (Concurrent features: `useTransition`, `useOptimistic`, `useDeferredValue`) |
+| Language    | TypeScript 5.7.3                                                    |
+| Build       | Vite 7.2.4 with @vitejs/plugin-react-swc                            |
+| Styling     | Tailwind CSS 4.1.17 (CSS-first config, OKLCH colors)                |
+| Animation   | Framer Motion 12.23.24 (3D transforms, layout animations)           |
+| Icons       | Lucide React 0.554.0                                                |
 
 ## Quick Start
 
@@ -27,22 +31,61 @@ This is a client-side React application that presents a job opportunity through 
 npm install    # Install dependencies
 npm run dev    # Start dev server at http://localhost:5173
 npm run build  # Production build to /dist
+npm run preview # Preview production build
 ```
 
 ## Project Structure
 
 ```
 src/
-├── components/          # React UI components
-├── constants/           # Data files (logs, tech stack, quiz, videos)
-├── hooks/               # Custom React hooks
-├── types/               # TypeScript definitions
-├── swup-operating-system.tsx  # Main app component
-├── main.tsx             # Entry point
-└── index.css            # Tailwind v4 configuration
+├── commands/                # Terminal command system
+│   ├── definitions/         # Command implementations by category
+│   │   ├── actions.tsx      # apply, theme, exit
+│   │   ├── business.tsx     # mission, why, how, what, beliefs, team, etc.
+│   │   ├── easter-eggs.tsx  # 25+ hidden fun commands
+│   │   ├── feedback.tsx     # feedback command
+│   │   ├── help.tsx         # help command with categories
+│   │   ├── navigation.tsx   # cd, ls, cat, pwd
+│   │   ├── quiz.tsx         # culture/quiz command
+│   │   ├── system.tsx       # echo, date, env, history, etc.
+│   │   └── index.ts         # ALL_COMMANDS array export
+│   ├── registry.ts          # Command registration & lookup
+│   ├── parser.ts            # Input parsing & tab completion
+│   └── useCommandExecutor.ts # Hook for command execution
+├── components/              # React UI components (24 exports)
+├── constants/               # Data files (5 exports)
+├── hooks/                   # Custom React hooks (8 exports)
+├── types/                   # TypeScript definitions (3 files)
+├── swup-operating-system.tsx # Main app component
+├── main.tsx                 # Entry point with ThemeProvider
+└── index.css                # Tailwind v4 CSS configuration
 ```
 
 ## Architecture
+
+### Component Hierarchy
+
+```
+SwitchupOperatingSystem (root)
+├── BootSequence              # Password-protected boot animation
+├── TerminalGlowEffect        # Chromatic depth field wrapper
+│   └── InteractiveTerminal   # Hero terminal (inline, with quiz support)
+│       ├── useTerminalCore   # Shared terminal logic
+│       └── Quiz mode         # useQuizState hook
+├── ProblemSpaces             # System Architecture Explorer
+│   ├── ExplorerSidebar       # Left navigation panel
+│   └── ExplorerMainContent   # Right content panel
+│       └── ArchitectureDocs  # 9 documentation pages
+├── TechStackCard             # Tech stack with flip animation
+│   └── FlipCard              # Reusable 3D flip card (Framer Motion)
+├── BehindTheScenesModal      # Vimeo videos with navigation
+├── ApplicationModal          # Multi-step application flow
+├── TerminalGlowEffect        # Chromatic depth field wrapper
+│   └── DecisionTerminal      # Footer CTA terminal
+│       ├── useTerminalCore   # Shared terminal logic
+│       └── Scroll-triggered  # Loading animation on scroll
+└── Content sections          # Logs, convergence, mutual fit
+```
 
 ### Components
 
@@ -57,84 +100,259 @@ src/
 | `SectionHeader`        | Consistent section headers                   |
 | `ErrorBoundary`        | Graceful error handling                      |
 
-**Reusable Window System**
+**Terminal Window System (Reusable)**
 
-| Component              | Purpose                                         |
-| ---------------------- | ----------------------------------------------- |
-| `TerminalWindow`       | Complete window with all controls (recommended) |
-| `TerminalWindowHeader` | macOS-style traffic light buttons               |
-| `FullscreenModal`      | Fullscreen overlay wrapper                      |
-| `ExitConfirmDialog`    | Exit confirmation with humor                    |
+| Component               | Purpose                                         |
+| ----------------------- | ----------------------------------------------- |
+| `TerminalWindow`        | Complete window with all controls (recommended) |
+| `TerminalWindowHeader`  | macOS-style traffic light buttons               |
+| `FullscreenModal`       | Fullscreen overlay wrapper                      |
+| `ExitConfirmDialog`     | Exit confirmation with humor                    |
+| `TerminalGlowEffect`    | Chromatic depth field effect                    |
+
+**Terminal Components**
+
+| Component          | Purpose                                      |
+| ------------------ | -------------------------------------------- |
+| `Terminal`         | Unified terminal component                   |
+| `DecisionTerminal` | Footer CTA with scroll-triggered loading     |
+| `TerminalOutput`   | Individual terminal line rendering           |
+
+**System Architecture Explorer**
+
+| Component             | Purpose                                    |
+| --------------------- | ------------------------------------------ |
+| `ProblemSpaces`       | Main explorer container                    |
+| `ExplorerSidebar`     | Left navigation with categories            |
+| `ExplorerMainContent` | Right content panel                        |
+| `ArchitectureDocs`    | 9 documentation content pages              |
+
+**Tech Stack Components**
+
+| Component       | Purpose                               |
+| --------------- | ------------------------------------- |
+| `TechStackCard` | Individual card with hover flip       |
+| `FlipCard`      | Reusable 3D flip (Framer Motion)      |
 
 ### Custom Hooks
 
-| Hook                | React 19 Feature   | Purpose                                    |
-| ------------------- | ------------------ | ------------------------------------------ |
-| `useTheme`          | `useTransition`    | Theme & CRT mode with non-blocking updates |
-| `useTerminalLogs`   | `useDeferredValue` | Auto-scrolling log simulation              |
-| `useQuizState`      | `useOptimistic`    | Quiz state with instant UI feedback        |
-| `useShutdown`       | -                  | Shutdown animation sequence                |
-| `useWindowControls` | -                  | Window state (fullscreen, minimize, exit)  |
+| Hook                   | React 19 Feature   | Purpose                                    |
+| ---------------------- | ------------------ | ------------------------------------------ |
+| `useTheme`             | `useTransition`    | Theme & CRT mode with non-blocking updates |
+| `useTerminalLogs`      | `useDeferredValue` | Auto-scrolling log simulation              |
+| `useQuizState`         | `useOptimistic`    | Quiz state with instant UI feedback        |
+| `useTerminalCore`      | -                  | **Master hook** - unified terminal logic   |
+| `useTerminalFocus`     | -                  | Input ref management (normal/fullscreen)   |
+| `useTerminalKeyboard`  | -                  | Shared keyboard shortcuts                  |
+| `useShutdown`          | -                  | Shutdown animation sequence                |
+| `useWindowControls`    | -                  | Window state (fullscreen, minimize, exit)  |
+
+### Command System
+
+The terminal uses a modular command architecture:
+
+```
+src/commands/
+├── definitions/           # 9 command definition files
+│   ├── actions.tsx        # apply, theme, exit
+│   ├── business.tsx       # Philosophy, beliefs, team, architecture
+│   ├── easter-eggs.tsx    # 25+ hidden fun commands
+│   ├── feedback.tsx       # feedback command
+│   ├── help.tsx           # help with categorized output
+│   ├── navigation.tsx     # cd, ls, cat, pwd (with path completion)
+│   ├── quiz.tsx           # culture/quiz command
+│   ├── system.tsx         # echo, date, env, history, etc.
+│   └── index.ts           # ALL_COMMANDS array
+├── registry.ts            # register, get, getByCategory, has
+├── parser.ts              # parseCommand, findSimilarCommands
+└── useCommandExecutor.ts  # Hook connecting it all
+```
+
+**Command Categories:**
+
+| Category     | Commands                                           |
+| ------------ | -------------------------------------------------- |
+| `info`       | help, whoami, stack, mission, why, how, what       |
+| `navigation` | cd, ls, pwd, cat                                   |
+| `action`     | apply, clear, exit                                 |
+| `theme`      | theme [default/matrix/cyberpunk/light]             |
+| `quiz`       | culture, quiz                                      |
+| `system`     | echo, date, env, history, uptime, hostname, uname  |
+| `easter-egg` | 25+ hidden commands                                |
 
 ### Data Constants
 
-| File                 | Content                                                             |
-| -------------------- | ------------------------------------------------------------------- |
-| `logMessages.ts`     | System log entries with levels (INFO, WARN, ERROR, SUCCESS, SYSTEM) |
-| `techStack.ts`       | Technology choices with rationale and specs                         |
-| `engineeringBets.ts` | Work-in-progress technical directions                               |
-| `quizQuestions.ts`   | Culture quiz with branching feedback                                |
-| `behindTheScenes.ts` | Vimeo video metadata and authors                                    |
+| File                  | Content                                                              |
+| --------------------- | -------------------------------------------------------------------- |
+| `logMessages.ts`      | System log entries with levels (INFO, WARN, ERROR, SUCCESS, SYSTEM)  |
+| `techStack.ts`        | Technology choices with rationale, specs, and engineering bets       |
+| `quizQuestions.ts`    | Culture quiz with branching feedback                                 |
+| `behindTheScenes.ts`  | Vimeo video metadata and authors                                     |
+| `problemSpaces.ts`    | 7 domains with 21 problem spaces                                     |
 
 ### TypeScript Types
 
+**Terminal Types** (`terminal.types.ts`)
 ```typescript
+type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
 type LogEntry = { id, timestamp, level, message }
-type StackItem = { category, tool, rationale, specs[], status, icon }
-type EngineeringBet = { id, title, context, tradeoff }
+type TerminalLine = { type: 'input' | 'output' | 'system' | 'error', content }
+type StackItem = { category, tool, rationale, specs[], status, icon, bet? }
+type EngineeringBetContent = { title, context, tradeoff }
 type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
 type BehindTheScenesVideo = { id, vimeoId, title, description, author, topics[], duration, featured? }
-type TerminalLine = { type: 'input' | 'output' | 'system', content }
-type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
+```
+
+**Command Types** (`command.types.ts`)
+```typescript
+interface ParsedCommand { command, args[], raw, flags }
+interface CommandOutput { type: 'output' | 'system' | 'error', content }
+interface CommandContext { addOutput, clearHistory, currentDirectory, quiz, ... }
+interface CommandResult { handled, preventHistoryUpdate?, clearInput? }
+interface CommandDefinition { name, aliases?, description, usage?, examples?, hidden?, category, handler }
+type CommandCategory = 'navigation' | 'info' | 'action' | 'theme' | 'quiz' | 'system' | 'easter-egg' | 'dev'
+interface CommandRegistry { register, registerAll, get, getAll, getByCategory, getVisible, has }
+```
+
+**Problem Spaces Types** (`problemSpaces.types.ts`)
+```typescript
+type ViewMode = 'intermediate' | 'target'
+type DomainId = 'lifecycle' | 'offer' | 'optimisation' | 'case' | 'provider' | 'service' | 'growth'
+type DocId = 'challenge' | 'target' | 'overview' | 'domains' | 'philosophy' | 'beliefs' | 'team-setup' | 'role-convergence' | 'evolution'
+type ExplorerItemId = DocId | DomainId
+type ExplorerColor = 'cyan' | 'orange' | 'blue' | 'purple' | 'amber' | 'red' | 'pink' | 'green' | 'teal'
+type ExplorerCategory = 'Architecture' | 'Organisation' | 'Domains'
+interface OperationalState { role, description, activities[] }
+interface ProblemSpace { id, title, subtitle, problem, outcome, intermediate, target, prerequisites[] }
+interface DocItem { type: 'doc', id: DocId, title, icon, color, category, subtitle, content }
+interface DomainItem { type: 'domain', id: DomainId, title, icon, color, category, spaces[] }
+type ExplorerItem = DocItem | DomainItem  // Discriminated union
 ```
 
 ## Terminal Commands
 
-### Standard Commands
+### Philosophy (The Soul)
 
-| Command                | Description                 |
-| ---------------------- | --------------------------- |
-| `help`                 | Show available commands     |
-| `stack`                | Display tech stack          |
-| `mission`              | Show company mission        |
-| `challenges`           | List engineering challenges |
-| `culture` / `quiz`     | Start culture assessment    |
-| `ls`                   | List "directory" contents   |
-| `whoami`               | Show user info              |
-| `apply` / `./apply.sh` | Open application modal      |
-| `clear`                | Clear terminal              |
-| `exit`                 | Trigger shutdown sequence   |
+| Command   | Description                      |
+| --------- | -------------------------------- |
+| `mission` | WHY + HOW + WHAT overview        |
+| `why`     | Marktfairänderung (market fairness) |
+| `how`     | Freundschaftsprinzip (friendship principle) |
+| `what`    | Subscription Operating System    |
 
-### Theme Commands
+### Beliefs & Team (The Heart)
+
+| Command     | Description                                  |
+| ----------- | -------------------------------------------- |
+| `beliefs`   | Four core beliefs                            |
+| `team`      | Problem space ownership, AI orchestration    |
+| `role`      | Product Engineering role convergence         |
+| `evolution` | AI Trust Gradient                            |
+| `warts`     | Honest self-portrait of challenges           |
+
+### Architecture (The Brain)
+
+| Command        | Description                           |
+| -------------- | ------------------------------------- |
+| `puzzle`       | The subscription problem              |
+| `architecture` | Three-layer model                     |
+| `domains`      | 7 domains, 21 problem spaces          |
+
+### Tools (The Hands)
+
+| Command | Description                       |
+| ------- | --------------------------------- |
+| `stack` | Engineering bets: What we use     |
+
+### Matchmaking
+
+| Command   | Description                          |
+| --------- | ------------------------------------ |
+| `whoami`  | Your explorer profile                |
+| `culture` | Mutual discovery quiz (10 questions) |
+| `apply`   | Start a conversation                 |
+
+### Utilities
+
+| Command    | Description                 |
+| ---------- | --------------------------- |
+| `help`     | Show available commands     |
+| `ls`       | List directory contents     |
+| `cat`      | View file contents          |
+| `cd`       | Change directory            |
+| `pwd`      | Print working directory     |
+| `env`      | Display environment vars    |
+| `theme`    | Switch visual theme         |
+| `feedback` | Share thoughts              |
+| `clear`    | Clear terminal history      |
+| `exit`     | Shutdown system             |
+
+### Theme Options
 
 | Command           | Description                        |
 | ----------------- | ---------------------------------- |
-| `theme`           | Show current theme                 |
 | `theme default`   | Classic terminal green             |
 | `theme matrix`    | Intense green on green-tinted dark |
 | `theme cyberpunk` | Magenta/purple futuristic          |
 | `theme light`     | Light mode for accessibility       |
 
-### Easter Eggs
+### Easter Eggs (Hidden)
 
-| Command              | Effect                   |
-| -------------------- | ------------------------ |
-| `konami`             | Classic code reward      |
-| `health`             | System health check      |
-| `matrix`             | Enter the matrix theme   |
-| `salary`             | Humorous response        |
-| `hire me` / `hireme` | Eager candidate response |
-| `sudo`               | Permission denied joke   |
+| Command                    | Effect                      |
+| -------------------------- | --------------------------- |
+| `konami`                   | Classic code reward         |
+| `health`                   | System health check         |
+| `matrix`                   | Enter the matrix theme      |
+| `hire me` / `hireme`       | Eager explorer response     |
+| `sudo`                     | Permission denied joke      |
+| `42`                       | The answer                  |
+| `vim`, `nano`, `emacs`     | Editor war jokes            |
+| `git`, `npm`, `make`       | Developer humor             |
+| `coffee`                   | Developer fuel              |
+| `fortune`, `cowsay`        | Unix classics               |
+| `neofetch`                 | System info display         |
+| `ping`, `ssh`              | Network humor               |
+| `sl`                       | Steam locomotive            |
+| `rm`, `touch`, `mkdir`     | Dangerous commands warnings |
+| `man`, `ps`, `id`          | Unix utilities              |
+| `reboot`, `please`, `hack` | Various jokes               |
+
+## System Architecture Explorer
+
+The explorer showcases Switchup's problem domain with:
+
+### Architecture Documentation (9 Pages)
+
+| Doc ID             | Title                  | Description                           |
+| ------------------ | ---------------------- | ------------------------------------- |
+| `challenge`        | The Challenge          | Core operational scalability problem  |
+| `target`           | Target State           | Subscription Operating System vision  |
+| `overview`         | System Overview        | Three-layer architecture model        |
+| `domains`          | Domains                | Domain-driven design approach         |
+| `philosophy`       | Philosophy             | WHY / HOW / WHAT framework            |
+| `beliefs`          | Beliefs                | Four core beliefs                     |
+| `team-setup`       | Team Setup             | Problem space ownership               |
+| `role-convergence` | Role Convergence       | Product Engineering convergence       |
+| `evolution`        | Evolution              | AI Trust Gradient model               |
+
+### Problem Space Domains (7 Domains, 21 Spaces)
+
+| Domain       | Problem Spaces                                      |
+| ------------ | --------------------------------------------------- |
+| Lifecycle    | State Integrity, Business Intent, Temporal Projections |
+| Offer        | Offer Modelling, Offer Normalisation, Offer Matching |
+| Optimisation | Optimal Offer Selection, Switch Decision Assessment |
+| Case         | Event Monitoring, Workflow Orchestration, Task Management |
+| Provider     | Provider Configuration, API/Bot Automation, Data Extraction |
+| Service      | Self-Servicing, Service Interactions                |
+| Growth       | Expert Guidance, User Onboarding                    |
+
+Each problem space includes:
+- **Problem statement** - What challenge we're solving
+- **Outcome** - Desired end state
+- **Intermediate state** - Human-operated current approach
+- **Target state** - AI-assisted future approach
+- **Prerequisites** - Required capabilities
 
 ## State Management
 
@@ -166,6 +384,11 @@ type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
 - Screen curvature vignette
 - Chromatic aberration (RGB split)
 
+### Terminal Glow Effect
+- Chromatic depth field wrapper
+- Customizable glow colors per theme
+- Wraps both hero and footer terminals
+
 ### Themes (OKLCH Color Space)
 - **Default** - Green (#22c55e equivalent) on ultra-dark
 - **Matrix** - Intense green with green-tinted backgrounds
@@ -178,6 +401,7 @@ type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
 - Log entries fade in with blur effect
 - Modal scale/opacity animations
 - Rotating gradient borders
+- 3D flip cards for tech stack
 
 ## Engagement Mechanics
 
@@ -231,14 +455,45 @@ border-default      /* Theme-aware border color */
 
 ## Development Guide
 
+### Add Terminal Command
+
+Create or edit a file in `src/commands/definitions/`:
+
+```typescript
+// src/commands/definitions/my-commands.tsx
+import { defineCommand } from '../registry';
+
+export const myCommand = defineCommand({
+  name: 'mycommand',
+  aliases: ['mc', 'mycmd'],
+  description: 'Does something cool',
+  usage: 'mycommand [options]',
+  examples: ['mycommand', 'mycommand --flag'],
+  category: 'info', // info, navigation, system, action, theme, quiz, easter-egg, dev
+  hidden: false, // Set to true for easter eggs
+
+  handler: (parsed, ctx) => {
+    ctx.addOutput({
+      type: 'output',
+      content: 'Hello from my command!',
+    });
+    return { handled: true };
+  },
+});
+```
+
+Then export from `src/commands/definitions/index.ts` and add to `ALL_COMMANDS` array.
+
 ### Add System Log
+
 ```typescript
 // src/constants/logMessages.ts
 { level: 'INFO', message: 'Your message' }
 // Levels: INFO, WARN, ERROR, SUCCESS, SYSTEM
 ```
 
-### Add Tech Stack Item
+### Add Tech Stack Item (with Engineering Bet)
+
 ```typescript
 // src/constants/techStack.ts
 {
@@ -247,11 +502,17 @@ border-default      /* Theme-aware border color */
   rationale: 'Why we use it',
   specs: ['Use case 1', 'Use case 2'],
   status: 'CORE',  // or 'EXPLORING'
-  icon: LucideIcon
+  icon: LucideIcon,
+  bet: {  // Optional - shows on card flip
+    title: 'Bet Title',
+    context: 'Background info',
+    tradeoff: 'Trade-offs'
+  }
 }
 ```
 
 ### Add Quiz Question
+
 ```typescript
 // src/constants/quizQuestions.ts
 {
@@ -264,40 +525,59 @@ border-default      /* Theme-aware border color */
 }
 ```
 
+### Add Problem Space
+
+```typescript
+// src/constants/problemSpaces.ts - Add to existing domain
+{
+  id: 'unique-id',
+  title: 'Problem Space Title',
+  subtitle: 'Short Description',
+  problem: 'The problem statement...',
+  outcome: 'The desired outcome...',
+  intermediate: {
+    role: 'Admin as Operator',
+    description: 'How humans currently handle this...',
+    activities: ['Activity 1', 'Activity 2', 'Activity 3']
+  },
+  target: {
+    role: 'Admin as Supervisor',
+    description: 'How AI will assist...',
+    activities: ['AI activity 1', 'AI activity 2', 'Human oversight']
+  },
+  prerequisites: ['Prereq 1', 'Prereq 2', 'Prereq 3']
+}
+```
+
+To add a new domain:
+1. Add domain ID to `DomainId` type in `src/types/problemSpaces.types.ts`
+2. Add problem spaces to `PROBLEM_SPACES` in `src/constants/problemSpaces.ts`
+3. Add domain entry to `EXPLORER_ITEMS` in `src/components/ProblemSpaces.tsx`
+
+### Add Architecture Documentation
+
+1. Add doc ID to `DocId` type in `src/types/problemSpaces.types.ts`
+2. Create content component in `src/components/ArchitectureDocs.tsx`
+3. Add to `EXPLORER_ITEMS` in `src/components/ProblemSpaces.tsx`
+
 ### Add Behind the Scenes Video
+
 ```typescript
 // src/constants/behindTheScenes.ts
 {
   id: 'unique-slug',
-  vimeoId: '1139421319',  // From vimeo.com/1139231458
-  title: 'Video Title',
-  description: 'What the video covers...',
-  author: {
-    name: 'Name',
-    role: 'Role at SwitchUp',
-    avatarInitials: 'XX',
-  },
+  vimeoId: '1139231458',  // From vimeo.com URL
+  title: 'Title',
+  description: 'Description',
+  author: { name: 'Name', role: 'Role', avatarInitials: 'XX' },
   topics: ['Topic 1', 'Topic 2'],
   duration: '8:42',
-  featured: true,  // Optional: spans 2 columns
+  featured: true  // Optional: spans 2 columns
 }
 ```
 
-### Add Terminal Command
-```typescript
-// src/swup-operating-system.tsx - handleCommand function
-case 'mycommand':
-  addLine({ type: 'output', content: 'Output text' });
-  break;
-```
-
-### Change Boot Password
-```typescript
-// src/components/BootSequence.tsx
-if (password === 'YourNewPassword') {
-```
-
 ### Use TerminalWindow Component
+
 ```tsx
 import { TerminalWindow } from './components';
 
@@ -333,9 +613,25 @@ For granular control, use individual components:
 - `FullscreenModal` - Fullscreen overlay
 - `ExitConfirmDialog` - Exit confirmation
 
+### Change Boot Password
+
+```typescript
+// src/components/BootSequence.tsx
+if (password === 'YourNewPassword') {
+```
+
+### Add Custom Tailwind Utility
+
+```css
+/* src/index.css */
+@utility my-utility {
+  /* styles */
+}
+```
+
 ## About the Role
 
-Switchup is hiring Product Engineers to build an AI-first platform that:
+Switchup is looking for Product Engineers to build an AI-first platform that:
 - Automates manual operational touchpoints
 - Scales across energy, telco, and streaming subscriptions
 - Creates seamless AI-human collaboration

@@ -1,6 +1,6 @@
 /**
  * Quiz Command
- * Starts the culture fit diagnostic
+ * Starts the mutual discovery quiz
  *
  * Note: Quiz answer handling (a/b responses) remains in the main component
  * because it requires complex state management with useQuizState hook.
@@ -12,12 +12,13 @@ import { defineCommand } from '../registry';
 import { QUIZ_QUESTIONS } from '../../constants';
 
 /**
- * CULTURE / QUIZ - Start culture fit diagnostic
+ * CULTURE - Mutual discovery quiz
+ * Not a test. More like a conversation to see if we click.
  */
 export const cultureCommand = defineCommand({
   name: 'culture',
-  aliases: ['quiz', 'diagnostic', 'fit'],
-  description: '10-question fit diagnostic (profound)',
+  aliases: ['quiz', 'match', 'fit'],
+  description: 'Mutual discovery quiz (10 questions)',
   category: 'quiz',
 
   handler: (_parsed, ctx) => {
@@ -31,8 +32,11 @@ export const cultureCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-2">
-          <div className="text-terminal-green font-bold">INITIALIZING CULTURE FIT DIAGNOSTIC...</div>
-          <div>Answer A or B. Type "exit" to quit.</div>
+          <div className="text-cyan-400 font-bold">MUTUAL DISCOVERY :: LET'S SEE IF WE CLICK</div>
+          <div className="text-muted text-xs italic mb-2">
+            (Not a test. No scores. Just honest questions to surface whether we'd enjoy working together.)
+          </div>
+          <div className="text-muted text-xs">Answer A or B. Type "exit" anytime — no hard feelings.</div>
           <div className="mt-4">
             <div className="text-primary font-bold">Q1: {firstQuestion.q}</div>
             <div className="pl-4 text-secondary">A) {firstQuestion.a}</div>

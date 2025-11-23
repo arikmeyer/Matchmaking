@@ -1,77 +1,72 @@
 /**
  * TerminalGlowEffect Component
- * Reusable glowing frame effect for terminal windows.
- * Features ambient nebula + rotating conic gradients.
+ *
+ * Apple-inspired "Chromatic Depth Field" effect for terminal windows.
+ * Creates an ambient energy field the terminal floats within.
+ *
+ * Architecture:
+ * - Uses pure CSS animations via @property for flicker-free rendering
+ * - No Framer Motion animations that could create stacking context issues
+ * - Layer 0: Ambient Field (atmospheric presence, radial breathing)
+ * - Layer 1: Primary Aurora (main color movement, multi-stop conic)
+ * - Layer 2: Secondary Harmonic (iridescence, offset counter-rotation)
+ * - Layer 3: Edge Accent (crisp dynamism, fast rotation with pulse)
+ * - Fresnel Edge: Static inner glow at contact points
+ *
+ * Design principles:
+ * - Prime number animation durations (13, 17, 23, 29s) = never repeats
+ * - Layered blur depths create z-axis perception
+ * - Color harmonics via OKLCH for perceptual uniformity
+ * - Respects prefers-reduced-motion via CSS media query
  */
 
 import { ReactNode } from 'react';
-import { motion } from 'framer-motion';
 
 interface TerminalGlowEffectProps {
   children: ReactNode;
   /** Whether the glow effect is visible */
   isVisible?: boolean;
-  /** Scale of the ambient nebula (-inset value) */
-  nebulaInset?: number;
+  /** Scale of the ambient field extension (multiplier) - reserved for future use */
+  ambientScale?: number;
   /** Additional class names for the container */
   className?: string;
 }
 
 /**
- * Wraps children with an animated glowing frame effect.
+ * Wraps children with an animated chromatic depth field effect.
  * Used for hero terminal and decision terminal.
  *
- * The effect consists of:
- * 1. Deep ambient nebula (breathing animation)
- * 2. Rotating green conic gradient vortex
- * 3. Counter-rotating subtle conic gradient vortex
+ * Uses pure CSS animations instead of Framer Motion to avoid
+ * stacking context issues that cause z-index flickering.
  */
 export function TerminalGlowEffect({
   children,
   isVisible = true,
-  nebulaInset = 12,
+  // ambientScale is reserved for future customization
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ambientScale = 1,
   className = '',
 }: TerminalGlowEffectProps) {
   return (
     <div className={`relative ${className}`}>
-      {/* Glow Effects Container */}
-      <motion.div
-        initial={false}
-        animate={{ opacity: isVisible ? 1 : 0 }}
-        transition={{ duration: 0.2 }}
-        className="pointer-events-none"
+      {/* Glow Effects Container - CSS-only animation, no stacking context issues */}
+      {/* Using visibility instead of opacity to avoid stacking context changes */}
+      <div
+        className="absolute inset-0 pointer-events-none z-0"
+        style={{ visibility: isVisible ? 'visible' : 'hidden' }}
       >
-        {/* 1. Deep Ambient Nebula (Breathing) */}
-        <motion.div
-          animate={{ opacity: [0.2, 0.5, 0.2], scale: [0.95, 1.05, 0.95] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute rounded-[40px] blur-3xl bg-gradient-to-tr from-terminal-green/20 via-surface/20 to-terminal-green/20"
-          style={{ inset: `-${nebulaInset * 4}px` }}
-        />
+        {/* Main chromatic glow - animated via CSS @property */}
+        <div className="chromatic-glow" />
 
-        {/* 2. Rotating Energy Vortex (Green) */}
-        <div className="absolute -inset-[2px] rounded-lg overflow-hidden">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[conic-gradient(transparent,transparent,var(--terminal-green),transparent,transparent)] opacity-30 blur-sm"
-          />
-        </div>
+        {/* Fresnel Edge Glow - Static highlight at contact points */}
+        <div className="chromatic-glow-fresnel" />
 
-        {/* 3. Counter-Rotating Vortex (Subtle) */}
-        <div className="absolute -inset-[2px] rounded-lg overflow-hidden">
-          <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[-50%] left-[-50%] w-[200%] h-[200%] bg-[conic-gradient(transparent,transparent,var(--color-surface-dark),transparent,transparent)] opacity-20 blur-sm"
-          />
-        </div>
-      </motion.div>
-
-      {/* Content */}
-      <div className="relative">
-        {children}
+        {/* Inner Edge Highlight - Subtle brightness at terminal border */}
+        <div className="chromatic-glow-inner" />
       </div>
+
+      {/* Content - Always on top with stable z-index */}
+      <div className="relative z-10 h-full">{children}</div>
     </div>
   );
 }

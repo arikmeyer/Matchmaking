@@ -191,6 +191,20 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
     }
 ];
 
+// --- ASCII Art (defined at column 0 to avoid indentation issues) ---
+
+const SLEEPING_ROBOT = `
+    ○ ○ ○
+     ╲│╱      z
+┌─────────┐  z
+│  ◠   ◠  │ z
+│    ▽    │
+│  ╰───╯  │
+└────┬────┘
+  ╱     ╲
+ ╱       ╲
+`.trim();
+
 // --- Main Component ---
 
 export const ProblemSpaces = () => {
@@ -222,38 +236,28 @@ export const ProblemSpaces = () => {
 
     // Minimized content with ASCII art (consistent with other windows)
     const minimizedContent = (
-        <div className="h-[250px] flex flex-col items-center justify-center text-center space-y-6">
-            {/* ASCII Art - Orchestrator / Capabilities / Record Architecture */}
+        <div className="h-[250px] flex flex-col items-center justify-center text-center space-y-4">
+            {/* ASCII Art - Dreaming Robot Architect */}
             <motion.pre
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-blue-500/80 text-xs leading-tight"
+                className="text-blue-500/80 text-[11px] leading-tight font-mono"
             >
-                {`
-  ◇ ORCHESTRATOR ◇
-         │
-    ┌────┴────┐
-    │ DOMAINS │
-    └────┬────┘
-         │
-    ┌────┴────┐
-    │ RECORD  │
-    └─────────┘
-`}
+                {SLEEPING_ROBOT}
             </motion.pre>
 
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
-                className="space-y-2"
+                className="space-y-1"
             >
-                <div className="text-xl font-bold text-primary">
+                <div className="text-lg font-bold text-primary">
                     Architect is dreaming
                 </div>
-                <div className="text-secondary text-sm">
-                    The blueprints rest, but the structure endures.
+                <div className="text-secondary text-xs">
+                    Blueprints compile in sleep mode...
                 </div>
             </motion.div>
 
@@ -261,7 +265,7 @@ export const ProblemSpaces = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: [0.5, 1, 0.5] }}
                 transition={{ delay: 0.6, duration: 2, repeat: Infinity }}
-                className="text-terminal-green font-mono text-sm"
+                className="text-terminal-green font-mono text-xs"
             >
                 <span className="text-muted">$</span> ./wake_architect.sh
             </motion.div>

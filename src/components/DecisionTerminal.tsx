@@ -7,7 +7,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { TerminalWindow, ContextAwareInput, ContextAwareClickArea } from './TerminalWindow';
-import { TerminalGlowEffect } from './TerminalGlowEffect';
 import { TerminalOutput } from './TerminalOutput';
 import { useTerminalCore, type TerminalLine } from '../hooks/useTerminalCore';
 
@@ -34,6 +33,23 @@ const APPLY_STAGES = [
   { progress: 7, label: 'Preparing...' },
   { progress: 10, label: 'Ready.' },
 ];
+
+// ASCII art for minimized state (defined at column 0 to avoid indentation issues)
+const ROCKET_ASCII = `
+     /\\
+    /  \\
+   |    |
+   |    |
+   | SU |
+   |    |
+  /|    |\\
+ / |    | \\
+/__|    |__\\
+   |____|
+   /  \\  \\
+  / /\\ \\  \\
+ /_/  \\_\\__\\
+`.trim();
 
 const ProgressBar = ({ stage }: { stage: number }) => {
   const filled = APPLY_STAGES[stage]?.progress || 0;
@@ -83,36 +99,27 @@ const PhaseIndicator = ({ phase }: { phase: Phase }) => {
 
 // Minimized content with ASCII art
 const MinimizedContent = () => (
-  <div className="h-[280px] flex flex-col items-center justify-center text-center space-y-6">
+  <div className="h-[280px] flex flex-col items-center justify-center text-center space-y-4">
     <motion.pre
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="text-blue-500/80 text-xs leading-tight"
+      className="text-blue-500/80 text-[10px] leading-tight font-mono"
     >
-      {`
-   ___________
-  |  _______  |
-  | |       | |
-  | |  ???  | |
-  | |_______| |
-  |___________|
-      |   |
-    __|   |__
-`}
+      {ROCKET_ASCII}
     </motion.pre>
 
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 0.4 }}
-      className="space-y-2"
+      className="space-y-1"
     >
-      <div className="text-xl font-bold text-primary">
-        Decision pending...
+      <div className="text-lg font-bold text-primary">
+        Ready for liftoff?
       </div>
-      <div className="text-secondary text-sm">
-        The terminal awaits your command.
+      <div className="text-secondary text-xs">
+        Your next adventure is one command away.
       </div>
     </motion.div>
 
@@ -120,9 +127,9 @@ const MinimizedContent = () => (
       initial={{ opacity: 0 }}
       animate={{ opacity: [0.5, 1, 0.5] }}
       transition={{ delay: 0.6, duration: 2, repeat: Infinity }}
-      className="text-terminal-green font-mono text-sm"
+      className="text-terminal-green font-mono text-xs"
     >
-      <span className="text-muted">$</span> await decision.resume()
+      <span className="text-muted">$</span> ./launch_journey_of_a_lifetime.sh
     </motion.div>
   </div>
 );
@@ -209,7 +216,7 @@ export const DecisionTerminal: React.FC<DecisionTerminalProps> = ({ onApply }) =
           { id: lineId(), content: '> Session loaded', type: 'system' },
           { id: lineId(), content: '', type: 'output' },
           { id: lineId(), content: "Got feedback? Type 'feedback'", type: 'output' },
-          { id: lineId(), content: "Want to join? Type 'apply'", type: 'output' },
+          { id: lineId(), content: "Ready to talk? Type 'apply'", type: 'output' },
         ]);
         setPhase('ready');
         return;
@@ -250,7 +257,7 @@ export const DecisionTerminal: React.FC<DecisionTerminalProps> = ({ onApply }) =
       }, 800);
 
       const timer3 = setTimeout(() => {
-        addLine("Want to join? Type 'apply'", 'output');
+        addLine("Ready to talk? Type 'apply'", 'output');
       }, 1000);
 
       const timer4 = setTimeout(() => {
@@ -316,23 +323,22 @@ export const DecisionTerminal: React.FC<DecisionTerminalProps> = ({ onApply }) =
 
   return (
     <div ref={containerRef} className="w-full">
-      <TerminalGlowEffect isVisible={!isMinimized && !isFullscreen} nebulaInset={8}>
-        <TerminalWindow
-          title="decision@switchup:~"
-          height="320px"
-          minimizedContent={<MinimizedContent />}
-          onClose={handleClose}
-          onMinimizedChange={setIsMinimized}
-          onFullscreenChange={setIsFullscreen}
-          exitDialogTitle="Exit without applying?"
-          exitDialogDescription={
-            <div className="text-secondary text-sm space-y-2">
-              <p>You can always return to explore more.</p>
-              <p className="text-muted text-xs italic">"The best time to plant a tree was 20 years ago. The second best time is now."</p>
-            </div>
-          }
-          headerRightContent={<PhaseIndicator phase={phase} />}
-        >
+      <TerminalWindow
+        title="decision@switchup:~"
+        height="320px"
+        minimizedContent={<MinimizedContent />}
+        onClose={handleClose}
+        onMinimizedChange={setIsMinimized}
+        onFullscreenChange={setIsFullscreen}
+        exitDialogTitle="Exit without applying?"
+        exitDialogDescription={
+          <div className="text-secondary text-sm space-y-2">
+            <p>You can always return to explore more.</p>
+            <p className="text-muted text-xs italic">"The best time to plant a tree was 20 years ago. The second best time is now."</p>
+          </div>
+        }
+        headerRightContent={<PhaseIndicator phase={phase} />}
+      >
           {/* Terminal Content - click anywhere to focus input */}
           <ContextAwareClickArea
             getClickHandler={terminal.getClickToFocusHandler}
@@ -368,8 +374,7 @@ export const DecisionTerminal: React.FC<DecisionTerminalProps> = ({ onApply }) =
               </div>
             </form>
           </ContextAwareClickArea>
-        </TerminalWindow>
-      </TerminalGlowEffect>
+      </TerminalWindow>
     </div>
   );
 };

@@ -111,7 +111,7 @@ export function ExplorerMainContent({
 
                                         <button
                                             onClick={() => onViewModeChange('intermediate')}
-                                            className={`relative z-10 px-6 py-2 rounded text-xs font-mono transition-all w-[180px] flex items-center justify-center gap-2 ${viewMode === 'intermediate' ? 'text-blue-400' : 'text-muted hover:text-secondary'
+                                            className={`relative z-10 px-6 py-2 rounded text-xs font-mono transition-all w-[180px] flex items-center justify-center gap-2 ${viewMode === 'intermediate' ? 'text-primary' : 'text-muted hover:text-secondary'
                                                 }`}
                                         >
                                             <Activity size={14} /> INTERMEDIATE
@@ -141,7 +141,7 @@ export function ExplorerMainContent({
                                             className="space-y-8"
                                         >
                                             <div>
-                                                <div className={`text-sm font-bold mb-2 uppercase tracking-wider ${viewMode === 'intermediate' ? 'text-blue-400' : 'text-green-400'}`}>
+                                                <div className={`text-sm font-bold mb-2 uppercase tracking-wider ${viewMode === 'intermediate' ? 'text-muted' : 'text-green-400'}`}>
                                                     {viewMode === 'intermediate' ? activeSpace.intermediate.role : activeSpace.target.role}
                                                 </div>
                                                 <p className="text-xl text-primary leading-relaxed font-light">
@@ -157,7 +157,7 @@ export function ExplorerMainContent({
                                                     {(viewMode === 'intermediate' ? activeSpace.intermediate.activities : activeSpace.target.activities).map((activity, i) => (
                                                         <div key={i} className="p-4 rounded-lg bg-surface-dark border border-border flex items-start gap-3 hover:border-border-hover transition-colors">
                                                             {viewMode === 'intermediate' ? (
-                                                                <Activity size={16} className="text-blue-500 shrink-0 mt-0.5" />
+                                                                <Activity size={16} className="text-primary shrink-0 mt-0.5" />
                                                             ) : (
                                                                 <Zap size={16} className="text-green-500 shrink-0 mt-0.5" />
                                                             )}

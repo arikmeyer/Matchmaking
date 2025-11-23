@@ -12,7 +12,7 @@ const BehindTheScenesModal = lazy(() => import('./components/BehindTheScenesModa
 const ApplicationModal = lazy(() => import('./components/ApplicationModal').then(m => ({ default: m.ApplicationModal })));
 
 // Import utility components (small, used everywhere)
-import { GlitchText, SectionHeader, ErrorBoundary, TerminalWindow, TerminalWindowHeader, FullscreenModal, ExitConfirmDialog, ProblemSpaces, DecisionTerminal, TerminalGlowEffect, TechStackCard, FlipCard, TerminalOutput } from './components';
+import { GlitchText, SectionHeader, ErrorBoundary, TerminalWindow, ContextAwareInput, ContextAwareClickArea, ExitConfirmDialog, ProblemSpaces, DecisionTerminal, TechStackCard, FlipCard, TerminalOutput } from './components';
 
 // Import constants
 import { LOG_MESSAGES, TECH_STACK, QUIZ_QUESTIONS, BEHIND_THE_SCENES_VIDEOS } from './constants';
@@ -28,43 +28,44 @@ import { HOME_DIR } from './commands';
 // Other components (BootSequence, VideoModal, GlitchText, SectionHeader) are imported from ./components
 
 const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExitConfirm, onApply }: { onMinimizedChange?: (isMinimized: boolean) => void, onFullscreenChange?: (isFullscreen: boolean) => void, onShowExitConfirm?: () => void, onApply?: () => void }) => {
+    // Track window state for terminal hook (TerminalWindow handles the actual state internally)
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [isMinimized, setIsMinimized] = useState(false);
 
     // React 19 useQuizState hook with useOptimistic for instant UI feedback
     const quizHook = useQuizState(QUIZ_QUESTIONS);
 
-    // Quiz results renderer
+    // Quiz results renderer - mutual discovery framing
     const renderQuizResults = (finalScore: number) => (
         <div className="mt-4 p-4 border border-default rounded bg-card-subtle">
-            <div className="text-primary font-bold mb-2 text-lg">DIAGNOSTIC COMPLETE</div>
-            <div className="font-mono mb-4">SCORE: {finalScore}/{QUIZ_QUESTIONS.length}</div>
+            <div className="text-cyan-400 font-bold mb-2 text-lg">DISCOVERY COMPLETE</div>
+            <div className="font-mono mb-4 text-muted">Clicks: {finalScore}/{QUIZ_QUESTIONS.length}</div>
 
             {finalScore >= 8 ? (
                 <div className="space-y-2">
-                    <div className="text-terminal-green font-bold">&gt;&gt; COMPATIBILITY CONFIRMED ({Math.round((finalScore / QUIZ_QUESTIONS.length) * 100)}%)</div>
-                    <div className="text-primary">You have the mindset we're looking for.</div>
-                    <div className="text-muted text-xs">Initiating application sequence...</div>
+                    <div className="text-terminal-green font-bold">&gt;&gt; LOTS OF CLICKS ({Math.round((finalScore / QUIZ_QUESTIONS.length) * 100)}%)</div>
+                    <div className="text-primary">Looks like we think similarly about building things.</div>
+                    <div className="text-muted text-xs">(That's rare. We notice.)</div>
                     <div className="mt-2 p-2 bg-nested border border-border rounded text-green-300">
-                        Run <span className="text-primary font-bold">apply</span> to claim your spot.
+                        Curious to explore further? Run <span className="text-primary font-bold">apply</span> to start the conversation.
                     </div>
                 </div>
             ) : finalScore >= 6 ? (
                 <div className="space-y-2">
-                    <div className="text-amber-400 font-bold">&gt;&gt; MIXED SIGNALS DETECTED</div>
-                    <div className="text-primary">You have some of the traits we value, but there are gaps.</div>
-                    <div className="text-secondary">Consider whether full ownership of ambiguous problem spaces excites or exhausts you.</div>
-                    <div className="text-muted text-sm mt-2">If you're energized by that challenge, let's talk anyway. Run <span className="text-primary">apply</span>.</div>
+                    <div className="text-amber-400 font-bold">&gt;&gt; SOME CLICKS, SOME TENSION</div>
+                    <div className="text-primary">We agree on some things, differ on others.</div>
+                    <div className="text-secondary">That's not necessarily bad—diverse perspectives can strengthen a team.</div>
+                    <div className="text-muted text-sm mt-2">If the tension feels interesting rather than exhausting, let's talk. Run <span className="text-primary">apply</span>.</div>
                 </div>
             ) : (
                 <div className="space-y-2">
-                    <div className="text-red-400 font-bold">&gt;&gt; LOW ALIGNMENT DETECTED</div>
-                    <div className="text-primary">Based on these answers, Switchup likely won't make you happy.</div>
-                    <div className="text-secondary">You might thrive in an environment with:</div>
-                    <div className="text-muted text-sm pl-4">• Clear product specs and roadmaps</div>
-                    <div className="text-muted text-sm pl-4">• Defined scope and predictable deliverables</div>
+                    <div className="text-red-400 font-bold">&gt;&gt; MOSTLY TENSION</div>
+                    <div className="text-primary">We seem to have different philosophies about building things.</div>
+                    <div className="text-secondary">You might enjoy an environment with:</div>
+                    <div className="text-muted text-sm pl-4">• Clear product specs and defined roadmaps</div>
+                    <div className="text-muted text-sm pl-4">• Predictable scope and stable deliverables</div>
                     <div className="text-muted text-sm pl-4">• Separation between 'building' and 'deciding what to build'</div>
-                    <div className="text-amber-500 text-xs mt-3">That's a valid choice. Different people thrive in different environments.</div>
+                    <div className="text-amber-500 text-xs mt-3">Neither approach is wrong—different people thrive in different environments. Thanks for exploring with us.</div>
                 </div>
             )}
         </div>
@@ -89,98 +90,27 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
         isFullscreen,
     });
 
-    // Handle escape key to close fullscreen
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape' && isFullscreen) {
-                setIsFullscreen(false);
-            }
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isFullscreen]);
-
-    // Notify parent when fullscreen changes
-    useEffect(() => {
-        onFullscreenChange?.(isFullscreen);
-    }, [isFullscreen, onFullscreenChange]);
-
-    // Handle minimize with proper animation sequencing
-    const handleMinimizeToggle = () => {
-        if (!isMinimized) {
-            onMinimizedChange?.(true);
-            setTimeout(() => setIsMinimized(true), 250);
-        } else {
-            setIsMinimized(false);
-            setTimeout(() => onMinimizedChange?.(false), 750);
-        }
+    // Sync state changes to parent
+    const handleMinimizedChange = (minimized: boolean) => {
+        setIsMinimized(minimized);
+        onMinimizedChange?.(minimized);
     };
 
-    // Terminal content (shared between normal and fullscreen modes)
-    const terminalContent = (isFullscreenMode: boolean) => (
-        <>
-            <TerminalWindowHeader
-                title="zsh - future@switchup.tech"
-                isFullscreen={isFullscreenMode}
-                onClose={() => onShowExitConfirm?.()}
-                onMinimize={() => {
-                    if (isFullscreenMode) {
-                        onMinimizedChange?.(true);
-                        setIsMinimized(true);
-                        setIsFullscreen(false);
-                    } else {
-                        handleMinimizeToggle();
-                    }
-                }}
-                onFullscreenToggle={() => setIsFullscreen(!isFullscreen)}
-            />
+    const handleFullscreenChange = (fullscreen: boolean) => {
+        setIsFullscreen(fullscreen);
+        onFullscreenChange?.(fullscreen);
+    };
 
-            <div
-                className={`p-6 flex flex-col cursor-text ${isFullscreenMode ? 'flex-1 min-h-0' : 'h-[600px]'}`}
-                onClick={terminal.getClickToFocusHandler(isFullscreenMode)}
+    // Minimized content
+    const minimizedContent = (
+        <div className="h-[640px] flex flex-col items-center justify-center text-center space-y-6">
+            <motion.pre
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                className="text-terminal-green/80 text-xs leading-tight"
             >
-                <TerminalOutput
-                    lines={terminal.lines}
-                    scrollRef={terminal.scrollRef}
-                />
-                <form onSubmit={terminal.handleSubmit} className="mt-2 flex items-center gap-2 border-t border-default pt-2">
-                    <span className="text-cyan-500">switchup{terminal.currentDirectory === HOME_DIR ? '' : `/${terminal.currentDirectory.replace(HOME_DIR, '').replace(/^\//, '')}`}</span>
-                    <span className="text-terminal-green"> {'>'}</span>
-                    <input
-                        ref={terminal.getInputRef(isFullscreenMode)}
-                        type="text"
-                        value={terminal.input}
-                        onChange={(e) => terminal.setInput(e.target.value)}
-                        onKeyDown={(e) => terminal.handleKeyDown(e, isFullscreenMode)}
-                        className="terminal-input w-full"
-                        placeholder="Type a command or 'help'..."
-                    />
-                </form>
-            </div>
-        </>
-    );
-
-    return (
-        <div className="relative">
-            <AnimatePresence mode="wait" initial={false}>
-                {isMinimized ? (
-                    <motion.div
-                        key="minimized"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.3 }}
-                        className="font-mono text-sm cursor-pointer group h-[640px] flex flex-col items-center justify-center"
-                        onClick={handleMinimizeToggle}
-                    >
-                        <div className="text-center space-y-6 relative">
-                            <motion.pre
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.2 }}
-                                className="text-terminal-green/80 text-xs leading-tight"
-                            >
-                                {`
+                {`
     /\\_____/\\
    /  o   o  \\
   ( ==  ^  == )
@@ -189,65 +119,66 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
  ( (  )   (  ) )
 (__(__)___(__)__)
 `}
-                            </motion.pre>
+            </motion.pre>
 
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.4 }}
-                                className="space-y-3"
-                            >
-                                <div className="text-2xl font-bold text-primary">
-                                    🏖️ Terminal went on vacation
-                                </div>
-                                <div className="text-secondary text-sm">
-                                    Even AI-powered terminals need a break sometimes.
-                                </div>
-                            </motion.div>
-
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: [0.5, 1, 0.5] }}
-                                transition={{ delay: 0.6, duration: 2, repeat: Infinity }}
-                                className="text-terminal-green font-mono text-sm mt-6"
-                            >
-                                <span className="text-muted">$</span> await terminal.wakeUp()
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                ) : (
-                    <motion.div
-                        key="terminal"
-                        initial={{ opacity: 0, scaleX: 0.2, scaleY: 0.05, y: 300 }}
-                        animate={{
-                            opacity: isFullscreen ? 0 : 1,
-                            scaleX: isFullscreen ? 1.02 : 1,
-                            scaleY: isFullscreen ? 1.02 : 1,
-                            y: 0
-                        }}
-                        exit={{
-                            opacity: 0,
-                            scaleX: 0.2,
-                            scaleY: 0.05,
-                            y: 300,
-                            transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] }
-                        }}
-                        transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-                        style={{ transformOrigin: 'bottom center' }}
-                        className={`terminal-card font-mono text-sm ${isFullscreen ? 'pointer-events-none' : ''}`}
-                    >
-                        {terminalContent(false)}
-                    </motion.div>
-                )}
-            </AnimatePresence>
-
-            <FullscreenModal
-                isOpen={isFullscreen}
-                onClose={() => setIsFullscreen(false)}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="space-y-3"
             >
-                {terminalContent(true)}
-            </FullscreenModal>
+                <div className="text-2xl font-bold text-primary">
+                    Terminal went on vacation
+                </div>
+                <div className="text-secondary text-sm">
+                    Even AI-powered terminals need a break sometimes.
+                </div>
+            </motion.div>
+
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ delay: 0.6, duration: 2, repeat: Infinity }}
+                className="text-terminal-green font-mono text-sm mt-6"
+            >
+                <span className="text-muted">$</span> await terminal.wakeUp()
+            </motion.div>
         </div>
+    );
+
+    return (
+        <TerminalWindow
+            title="zsh - future@switchup.tech"
+            height="600px"
+            minimizedContent={minimizedContent}
+            onClose={onShowExitConfirm}
+            onMinimizedChange={handleMinimizedChange}
+            onFullscreenChange={handleFullscreenChange}
+        >
+            {/* Terminal Content - uses ContextAwareClickArea for proper focus management */}
+            <ContextAwareClickArea
+                getClickHandler={terminal.getClickToFocusHandler}
+                className="p-6 flex-1 min-h-0 flex flex-col cursor-text"
+            >
+                <TerminalOutput
+                    lines={terminal.lines}
+                    scrollRef={terminal.scrollRef}
+                />
+                <form onSubmit={terminal.handleSubmit} className="mt-2 flex items-center gap-2 border-t border-default pt-2">
+                    <span className="text-cyan-500">switchup{terminal.currentDirectory === HOME_DIR ? '' : `/${terminal.currentDirectory.replace(HOME_DIR, '').replace(/^\//, '')}`}</span>
+                    <span className="text-terminal-green"> {'>'}</span>
+                    <ContextAwareInput
+                        getInputRef={terminal.getInputRef}
+                        type="text"
+                        value={terminal.input}
+                        onChange={(e) => terminal.setInput(e.target.value)}
+                        onKeyDown={(e) => terminal.handleKeyDown(e, isFullscreen)}
+                        className="terminal-input w-full"
+                        placeholder="Type a command or 'help'..."
+                    />
+                </form>
+            </ContextAwareClickArea>
+        </TerminalWindow>
     );
 };
 
@@ -298,7 +229,7 @@ export default function SwitchupOperatingSystem() {
     // Easter egg: Console messages for developers
     useEffect(() => {
         console.log('%c👋 Hey there, curious developer!', 'color: #22c55e; font-size: 20px; font-weight: bold;');
-        console.log('%cWe see you peeking under the hood. That\'s exactly what we\'re looking for.', 'color: #a3a3a3; font-size: 14px;');
+        console.log('%cWe see you peeking under the hood. That\'s the kind of curiosity we appreciate.', 'color: #a3a3a3; font-size: 14px;');
         console.log('%c💼 Interested? Run: console.log(\'apply\') or email future-colleagues@switchup.tech', 'color: #22c55e; font-size: 12px;');
         console.log('%c🎮 Try typing "konami" in the terminal...', 'color: #737373; font-size: 10px; font-style: italic;');
     }, []);
@@ -388,8 +319,8 @@ export default function SwitchupOperatingSystem() {
                 console.log(`%c${totalVisits} visits across ${uniqueDays} days. That\'s not browsing. That\'s commitment.`, 'color: #d1d5db; font-size: 13px;');
                 console.log('%c', ''); // spacing
                 console.log('%cHere\'s the thing:', 'color: #a3a3a3; font-size: 12px;');
-                console.log('%cWe track this because persistence is our #1 hiring signal.', 'color: #22c55e; font-size: 12px;');
-                console.log('%cYou just proved you have it. Now prove you can build.', 'color: #22c55e; font-size: 12px;');
+                console.log('%cWe notice persistence. It says a lot about how someone approaches problems.', 'color: #22c55e; font-size: 12px;');
+                console.log('%cYou clearly have it. Curious what else you can do?', 'color: #22c55e; font-size: 12px;');
                 console.log('%c', ''); // spacing
                 console.log('%c📧 future-colleagues@switchup.tech', 'color: #ef4444; font-size: 15px; background: #1a1a1a; padding: 8px; font-weight: bold;');
                 console.log('%cSubject: "I visited your site ${totalVisits} times. Now can we talk?"', 'color: #737373; font-size: 11px; font-style: italic;');
@@ -443,7 +374,7 @@ export default function SwitchupOperatingSystem() {
         } else if (newCount === 10) {
             alert('🚀 Easter Egg Found! You\'re persistent. We like that. Check the console.');
             console.log('%c🏆 ULTRA ACHIEVEMENT: "The Persistent One"', 'color: #22c55e; font-size: 20px; font-weight: bold;');
-            console.log('%cSeriously though, if you\'re this thorough, you should apply.', 'color: #22c55e; font-size: 14px;');
+            console.log('%cSeriously though, this level of thoroughness? We should probably talk.', 'color: #22c55e; font-size: 14px;');
         }
     };
 
@@ -688,14 +619,12 @@ export default function SwitchupOperatingSystem() {
                         transition={{ delay: 0.5, duration: 0.8 }}
                         className="relative z-20"
                     >
-                        <TerminalGlowEffect isVisible={!terminalMinimized && !terminalFullscreen}>
                         <InteractiveTerminal
                             onMinimizedChange={setTerminalMinimized}
                             onFullscreenChange={setTerminalFullscreen}
                             onShowExitConfirm={() => setShowExitConfirm(true)}
                             onApply={() => setApplicationOpen(true)}
                         />
-                        </TerminalGlowEffect>
                     </motion.div>
                 </section>
 
@@ -790,7 +719,7 @@ export default function SwitchupOperatingSystem() {
                                             }`}
                                     >
                                         <span className="opacity-30 shrink-0">[{log.timestamp}]</span>
-                                        <span className="font-bold shrink-0 w-20">[{log.level}]</span>
+                                        <span className="shrink-0 w-20">[{log.level}]</span>
                                         <span>{log.message}</span>
                                     </motion.div>
                                 ))}

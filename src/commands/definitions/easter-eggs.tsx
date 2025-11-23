@@ -23,7 +23,7 @@ export const konamiCommand = defineCommand({
         <div className="text-terminal-green space-y-2">
           <div>Achievement Unlocked: "Konami Commander"</div>
           <div className="text-xs text-muted">You know the classics. We like that.</div>
-          <div className="text-amber-400 mt-2">+30 Culture Fit Points</div>
+          <div className="text-amber-400 mt-2">+30 Curiosity Points (we track those)</div>
         </div>
       ),
     });
@@ -48,13 +48,13 @@ export const sudoCommand = defineCommand({
           <div className="text-muted">[sudo] password for guest:</div>
           <div className="text-red-400">Permission denied.</div>
 
-          <div className="mt-2 text-secondary">You need to be hired first. Three paths:</div>
+          <div className="mt-2 text-secondary">Access requires mutual agreement. Three paths:</div>
           <div className="pl-4 text-muted">1. Run 'apply' (email us directly)</div>
           <div className="pl-4 text-muted">2. Click 'Initialize Application' (fancy modal)</div>
-          <div className="pl-4 text-muted">3. Keep exploring, find easter eggs, impress us</div>
+          <div className="pl-4 text-muted">3. Keep exploring, find easter eggs, maybe we click</div>
 
           <div className="mt-2 text-muted text-xs">
-            Protip: We actually read every application. No AI screening here.
+            Protip: We actually read every message. No AI screening here.
           </div>
         </div>
       ),
@@ -216,7 +216,7 @@ export const coffeeCommand = defineCommand({
       type: 'output',
       content: (
         <pre className="whitespace-pre font-mono text-terminal-yellow">
-{`
+          {`
     ( (
      ) )
   ........
@@ -226,8 +226,8 @@ export const coffeeCommand = defineCommand({
 
 Brewing...
 
-Remote work benefit: Unlimited coffee budget
-(You buy it, we don't judge the quantity)`}
+Office perk: Great coffee and even better matcha at Maybachufer
+(Come by. The espresso machine doesn't judge quantity)`}
         </pre>
       ),
     });
@@ -253,9 +253,9 @@ export const answerCommand = defineCommand({
             The Answer to Life, the Universe, and Everything.
           </div>
           <div className="text-muted mt-1">
-            Also the answer to: "How many providers have we integrated?"
+            Also the answer to: "How many problem spaces do we have?"
           </div>
-          <div className="text-muted">Well, 47 actually. But who's counting?</div>
+          <div className="text-muted">Well, 21 actually. Across 7 domains. But who's counting?</div>
         </div>
       ),
     });
@@ -280,12 +280,12 @@ export const helloCommand = defineCommand({
         <div>
           <div>Hello!</div>
           <div className="text-muted mt-1">
-            I'm the Switchup recruitment terminal. Here to help you explore if
-            we're a good fit.
+            I'm the Switchup matchmaking terminal. Here to help us figure out
+            if we'd click.
           </div>
           <div className="text-muted mt-1">
             Try 'help' to see available commands, or jump straight to 'culture'
-            for the fun part.
+            for mutual discovery.
           </div>
         </div>
       ),
@@ -311,10 +311,10 @@ export const thanksCommand = defineCommand({
         <div>
           <div>You're welcome!</div>
           <div className="text-terminal-green text-sm mt-1">
-            +5 culture points for being polite
+            +5 politeness points (we notice these things)
           </div>
           <div className="text-muted text-sm">
-            (Politeness goes a long way in async, remote teams)
+            (Politeness goes a long way in small teams)
           </div>
         </div>
       ),
@@ -441,10 +441,10 @@ export const makeCommand = defineCommand({
     const makeTargets: Record<string, string> = {
       love: "make: *** No rule to make target 'love'. Try 'make career'.",
       career: "Building career... Success! Now run 'apply' to deploy.",
-      coffee: "Brewing... Error: Remote work detected. BYO coffee.",
+      coffee: "Brewing... Success! Come to Maybachufer for the good stuff.",
       money: "make: *** 'money' requires 'career' first. Try 'make career'.",
       friends: 'Making friends... Found: future-colleagues@switchup.tech',
-      sandwich: "make: *** What? Make it yourself. Or join us for virtual lunch.",
+      sandwich: "make: *** What? Make it yourself. Or join us for lunch at the office.",
       install: "Installing dependencies... Ready. Run 'apply' to complete.",
     };
 
@@ -484,16 +484,16 @@ export const gitCommand = defineCommand({
           type: 'output',
           content: (
             <pre className="whitespace-pre-wrap font-mono text-sm">
-{`On branch: your-career
-Your branch is behind 'origin/dream-job' by 1 commit.
+              {`On branch: your-journey
+Your branch is behind 'origin/interesting-paths' by 1 commit.
   (use "apply" to fast-forward)
 
-Untracked opportunities:
-  (use "apply" to begin tracking)
+Untracked possibilities:
+  (use "apply" to begin exploring)
 
-        switchup-position.md
+        switchup-conversation.md
 
-nothing added to commit but untracked opportunities present`}
+nothing added to commit but untracked possibilities present`}
             </pre>
           ),
         });
@@ -504,23 +504,23 @@ nothing added to commit but untracked opportunities present`}
           type: 'output',
           content: (
             <pre className="whitespace-pre-wrap font-mono text-sm">
-{`commit 7d3f2a1 (HEAD -> main)
+              {`commit 7d3f2a1 (HEAD -> main)
 Author: Switchup Team <future-colleagues@switchup.tech>
 Date:   Nov 2024
 
-    feat: Launched recruitment terminal
+    feat: Launched matchmaking terminal
 
 commit 4b2e8c9
 Author: Engineering <eng@switchup.tech>
 Date:   Oct 2024
 
-    feat: Reached 47 provider integrations
+    refactor: Three-layer architecture (Orchestrator/Capabilities/Record)
 
 commit 1a9d4f2
-Author: Founders <founders@switchup.tech>
+Author: Founders <founder@switchup.tech>
 Date:   Sep 2024
 
-    chore: Closed Series A funding`}
+    docs: Added Marktfairänderung philosophy`}
             </pre>
           ),
         });
@@ -629,21 +629,21 @@ export const neofetchCommand = defineCommand({
       type: 'output',
       content: (
         <pre className="whitespace-pre font-mono text-xs leading-tight">
-{`
-   _____ _    _ _____ _____ _____ _    _ _    _  candidate@switchup
+          {`
+   _____ _    _ _____ _____ _____ _    _ _    _  explorer@switchup
   / ____| |  | |_   _|_   _/ ____| |  | | |  | | -----------------
  | (___ | |  | | | |   | || |    | |__| | |  | | OS: SwitchupOS 2024.1 LTS
-  \\___ \\| |  | | | |   | || |    |  __  | |  | | Host: Recruitment Terminal
+  \\___ \\| |  | | | |   | || |    |  __  | |  | | Host: Matchmaking Terminal
   ____) | |__| |_| |_ _| || |____| |  | | |__| | Kernel: React 19.0.0
- |_____/ \\____/|_____|_____\\_____|_|  |_|\\____/  Packages: 47 providers
+ |_____/ \\____/|_____|_____\\_____|_|  |_|\\____/  Domains: 7 (21 problem spaces)
                                                  Shell: bash 5.2.0
 
-  Stack: React, TypeScript, Neon, Windmill
-  Team: Small, senior, high-ownership
-  Location: Remote-first (EU)
-  Deploys: Multiple daily
+  Stack: Windmill, TypeScript+ZOD, Playwright, AI
+  Team: Small by design, problem space owners
+  Location: Berlin @ Maybachufer
+  Philosophy: Marktfairänderung
 
-  Run 'apply' to join`}
+  Run 'apply' if something clicks`}
         </pre>
       ),
     });
@@ -680,7 +680,7 @@ export const pingCommand = defineCommand({
         '--- switchup.tech ping statistics ---',
         '2 packets transmitted, 2 received, 0% packet loss',
         '',
-        'Connection status: HIRING',
+        'Connection status: EXPLORING_TOGETHER',
       ],
       'google.com': [
         'PING google.com: Packet redirected',
@@ -726,15 +726,15 @@ export const fortuneCommand = defineCommand({
   handler: (_parsed, ctx) => {
     const fortunes = [
       "Your career will thank you for running 'apply'.",
-      'A small team with big ambitions seeks you.',
-      'The best time to switch jobs was yesterday. The second best time is now.',
-      'In the land of complex integrations, the Universal Adapter is king.',
-      'Fortune favors the bold. And those who read job postings in terminals.',
+      'A small team with big ambitions. Perhaps we click.',
+      'The best time to start a conversation was yesterday. The second best time is now.',
+      'Marktfairänderung: Markets can be transformed toward fairness.',
+      'Fortune favors the bold. And those who explore matchmaking terminals.',
       "You will soon receive an interesting email... if you run 'apply'.",
       'The code you write today will shape subscriptions tomorrow.',
-      '47 providers integrated. 1 more engineer needed.',
-      "Remote work: because pants are optional, but great code isn't.",
-      'Meetings: few. Impact: high. Ownership: yours.',
+      '21 problem spaces. 7 domains. Room for one more explorer.',
+      'Berlin HQ at Maybachufer: canal views, good coffee, great code.',
+      'Meetings: few. Impact: high. Problem space ownership: yours.',
     ];
 
     const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
@@ -762,14 +762,14 @@ export const cowsayCommand = defineCommand({
   hidden: true,
 
   handler: (parsed, ctx) => {
-    const message = parsed.args.join(' ') || 'Join Switchup!';
+    const message = parsed.args.join(' ') || 'Moo. Run apply.';
     const border = '-'.repeat(message.length + 2);
 
     ctx.addOutput({
       type: 'output',
       content: (
         <pre className="whitespace-pre font-mono text-sm">
-{` ${border}
+          {` ${border}
 < ${message} >
  ${border}
         \\   ^__^
@@ -799,7 +799,7 @@ export const slCommand = defineCommand({
       type: 'output',
       content: (
         <pre className="whitespace-pre font-mono text-xs text-terminal-yellow">
-{`
+          {`
       ====        ________                ___________
   _D _|  |_______/        \\__I_I_____===__|_________|
    |(_)---  |   H\\________/ |   |        =|___ ___|
@@ -853,7 +853,7 @@ export const sshCommand = defineCommand({
             <div className="text-terminal-green">Connection established.</div>
             <div className="mt-2">Welcome to Switchup.</div>
             <div className="text-muted text-sm">
-              To complete onboarding, run 'apply'
+              To continue exploring, run 'apply'
             </div>
           </div>
         ),
@@ -894,46 +894,46 @@ export const manCommand = defineCommand({
         name: 'stack',
         shortDesc: 'Display Switchup technology stack',
         description: `Shows the complete technology stack used at Switchup,
-including our engineering bets and the reasoning behind each choice.
-
-We believe in transparency about our technical decisions.
-Every tool was chosen deliberately, and we're happy to discuss why.`,
+including our engineering bets and the reasoning behind each choice.`,
       },
       apply: {
         name: 'apply',
-        shortDesc: 'Initialize job application sequence',
-        description: `Starts the application process for joining Switchup.
+        shortDesc: 'Start a conversation about working together',
+        description: `Opens the door to explore working together.
 
-We don't use AI to screen applications - real humans read every one.
+We don't use AI to screen conversations - real humans read every message.
 Include what excites you about what we're building and a project
-you're proud of.`,
+you're proud of. We'll take it from there.`,
       },
       culture: {
         name: 'culture',
-        shortDesc: 'Start the culture fit diagnostic',
-        description: `Interactive 10-question diagnostic to evaluate mutual fit.
+        shortDesc: 'Start the mutual discovery quiz',
+        description: `Interactive 10-question quiz for mutual discovery.
 
 This isn't a test - it's a conversation starter. The questions reveal
-what it's actually like to work here so you can decide if it's right
-for you.`,
+what it's actually like to work here so we can both decide if we'd
+click.`,
       },
       switchup: {
         name: 'switchup',
         shortDesc: 'About Switchup',
-        description: `Switchup is building the Universal Adapter for subscriptions.
+        description: `Switchup is building a Subscription Operating System.
 
-THE PROBLEM
-Switching subscriptions (energy, insurance, telecom) is broken.
-Every provider has different APIs, data formats, and processes.
-Consumers are stuck because switching is too hard.
+WHY: MARKTFAIRÄNDERUNG
+Markets should reward value, not exploit inattention.
+We believe technology can transform markets toward fairness.
 
-THE SOLUTION
-One unified API that handles all the complexity.
-We make switching as easy as a single API call.
+HOW: FREUNDSCHAFTSPRINZIP
+What would a good friend do? We recommend what's best
+for users—even if we don't earn anything.
+
+WHAT: NEVER OVERCHARGED AGAIN
+Not a switching service. An operating system that monitors,
+detects, acts, and protects. Continuously.
 
 THE TEAM
-Small, senior, high-ownership. Based in Europe, remote-first.
-We ship multiple times a day and own what we build.`,
+Small by design. Problem space owners, not ticket pushers.
+Each of us acts as an AI orchestrator for our domains.`,
       },
       ls: {
         name: 'ls',
@@ -977,7 +977,7 @@ Try: cat README.md
 
 Usage: pwd
 
-The home directory is /home/candidate/switchup (aka ~)`,
+The home directory is /home/explorer/switchup (aka ~)`,
       },
       help: {
         name: 'help',
@@ -1035,16 +1035,16 @@ export const psCommand = defineCommand({
       type: 'output',
       content: (
         <pre className="whitespace-pre font-mono text-sm">
-{`  PID TTY          TIME CMD
-    1 pts/0    00:00:01 subscription-matcher --optimize
-    2 pts/0    00:00:00 candidate-evaluator --target=you
-    3 pts/0    00:00:02 universal-adapter --providers=47
-    4 pts/0    00:00:00 culture-fit-analyzer --running
-    5 pts/0    00:00:01 opportunity-detector --status=active
+          {`  PID TTY          TIME CMD
+    1 pts/0    00:00:01 process-orchestrator --domains=7
+    2 pts/0    00:00:00 matchmaking-engine --mode=mutual
+    3 pts/0    00:00:02 capability-domain --type=offer
+    4 pts/0    00:00:00 discovery-quiz --awaiting-explorer
+    5 pts/0    00:00:01 system-of-record --lifecycle
     6 pts/0    00:00:00 ps
 
-Pro tip: These processes are looking for a new maintainer.
-Run 'apply' to take ownership.`}
+Pro tip: These processes could use a problem space owner. Is that you?
+Run 'apply' if something clicks.`}
         </pre>
       ),
     });
@@ -1064,7 +1064,7 @@ export const idCommand = defineCommand({
   handler: (_parsed, ctx) => {
     ctx.addOutput({
       type: 'output',
-      content: 'uid=1000(candidate) gid=1000(potential-hire) groups=1000(future-colleagues),27(sudo-worthy)',
+      content: 'uid=1000(explorer) gid=1000(mutual-discovery) groups=1000(future-colleagues),27(sudo-worthy)',
     });
     return { handled: true };
   },
@@ -1125,7 +1125,7 @@ export const pleaseCommand = defineCommand({
         content: (
           <div>
             <div>Since you asked nicely... </div>
-            <div className="text-terminal-green text-sm">+2 culture points for politeness</div>
+            <div className="text-terminal-green text-sm">+2 politeness points</div>
             <div className="text-muted text-sm mt-1">Now try running '{actualCommand}' directly.</div>
           </div>
         ),
@@ -1133,27 +1133,10 @@ export const pleaseCommand = defineCommand({
     } else {
       ctx.addOutput({
         type: 'output',
-        content: 'Please what? We appreciate the politeness though. +2 culture points.',
+        content: 'Please what? We appreciate the politeness though. +2 points.',
       });
     }
     return { handled: true };
   },
 });
 
-/**
- * WHY - The existential question
- */
-export const whyCommand = defineCommand({
-  name: 'why',
-  description: 'Ask why',
-  category: 'easter-egg',
-  hidden: true,
-
-  handler: (_parsed, ctx) => {
-    ctx.addOutput({
-      type: 'output',
-      content: 'Because subscriptions are broken, and someone needs to fix them. Why not you?',
-    });
-    return { handled: true };
-  },
-});

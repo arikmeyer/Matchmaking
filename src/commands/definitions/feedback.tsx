@@ -130,11 +130,11 @@ export const feedbackCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2 space-y-1">
             <div>Why share feedback?</div>
-            <div className="pl-2">• Help us improve the candidate experience</div>
+            <div className="pl-2">• Help us improve this experience</div>
             <div className="pl-2">• Let us know what resonated (or didn't)</div>
             <div className="pl-2">• Stay on our radar for future opportunities</div>
             <div className="mt-2 text-amber-500/80">
-              Tip: Even "I'm not the right fit because..." is valuable feedback.
+              Tip: Even "we're not a good match because..." is valuable feedback.
             </div>
           </div>
         </div>
