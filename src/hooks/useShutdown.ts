@@ -33,12 +33,11 @@ export function useShutdown(onComplete?: () => void) {
         setPhase('shutting-down');
     }, []);
 
-    // Shutdown animation sequence
+    // Shutdown animation sequence (progress 0-100%)
     useEffect(() => {
         if (phase !== 'shutting-down') return;
 
         let currentProgress = 0;
-        let completionTimer: ReturnType<typeof setTimeout> | null = null;
 
         const interval = setInterval(() => {
             currentProgress += 5;
@@ -47,19 +46,22 @@ export function useShutdown(onComplete?: () => void) {
             if (currentProgress >= 100) {
                 clearInterval(interval);
                 setPhase('complete');
-
-                // Call completion callback after a brief delay
-                completionTimer = setTimeout(() => {
-                    onCompleteRef.current?.();
-                }, 500);
             }
         }, 50); // Update every 50ms for smooth progress
 
-        return () => {
-            clearInterval(interval);
-            if (completionTimer) clearTimeout(completionTimer);
-        };
-    }, [phase]); // Only depend on phase - callback is accessed via ref
+        return () => clearInterval(interval);
+    }, [phase]);
+
+    // Call completion callback after shutdown completes (separate effect to avoid cleanup race)
+    useEffect(() => {
+        if (phase !== 'complete') return;
+
+        const timer = setTimeout(() => {
+            onCompleteRef.current?.();
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [phase]);
 
     // Auto-start shutdown after initiation delay
     useEffect(() => {
