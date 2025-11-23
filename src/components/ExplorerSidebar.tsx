@@ -50,7 +50,7 @@ export function ExplorerSidebar({
             </div>
 
             {/* Item list */}
-            <div className="flex-1 overflow-y-auto p-2 space-y-1">
+            <div className="flex-1 overflow-y-auto scrollbar-hide p-2 space-y-1">
                 {items.map((item, index) => {
                     const isActive = selectedItemId === item.id;
                     const showCategory = index === 0 || item.category !== items[index - 1].category;
