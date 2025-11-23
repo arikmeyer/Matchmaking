@@ -47,6 +47,15 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
 
     const handlePasswordSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        // ╔═══════════════════════════════════════════════════════════════════╗
+        // ║  > SECURITY SCAN COMPLETE                                         ║
+        // ║  > ENCRYPTION: military-grade (it's a plaintext string)           ║
+        // ║  > BACKEND: lol                                                   ║
+        // ║  > THREAT MODEL: "please don't look"                              ║
+        // ║                                                                   ║
+        // ║  If Ctrl+U was your first instinct, you're our kind of person.    ║
+        // ║  Skip the theater and just apply: future-colleagues@switchup.tech ║
+        // ╚═══════════════════════════════════════════════════════════════════╝
         if (password === 'SwitchMeUp') {
             setLines(prev => [...prev, `[PASSWORD] ${'*'.repeat(password.length)}`, 'ACCESS GRANTED.']);
             setTimeout(onComplete, 600);

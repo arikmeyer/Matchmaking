@@ -11,7 +11,7 @@ This is the end-to-end story of how the system fulfills one of its core "contrac
 **The Action:** The architect makes a series of high-level, strategic decisions that define the "stage" for our play:
 
 1. **Partitioning:** "We will not build one giant 'SwitchUp' service. We will have separate, specialized services. There will be one for managing the core truth of a contract's state (/lifecycle), one for orchestrating business processes (/case), one for making smart decisions (/optimisation), one for talking to users (/service), and so on."
-2. **Defining Boundaries:** "The /case domain is the 'Brain' and the only part of the system allowed to orchestrate. All other domains are 'Limbs' or 'Tools' that are forbidden from talking to each other. They can only be called by the Brain, and they can all reference the foundational 'Spine' of truth, /lifecycle."
+2. **Defining Boundaries:** "The /case domain is the Process Orchestrator—the only part of the system allowed to coordinate across domains. All other domains are Capability Domains that are forbidden from talking to each other. They can only be called by the Orchestrator, and they can all query the System of Record (/lifecycle) for truth."
 3. **Setting the Stage:** DDD has drawn the map of the world. It has defined the domains and the fundamental rules of interaction. It has built the restaurant with its separate kitchen zones.
 
 **The Outcome:** We have a stable, logical, and well-defined architectural framework.

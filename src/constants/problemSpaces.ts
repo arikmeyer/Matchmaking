@@ -12,6 +12,87 @@ import type { DomainId, ProblemSpace } from '../types';
  * intermediate states, target states, and prerequisites.
  */
 export const PROBLEM_SPACES: Record<DomainId, ProblemSpace[]> = {
+    lifecycle: [
+        {
+            id: 'state-integrity',
+            title: 'State Integrity',
+            subtitle: 'Single Source of Truth',
+            problem: 'Without a canonical source of truth, different systems develop conflicting views of business state, leading to data inconsistencies and reconciliation nightmares.',
+            outcome: 'One authoritative, validated, auditable record of all core business entities—Contracts, Users, Tasks—that all other layers trust implicitly.',
+            intermediate: {
+                role: 'Lifecycle Admin as Operator',
+                description: 'Humans maintain data models, write migration scripts, and manually ensure consistency across dependent services.',
+                activities: [
+                    'Design and evolve data schemas',
+                    'Write and test migration scripts',
+                    'Manually reconcile data conflicts'
+                ]
+            },
+            target: {
+                role: 'Lifecycle Admin as Supervisor',
+                description: 'AI assists with schema evolution impact analysis, detects anomalies in data patterns, and suggests optimizations.',
+                activities: [
+                    'AI analyzes schema change impacts',
+                    'AI detects data anomalies',
+                    'Humans approve structural changes'
+                ]
+            },
+            prerequisites: ['Event sourcing foundation', 'Schema versioning', 'Anomaly detection models']
+        },
+        {
+            id: 'business-intent',
+            title: 'Business Intent Catalog',
+            subtitle: 'Validated Operations',
+            problem: 'Generic CRUD operations allow invalid state transitions, bypass business rules, and create states that "should never happen."',
+            outcome: 'An intent-driven API of atomic business operations that encode all rules—every caller uses validated verbs like ConfirmActivation, not raw field updates.',
+            intermediate: {
+                role: 'Lifecycle Admin as Operator',
+                description: 'Humans define intent operations, manually validate preconditions, and test state transitions for edge cases.',
+                activities: [
+                    'Define new business intents',
+                    'Implement validation rules',
+                    'Test state transition coverage'
+                ]
+            },
+            target: {
+                role: 'Lifecycle Admin as Supervisor',
+                description: 'AI suggests new intents from usage patterns, validates operation safety, and generates comprehensive test cases.',
+                activities: [
+                    'AI identifies missing intents',
+                    'AI generates validation tests',
+                    'Humans design intent semantics'
+                ]
+            },
+            prerequisites: ['Intent definition framework', 'Precondition engine', 'Test generation AI']
+        },
+        {
+            id: 'temporal-projections',
+            title: 'Temporal Projections',
+            subtitle: 'Past, Present & Future',
+            problem: 'Systems only know current state—they can\'t answer "what was the state on March 1st?" or "what will happen if no action is taken?"',
+            outcome: 'Rich temporal queries that reveal how state evolved, provide complete audit trails, and project deterministic future states.',
+            intermediate: {
+                role: 'Lifecycle Admin as Operator',
+                description: 'Humans write specific projection queries, manually calculate future states for reports, and build point-in-time snapshots.',
+                activities: [
+                    'Build temporal query logic',
+                    'Calculate future projections',
+                    'Generate audit reports'
+                ]
+            },
+            target: {
+                role: 'Lifecycle Admin as Supervisor',
+                description: 'AI generates projections on demand, predicts state evolution, and surfaces insights from temporal patterns.',
+                activities: [
+                    'AI answers temporal queries',
+                    'AI predicts state trajectories',
+                    'Humans define projection rules'
+                ]
+            },
+            prerequisites: ['Event store with replay', 'Projection engine', 'Temporal query language']
+        }
+    ],
+
     offer: [
         {
             id: 'modelling',

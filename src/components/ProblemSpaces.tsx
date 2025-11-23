@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     Database, TrendingUp, GitPullRequest, Server, User, Zap,
-    Brain, Network, Layers, Sparkles, Lightbulb, Users, GitMerge
+    Brain, Network, Layers, Sparkles, Lightbulb, Users, GitMerge, Heart, Shield
 } from 'lucide-react';
 import { PROBLEM_SPACES } from '../constants';
 import { TerminalWindow } from './TerminalWindow';
@@ -17,9 +17,10 @@ import { ExplorerMainContent } from './ExplorerMainContent';
 import {
     ChallengeContent,
     TargetStateContent,
-    AnatomyContent,
+    SystemOverviewContent,
     DomainsContent,
     PhilosophyContent,
+    BeliefsContent,
     TeamSetupContent,
     RoleConvergenceContent,
     EvolutionContent
@@ -51,20 +52,20 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         content: <TargetStateContent />
     },
     {
-        id: 'anatomy',
+        id: 'overview',
         type: 'doc',
-        title: 'System Anatomy',
-        subtitle: 'Brain / Spine / Limbs',
+        title: 'System Overview',
+        subtitle: 'Orchestrator / Capabilities / Record',
         icon: Layers,
         color: 'orange',
         category: 'Architecture',
-        content: <AnatomyContent />
+        content: <SystemOverviewContent />
     },
     {
         id: 'domains',
         type: 'doc',
-        title: 'Why DDD',
-        subtitle: 'Domain-Driven Design',
+        title: 'Domain-Driven Design',
+        subtitle: 'Bounded Contexts & Shared Language',
         icon: Database,
         color: 'amber',
         category: 'Architecture',
@@ -76,11 +77,21 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         id: 'philosophy',
         type: 'doc',
         title: 'Philosophy',
-        subtitle: 'Beliefs & Principles',
-        icon: Lightbulb,
+        subtitle: 'WHY / HOW / WHAT',
+        icon: Heart,
         color: 'blue',
         category: 'Organisation',
         content: <PhilosophyContent />
+    },
+    {
+        id: 'beliefs',
+        type: 'doc',
+        title: 'Beliefs',
+        subtitle: 'Team & Learning Principles',
+        icon: Lightbulb,
+        color: 'purple',
+        category: 'Organisation',
+        content: <BeliefsContent />
     },
     {
         id: 'team-setup',
@@ -113,13 +124,23 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         content: <EvolutionContent />
     },
 
-    // Domains
+    // Domains - Color coded by architectural layer:
+    // Orchestrator (amber/yellow), Capabilities (green), System of Record (blue)
+    {
+        id: 'case',
+        type: 'domain',
+        title: 'Case Domain',
+        icon: GitPullRequest,
+        color: 'amber',  // Orchestrator = yellow/amber
+        category: 'Domains',
+        spaces: PROBLEM_SPACES.case
+    },
     {
         id: 'offer',
         type: 'domain',
         title: 'Offer Domain',
         icon: Database,
-        color: 'blue',
+        color: 'green',  // Capability = green
         category: 'Domains',
         spaces: PROBLEM_SPACES.offer
     },
@@ -128,25 +149,16 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         type: 'domain',
         title: 'Optimisation Domain',
         icon: TrendingUp,
-        color: 'amber',
+        color: 'green',  // Capability = green
         category: 'Domains',
         spaces: PROBLEM_SPACES.optimisation
-    },
-    {
-        id: 'case',
-        type: 'domain',
-        title: 'Case Domain',
-        icon: GitPullRequest,
-        color: 'amber',
-        category: 'Domains',
-        spaces: PROBLEM_SPACES.case
     },
     {
         id: 'provider',
         type: 'domain',
         title: 'Provider Domain',
         icon: Server,
-        color: 'red',
+        color: 'green',  // Capability = green
         category: 'Domains',
         spaces: PROBLEM_SPACES.provider
     },
@@ -155,7 +167,7 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         type: 'domain',
         title: 'Service Domain',
         icon: User,
-        color: 'pink',
+        color: 'green',  // Capability = green
         category: 'Domains',
         spaces: PROBLEM_SPACES.service
     },
@@ -164,9 +176,18 @@ const EXPLORER_ITEMS: ExplorerItem[] = [
         type: 'domain',
         title: 'Growth Domain',
         icon: Zap,
-        color: 'green',
+        color: 'green',  // Capability = green
         category: 'Domains',
         spaces: PROBLEM_SPACES.growth
+    },
+    {
+        id: 'lifecycle',
+        type: 'domain',
+        title: 'Lifecycle Domain',
+        icon: Shield,
+        color: 'blue',  // System of Record = blue
+        category: 'Domains',
+        spaces: PROBLEM_SPACES.lifecycle
     }
 ];
 
@@ -202,7 +223,7 @@ export const ProblemSpaces = () => {
     // Minimized content with ASCII art (consistent with other windows)
     const minimizedContent = (
         <div className="h-[250px] flex flex-col items-center justify-center text-center space-y-6">
-            {/* ASCII Art - Brain-Spine-Limbs Architecture */}
+            {/* ASCII Art - Orchestrator / Capabilities / Record Architecture */}
             <motion.pre
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -210,13 +231,15 @@ export const ProblemSpaces = () => {
                 className="text-blue-500/80 text-xs leading-tight"
             >
                 {`
-     ◇ BRAIN ◇
-        │
-    ┌───┴───┐
-    │ SPINE │
-    └┬──┬──┬┘
-     │  │  │
-    ◇  ◇  ◇
+  ◇ ORCHESTRATOR ◇
+         │
+    ┌────┴────┐
+    │ DOMAINS │
+    └────┬────┘
+         │
+    ┌────┴────┐
+    │ RECORD  │
+    └─────────┘
 `}
             </motion.pre>
 
@@ -260,7 +283,7 @@ export const ProblemSpaces = () => {
             exitDialogDescription={
                 <div className="text-secondary text-sm space-y-2">
                     <p>The architecture will continue evolving without you. It always does.</p>
-                    <p className="text-muted text-xs italic">"The Brain orchestrates, the Spine records, and you... wander off."</p>
+                    <p className="text-muted text-xs italic">"The Orchestrator coordinates, the Record preserves, and you... wander off."</p>
                 </div>
             }
         >

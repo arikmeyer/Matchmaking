@@ -9,10 +9,10 @@ import type { LucideIcon } from 'lucide-react';
 export type ViewMode = 'intermediate' | 'target';
 
 /** Valid domain identifiers for problem spaces */
-export type DomainId = 'offer' | 'optimisation' | 'case' | 'provider' | 'service' | 'growth';
+export type DomainId = 'lifecycle' | 'offer' | 'optimisation' | 'case' | 'provider' | 'service' | 'growth';
 
 /** Valid document identifiers for architecture docs */
-export type DocId = 'challenge' | 'target' | 'anatomy' | 'domains' | 'philosophy' | 'team-setup' | 'role-convergence' | 'evolution';
+export type DocId = 'challenge' | 'target' | 'overview' | 'domains' | 'philosophy' | 'beliefs' | 'team-setup' | 'role-convergence' | 'evolution';
 
 /** Union of all valid explorer item identifiers */
 export type ExplorerItemId = DocId | DomainId;
