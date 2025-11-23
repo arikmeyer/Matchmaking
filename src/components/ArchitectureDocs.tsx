@@ -1457,14 +1457,14 @@ export const TeamSetupContent = () => (
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     <p className="text-sm text-secondary">
-                        We're not a small team that's "scaling up." We <strong>choose to stay small</strong> – a closely knit group of highly talented individuals who trust each other deeply.
+                        We're not a small team that's "scaling up." We choose to stay smallish – a closely knit group of highly talented individuals who trust each other deeply.
                     </p>
                     <p className="text-xs text-secondary">
-                        Small means everyone knows everything. No information silos. No coordination overhead. No politics. Just people who trust each other, moving fast toward a shared goal.
+                        Small means we can make decisions fast. No information silos. No coordination overhead. No politics. Just people who trust each other, moving fast toward a shared goal.
                     </p>
                 </div>
                 <div className="p-4 rounded-lg bg-nested-deep border border-border">
-                    <div className="text-xs font-mono text-section-planning mb-3">THE HYPOTHESIS</div>
+                    <div className="text-xs font-mono text-section-planning mb-3">OUR HYPOTHESIS</div>
                     <p className="text-sm text-primary italic mb-3">
                         A small team can flip entire markets – if energy is channeled correctly.
                     </p>
@@ -1499,7 +1499,7 @@ export const TeamSetupContent = () => (
                         <div className="text-center">
                             <div className="text-xs font-mono text-muted uppercase mb-2">Each Person Owns</div>
                             <div className="text-2xl font-bold text-section-focus mb-1">1+ Problem Spaces</div>
-                            <div className="text-[10px] text-secondary">Complete responsibility. Complete authority.</div>
+                            <div className="text-[10px] text-secondary">Complete responsibility.</div>
                         </div>
                     </div>
                 </div>

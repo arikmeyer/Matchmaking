@@ -40,7 +40,7 @@ export function ExplorerMainContent({
             </div>
 
             {/* Content */}
-            <div className="flex-1 p-6 overflow-y-auto">
+            <div className="flex-1 p-6 overflow-y-auto scrollbar-hide">
                 <AnimatePresence mode="wait">
                     {/* Doc view */}
                     {activeItem.type === 'doc' && (

@@ -226,7 +226,7 @@ export const beliefsCommand = defineCommand({
           <div>
             <div className="text-primary font-bold">2. SMALL TEAM BELIEF</div>
             <div className="pl-4 text-secondary text-xs">AI changes the math. What once took hundreds can be done by a focused few.</div>
-            <div className="pl-4 text-muted text-xs">We choose to stay small. Not because we can't grow. Because we don't want to.</div>
+            <div className="pl-4 text-muted text-xs">We choose to stay smallish. Not because we can't grow. Because we don't want to.</div>
             <div className="pl-4 text-muted text-xs">Small = high trust, no politics.</div>
           </div>
 

@@ -547,7 +547,7 @@ export const alertConfig = {
   [`${HOME_DIR}/docs/culture.md`]: `# Team Setup at Switchup
 
 ## Small by Design
-We choose to stay small – a closely knit team of talented people
+We choose to stay smallish – a closely knit team of talented people
 who trust each other deeply. No silos. No politics. High context.
 
 ## Problem Space Ownership
