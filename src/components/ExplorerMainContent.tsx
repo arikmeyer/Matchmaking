@@ -79,7 +79,7 @@ export function ExplorerMainContent({
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="p-5 border border-section-problem bg-section-problem rounded-xl relative overflow-hidden group">
                                     <div className="absolute inset-0 bg-surface-dark/30 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                                    <h3 className="text-xs font-mono text-red-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <h3 className="text-xs font-mono text-section-problem uppercase tracking-wider mb-3 flex items-center gap-2">
                                         <AlertTriangle size={14} /> Problem Definition
                                     </h3>
                                     <p className="text-secondary text-sm leading-relaxed">
@@ -88,7 +88,7 @@ export function ExplorerMainContent({
                                 </div>
                                 <div className="p-5 border border-section-success bg-section-success rounded-xl relative overflow-hidden group">
                                     <div className="absolute inset-0 bg-surface-dark/30 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                                    <h3 className="text-xs font-mono text-green-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                                    <h3 className="text-xs font-mono text-section-success uppercase tracking-wider mb-3 flex items-center gap-2">
                                         <ShieldCheck size={14} /> Intended Outcome
                                     </h3>
                                     <p className="text-secondary text-sm leading-relaxed">
@@ -121,7 +121,7 @@ export function ExplorerMainContent({
 
                                         <button
                                             onClick={() => onViewModeChange('target')}
-                                            className={`relative z-10 px-6 py-2 rounded text-xs font-mono transition-all w-[180px] flex items-center justify-center gap-2 ${viewMode === 'target' ? 'text-green-400' : 'text-muted hover:text-secondary'
+                                            className={`relative z-10 px-6 py-2 rounded text-xs font-mono transition-all w-[180px] flex items-center justify-center gap-2 ${viewMode === 'target' ? 'text-section-success' : 'text-muted hover:text-secondary'
                                                 }`}
                                         >
                                             <Zap size={14} /> TARGET STATE
@@ -141,7 +141,7 @@ export function ExplorerMainContent({
                                             className="space-y-8"
                                         >
                                             <div>
-                                                <div className={`text-sm font-bold mb-2 uppercase tracking-wider ${viewMode === 'intermediate' ? 'text-muted' : 'text-green-400'}`}>
+                                                <div className={`text-sm font-bold mb-2 uppercase tracking-wider ${viewMode === 'intermediate' ? 'text-muted' : 'text-section-success'}`}>
                                                     {viewMode === 'intermediate' ? activeSpace.intermediate.role : activeSpace.target.role}
                                                 </div>
                                                 <p className="text-xl text-primary leading-relaxed font-light">
@@ -159,7 +159,7 @@ export function ExplorerMainContent({
                                                             {viewMode === 'intermediate' ? (
                                                                 <Activity size={16} className="text-primary shrink-0 mt-0.5" />
                                                             ) : (
-                                                                <Zap size={16} className="text-green-500 shrink-0 mt-0.5" />
+                                                                <Zap size={16} className="text-section-success shrink-0 mt-0.5" />
                                                             )}
                                                             <span className="text-sm text-secondary leading-snug">{activity}</span>
                                                         </div>

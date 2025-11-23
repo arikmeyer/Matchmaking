@@ -151,8 +151,8 @@ export function Terminal({
 
       {/* Input area */}
       <form onSubmit={terminal.handleSubmit} className="mt-2 flex items-center gap-2 border-t border-default pt-2">
-        <span className="text-blue-500">{getPrompt()}</span>
-        <span className="text-green-500"> {'>'}</span>
+        <span className="text-section-planning">{getPrompt()}</span>
+        <span className="text-terminal-green"> {'>'}</span>
         <ContextAwareInput
           getInputRef={terminal.getInputRef}
           type="text"
@@ -193,13 +193,13 @@ function getLineClassName(type: TerminalLine['type']): string {
     case 'command':
       return 'text-primary';
     case 'error':
-      return 'text-red-400';
+      return 'text-section-problem';
     case 'system':
-      return 'text-blue-400 italic';
+      return 'text-section-planning italic';
     case 'success':
-      return 'text-green-500';
+      return 'text-terminal-green';
     case 'progress':
-      return 'text-green-500';
+      return 'text-terminal-green';
     default:
       return 'text-secondary';
   }
@@ -208,13 +208,13 @@ function getLineClassName(type: TerminalLine['type']): string {
 function getLinePrefix(type: TerminalLine['type']): ReactNode {
   switch (type) {
     case 'input':
-      return <span className="text-green-500 mr-2">➜</span>;
+      return <span className="text-terminal-green mr-2">➜</span>;
     case 'command':
       return null; // Commands from DecisionTerminal use "> " prefix in content
     case 'error':
-      return <span className="text-red-500 mr-2">✗</span>;
+      return <span className="text-section-problem mr-2">✗</span>;
     case 'system':
-      return <span className="text-blue-500 mr-2">ℹ</span>;
+      return <span className="text-section-planning mr-2">ℹ</span>;
     default:
       return null;
   }

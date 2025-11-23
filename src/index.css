@@ -197,6 +197,11 @@
   border-bottom: 1px solid var(--color-warning-header-border);
 }
 
+/* Command text styling - terminal-green always bold for actionable items */
+.text-terminal-green {
+  font-weight: 600;
+}
+
 /* Custom Variants using @variant */
 @variant terminal (&.terminal-active) {
   /* Applied when element has terminal-active class */

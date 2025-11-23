@@ -133,7 +133,7 @@ export const feedbackCommand = defineCommand({
             <div className="pl-2">• Help us improve this experience</div>
             <div className="pl-2">• Let us know what resonated (or didn't)</div>
             <div className="pl-2">• Stay on our radar for future opportunities</div>
-            <div className="mt-2 text-amber-500/80">
+            <div className="mt-2 text-muted">
               Tip: Even "we're not a good match because..." is valuable feedback.
             </div>
           </div>

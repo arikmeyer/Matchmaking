@@ -111,7 +111,7 @@ export function TechStackCard({ item, index }: TechStackCardProps) {
                     <div className="pt-2 border-t border-default">
                         <div className="flex items-center gap-2 mb-1">
                             <div className="w-1 h-1 rounded-full bg-amber-500" />
-                            <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wider">
+                            <span className="text-[10px] font-bold text-section-focus uppercase tracking-wider">
                                 The Trade-off
                             </span>
                         </div>
