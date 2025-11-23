@@ -54,11 +54,6 @@ const HELP_SECTIONS = [
   },
 ];
 
-/**
- * Utility commands shown compactly (no descriptions needed)
- */
-const UTILITY_COMMANDS = ['ls', 'cat', 'cd', 'pwd', 'env', 'history', 'clear', 'help'];
-
 export const helpCommand = defineCommand({
   name: 'help',
   aliases: ['?', 'commands'],
@@ -202,20 +197,9 @@ export const helpCommand = defineCommand({
             </div>
           ))}
 
-          {/* Utilities - compact inline list */}
-          <div className="text-secondary text-xs pt-2 border-t border-default">
-            <span className="text-muted uppercase">utilities: </span>
-            {UTILITY_COMMANDS.map((name, i) => (
-              <span key={name}>
-                <span className="text-terminal-green">{name}</span>
-                {i < UTILITY_COMMANDS.length - 1 && ', '}
-              </span>
-            ))}
-          </div>
-
           {/* Quick tips */}
-          <div className="text-muted text-xs">
-            <span className="text-terminal-green">Tab</span> autocomplete · <span className="text-terminal-green">↑/↓</span> history · <span className="text-terminal-green">help [cmd]</span> details · <span className="text-terminal-green">help --all</span> everything
+          <div className="text-muted text-xs pt-2 border-t border-default">
+            <span className="text-terminal-green">Tab</span> autocomplete · <span className="text-terminal-green">↑/↓</span> history · <span className="text-terminal-green">⌘⇧F</span> window · <span className="text-terminal-green">help --all</span>
           </div>
         </div>
       ),
