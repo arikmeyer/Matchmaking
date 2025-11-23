@@ -127,6 +127,12 @@ export function useTerminalCore(options: UseTerminalCoreOptions = {}): UseTermin
     focusDelay,
   });
 
+  // Ref to track latest quiz prop (avoids stale closure in setTimeout)
+  const quizRef = useRef(quiz);
+  useEffect(() => {
+    quizRef.current = quiz;
+  }, [quiz]);
+
   // Generate unique line IDs
   const lineId = useCallback(() => `line-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`, []);
 
@@ -252,10 +258,14 @@ export function useTerminalCore(options: UseTerminalCoreOptions = {}): UseTermin
           if (quizTimerRef.current) clearTimeout(quizTimerRef.current);
 
           quizTimerRef.current = setTimeout(() => {
+            // Use ref to get CURRENT quiz state (avoids stale closure)
+            const currentQuiz = quizRef.current;
+            if (!currentQuiz) return;
+
             const nextIndex = currentIndex + 1;
-            // Check if there are more questions (we'll let parent handle the count)
-            if (!quiz.state.isComplete && quiz.currentQuestion) {
-              const nextQ = quiz.currentQuestion;
+            // Check if there are more questions using CURRENT state
+            if (!currentQuiz.state.isComplete && currentQuiz.currentQuestion) {
+              const nextQ = currentQuiz.currentQuestion;
               setLines(prev => [...prev, {
                 id: lineId(),
                 type: 'output',
@@ -268,8 +278,8 @@ export function useTerminalCore(options: UseTerminalCoreOptions = {}): UseTermin
                 )
               }]);
             } else if (renderQuizResults) {
-              // Quiz complete
-              const finalScore = quiz.state.score;
+              // Quiz complete - use CURRENT score
+              const finalScore = currentQuiz.state.score;
               setQuizStarted(false);
               setLines(prev => [...prev, {
                 id: lineId(),
