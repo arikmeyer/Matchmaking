@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Cpu, Globe, Shield, Activity, Command, Lock, Search, Play, Pause, RotateCcw, X, Server, AlertTriangle, Eye, XCircle, CheckCircle, Database, TrendingUp, GitPullRequest, User, Sparkles, Target, Code, Palette, Wrench, Heart, Rocket } from 'lucide-react';
 
@@ -255,10 +255,13 @@ export default function SwitchupOperatingSystem() {
     // Use React 19 hooks
     const { currentTheme, crtMode, isPending: themeChanging, changeTheme } = useTheme();
 
-    // useShutdown hook for React 19 concurrent rendering
-    const shutdown = useShutdown(() => {
+    // Stable callback for shutdown completion (prevents effect re-runs in hook)
+    const handleShutdownComplete = useCallback(() => {
         localStorage.setItem('switchup_shutdown', 'true');
-    });
+    }, []);
+
+    // useShutdown hook for React 19 concurrent rendering
+    const shutdown = useShutdown(handleShutdownComplete);
 
     const [booted, setBooted] = useState(() => {
         // If system was shut down, skip boot sequence

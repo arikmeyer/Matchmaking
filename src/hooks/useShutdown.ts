@@ -3,13 +3,19 @@
  * Manages shutdown animation and system state with smooth transitions
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 export type ShutdownPhase = 'idle' | 'initiating' | 'shutting-down' | 'complete';
 
 export function useShutdown(onComplete?: () => void) {
     const [phase, setPhase] = useState<ShutdownPhase>('idle');
     const [progress, setProgress] = useState(0);
+
+    // Store callback in ref to avoid effect re-runs when callback reference changes
+    const onCompleteRef = useRef(onComplete);
+    useEffect(() => {
+        onCompleteRef.current = onComplete;
+    }, [onComplete]);
 
     // Initiate shutdown sequence
     const initiate = useCallback(() => {
@@ -44,7 +50,7 @@ export function useShutdown(onComplete?: () => void) {
 
                 // Call completion callback after a brief delay
                 completionTimer = setTimeout(() => {
-                    onComplete?.();
+                    onCompleteRef.current?.();
                 }, 500);
             }
         }, 50); // Update every 50ms for smooth progress
@@ -53,7 +59,7 @@ export function useShutdown(onComplete?: () => void) {
             clearInterval(interval);
             if (completionTimer) clearTimeout(completionTimer);
         };
-    }, [phase, onComplete]);
+    }, [phase]); // Only depend on phase - callback is accessed via ref
 
     // Auto-start shutdown after initiation delay
     useEffect(() => {

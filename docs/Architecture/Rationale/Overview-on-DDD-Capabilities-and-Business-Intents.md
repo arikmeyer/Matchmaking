@@ -47,7 +47,7 @@ Now, let's connect them in a clear, top-down chain of command.
 +-----------------------------------------------------------------------------------------------------------------------------+
 | 1. DOMAIN-DRIVEN DESIGN (The Philosophy / The Zoning Laws)                                                                  |
 |    - Defines the existence of /case, /lifecycle, /provider, etc.                                                            |
-|    - Sets the "Hub and Spoke" rule: The Brain calls the Limbs.                                                              |
+|    - Sets the "Hub and Spoke" rule: The Process Orchestrator coordinates the Capability Domains.                            |
 |                                                                                                                             |
 |    (This philosophy allows us to build…)                                                                                    |
 +-----------------------------------------------------------------------------------------------------------------------------+
