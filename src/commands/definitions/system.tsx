@@ -52,6 +52,7 @@ export const echoCommand = defineCommand({
   usage: 'echo [text]',
   examples: ['echo Hello', 'echo $USER', 'echo $COMPANY'],
   category: 'system',
+  hidden: true,
 
   handler: (parsed, ctx) => {
     let text = joinArgs(parsed.args);
@@ -77,6 +78,7 @@ export const dateCommand = defineCommand({
   name: 'date',
   description: 'Display current date and time',
   category: 'system',
+  hidden: true,
 
   handler: (_parsed, ctx) => {
     const now = new Date();
@@ -147,6 +149,7 @@ export const envCommand = defineCommand({
   aliases: ['printenv'],
   description: 'Display environment variables',
   category: 'system',
+  hidden: true,
 
   handler: (_parsed, ctx) => {
     const envOutput = Object.entries(ENV_VARIABLES)

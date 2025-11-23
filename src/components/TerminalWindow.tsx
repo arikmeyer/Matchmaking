@@ -156,6 +156,10 @@ export function TerminalWindow({
     // Timer ref for cleanup on unmount
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+    // Ref for tracking if window is in viewport (for keyboard shortcut scoping)
+    const containerRef = useRef<HTMLDivElement>(null);
+    const isInViewRef = useRef(true);
+
     // Glow visibility management for smooth transitions
     // Hide immediately, show only after window animation completes
     const glowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -207,17 +211,77 @@ export function TerminalWindow({
         };
     }, []);
 
-    // Handle escape key to close fullscreen
+    // Track if window is in viewport using Intersection Observer
+    // This ensures keyboard shortcuts only affect the visible terminal
+    useEffect(() => {
+        const element = containerRef.current;
+        if (!element) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    // Consider "in view" if at least 20% visible
+                    isInViewRef.current = entry.intersectionRatio > 0.2;
+                });
+            },
+            { threshold: [0, 0.2, 0.5, 1] }
+        );
+
+        observer.observe(element);
+        return () => observer.disconnect();
+    }, []);
+
+    // Handle keyboard shortcuts for window control
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            // Escape: close fullscreen
             if (e.key === 'Escape' && isFullscreen) {
                 setIsFullscreen(false);
                 onFullscreenChange?.(false);
+                return;
+            }
+
+            // Ctrl+Shift+F (Windows/Linux) or Cmd+Shift+F (Mac): cycle window state
+            // Only respond if this window is in view OR is currently fullscreen
+            if (e.key === 'f' && (e.ctrlKey || e.metaKey) && e.shiftKey) {
+                if (!isFullscreen && !isInViewRef.current) return;
+                e.preventDefault();
+
+                if (isMinimized) {
+                    // Minimized → Normal: restore window
+                    if (useInternalMinimize) {
+                        setIsMinimizedInternal(false);
+                        if (timerRef.current) clearTimeout(timerRef.current);
+                        timerRef.current = setTimeout(() => onMinimizedChange?.(false), restoreDelay);
+                    } else {
+                        onMinimizeClick?.();
+                    }
+                } else if (isFullscreen) {
+                    // Fullscreen → Minimized: minimize from fullscreen (inline logic)
+                    if (onMinimizeClick) {
+                        setIsFullscreen(false);
+                        onFullscreenChange?.(false);
+                        onMinimizeClick();
+                    } else {
+                        onMinimizedChange?.(true);
+                        setIsMinimizedInternal(true);
+                        setIsFullscreen(false);
+                        onFullscreenChange?.(false);
+                    }
+                } else {
+                    // Normal → Fullscreen: enter fullscreen (inline logic)
+                    if (onFullscreenClick) {
+                        onFullscreenClick();
+                    } else {
+                        setIsFullscreen(true);
+                        onFullscreenChange?.(true);
+                    }
+                }
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isFullscreen, onFullscreenChange]);
+    }, [isFullscreen, isMinimized, useInternalMinimize, onFullscreenChange, onMinimizedChange, onMinimizeClick, onFullscreenClick, restoreDelay]);
 
     // Handle minimize with animation sequencing
     const handleMinimizeToggle = useCallback(() => {
@@ -338,6 +402,7 @@ export function TerminalWindow({
     const glowVisible = showGlow && windowShouldBeVisible && glowReady;
 
     return (
+        <div ref={containerRef}>
         <TerminalGlowEffect isVisible={glowVisible} className={className}>
             {/* Main window or minimized state */}
             <AnimatePresence mode="wait" initial={false}>
@@ -401,5 +466,6 @@ export function TerminalWindow({
                 description={exitDialogDescription}
             />
         </TerminalGlowEffect>
+        </div>
     );
 }
