@@ -18,7 +18,7 @@ export const TECH_STACK: StackItem[] = [
         bet: {
             title: 'Windmill.dev: Workflow Engine vs. Building Our Own',
             context: 'We\'ll run hundreds of millions of workflow instances per year. We thought about: (a) building our own workflow engine, (b) Temporal (beautiful but heavyweight), (c) Windmill (TypeScript-native, self-hostable), (d) popular no-code workflow builders like n8n.',
-            tradeoff: 'We\'re going with Windmill, for now. Self-hostable and script-based flows means no vendor lock-in. Built-in observability means we\'re spending zero time building admin dashboards. The bet we\'re making: This open-source tool will mature with us. If it doesn\'t, we migrate—but the months we\'re saving by not building workflow infrastructure from scratch lets us address the core points we have in a much more rapid manner. Open question: What is a best practice setup for our scripts & flows?'
+            tradeoff: 'We\'re going with Windmill, for now. Self-hostable and script-based flows means no vendor lock-in. Built-in observability means we\'re spending zero time building admin dashboards. The bet we\'re making: This open-source tool will mature with us. If it doesn\'t, we migrate – but the months we\'re saving by not building workflow infrastructure from scratch lets us address the core points we have in a much more rapid manner. Open question: What is a best practice setup for our scripts & flows?'
         }
     },
     {
@@ -31,7 +31,7 @@ export const TECH_STACK: StackItem[] = [
         bet: {
             title: 'Schema-Driven Development: Taming Provider Chaos',
             context: 'Every provider is a black box. One returns dates as ISO strings, another as Unix timestamps. APIs change without notice. Scraped data is structurally unpredictable. TypeScript catches type errors at compile time, but production data doesn\'t care about our types.',
-            tradeoff: 'We\'re using ZOD schemas as more than validation — they\'re executable documentation of provider behavior. When a provider changes their response format, the ZOD error tells us exactly what changed. The overhead: maintaining both TypeScript types AND ZOD schemas. The payoff: we catch chaos at the boundary, not three steps downstream. Open question: How do we keep 100+ provider schemas maintainable as we scale?'
+            tradeoff: 'We\'re using ZOD schemas as more than validation – they\'re executable documentation of provider behavior. When a provider changes their response format, the ZOD error tells us exactly what changed. The overhead: maintaining both TypeScript types AND ZOD schemas. The payoff: we catch chaos at the boundary, not three steps downstream. Open question: How do we keep 100+ provider schemas maintainable as we scale?'
         }
     },
     {
@@ -43,7 +43,7 @@ export const TECH_STACK: StackItem[] = [
         icon: Terminal,
         bet: {
             title: 'Playwright + Self-Healing Bots: RPA at Scale',
-            context: 'Energy providers don\'t have APIs (or don\'t grant us access to them). We need to eventually connect to 100+ provider portals. DOM changes break bots constantly—it\'s the nature of scraping.',
+            context: 'Energy providers don\'t have APIs (or don\'t grant us access to them). We need to eventually connect to 100+ provider portals. DOM changes break bots constantly – it\'s the nature of scraping.',
             tradeoff: 'We\'re experimenting with self-healing scripts: Playwright captures screenshots when things break, an AI sub-agent analyzes the failures, generates fixes, and commits them for review. Does it work all the time? No. Does it make our lives easier? Yes, absolutely! Our bet: AI capabilities continues increasingly rapidly (hello Gemini 3) and will continue to reduce our maintenance burden. Upfront engineering effort now to build the healing pipeline pays off at scale. What we\'d love to accomplish at some point in the not too distant future: a 90% auto-heal rate.'
         }
     },
@@ -56,8 +56,8 @@ export const TECH_STACK: StackItem[] = [
         icon: Cpu,
         bet: {
             title: 'Mastering AI: Craft, Experimentation, and Collective Learning',
-            context: 'AI capabilities are remarkable, but raw model access is just the beginning. The real work is figuring out how to leverage them effectively—crafting skills that encode domain knowledge, designing sub-agents for specific tasks, engineering context that gets reliable results while working around limitations. And the landscape shifts as models evolve.',
-            tradeoff: 'We\'re betting on developing AI craft together. We experiment with prompting techniques, sub-agent architectures, and context patterns. When someone discovers what works (or fails spectacularly), we share it. Langfuse gives us observability. The alternative would be using models naively and shipping faster short-term. We believe the compound returns — better results AND accelerated personal growth for everyone — justify the investment. What we\'re navigating: balancing exploration with delivery, and ensuring we all benefit from our lessons learned.'
+            context: 'AI capabilities are remarkable, but raw model access is just the beginning. The real work is figuring out how to leverage them effectively – crafting skills that encode domain knowledge, designing sub-agents for specific tasks, engineering context that gets reliable results while working around limitations. And the landscape shifts as models evolve.',
+            tradeoff: 'We\'re betting on developing AI craft together. We experiment with prompting techniques, sub-agent architectures, and context patterns. When someone discovers what works (or fails spectacularly), we share it. Langfuse gives us observability. The alternative would be using models naively and shipping faster short-term. We believe the compound returns – better results AND accelerated personal growth for everyone – justify the investment. What we\'re navigating: balancing exploration with delivery, and ensuring we all benefit from our lessons learned.'
         }
     },
     {
@@ -82,8 +82,8 @@ export const TECH_STACK: StackItem[] = [
         icon: FileText,
         bet: {
             title: 'Document Intelligence: Precision vs. Generalization at Scale',
-            context: 'We need to be able to process 100k+ provider documents monthly — contract confirmations, bills, cancellation notices, price change letters. Traditional OCR fails on reality: scanned PDFs, varying layouts, German legalese. Vision models "see" documents holistically — but accuracy depends on how we structure extraction.',
-            tradeoff: 'Do we build custom JSON schemas per document type and provider, or use a generic schema that handles everything? Custom schemas deliver higher accuracy — critical when wrong extraction means wrong decisions for customers. But custom means O(n) maintenance as we onboard providers. We\'re thinking about a hybrid approach: generic core with provider-specific overrides where accuracy gaps matter. What we\'re exploring: Can AI help generate and maintain schemas as providers change formats?'
+            context: 'We need to be able to process 100k+ provider documents monthly – contract confirmations, bills, cancellation notices, price change letters. Traditional OCR fails on reality: scanned PDFs, varying layouts, German legalese. Vision models "see" documents holistically – but accuracy depends on how we structure extraction.',
+            tradeoff: 'Do we build custom JSON schemas per document type and provider, or use a generic schema that handles everything? Custom schemas deliver higher accuracy – critical when wrong extraction means wrong decisions for customers. But custom means O(n) maintenance as we onboard providers. We\'re thinking about a hybrid approach: generic core with provider-specific overrides where accuracy gaps matter. What we\'re exploring: Can AI help generate and maintain schemas as providers change formats?'
         }
     }
 ];

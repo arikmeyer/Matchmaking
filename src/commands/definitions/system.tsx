@@ -238,7 +238,7 @@ export const whoamiCommand = defineCommand({
           </div>
 
           <div className="mt-3 border-t border-default pt-2 text-muted text-xs">
-            <span className="text-cyan-400">Explore:</span> 'mission' 'team' 'warts' 'culture' — then decide if you want to 'apply'
+            <span className="text-cyan-400">Explore:</span> 'mission' 'team' 'warts' 'culture' – then decide if you want to 'apply'
           </div>
         </div>
       ),

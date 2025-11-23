@@ -66,7 +66,7 @@ Imagine a service that has the full overview of all your subscriptions \- energy
 * Craftspeople who optimize within familiar tools rather than adopting the best tool for the job  
 * People who don’t get excited about any of the stuff above
 
-—--------------------------
+ – --------------------------
 
 # Ideas to make it engaging / make it easier for our perfect people to raise their hands
 

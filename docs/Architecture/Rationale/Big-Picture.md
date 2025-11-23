@@ -7,7 +7,7 @@ At the highest level, our system is not a collection of services, but a layered 
 ### 1. The System of Record: The /lifecycle Domain
 
 - **What it is:** The single, authoritative source of truth for all core business data (Contracts, Users, Tasks). It is the foundation upon which all other layers depend.
-- **Its Role:** It acts as **the guardian of business state**—conservative, transactional, and relentlessly consistent. Its primary job is to validate every operation and protect the integrity of the business's core data.
+- **Its Role:** It acts as **the guardian of business state** – conservative, transactional, and relentlessly consistent. Its primary job is to validate every operation and protect the integrity of the business's core data.
 - **How it Works:** It exposes a granular, intent-driven API called the **Business Intent Catalog**. These are the atomic "verbs" of the business (ConfirmActivation, ApplyCredit). It guarantees that no action can be taken that would violate the core rules of the business's state. It also provides rich, temporal **Projection** queries that allow other layers to understand an entity's past, present, and deterministic future.
 - **The Golden Rule:** It calls no one. Everyone calls it for the truth.
 

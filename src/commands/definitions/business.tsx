@@ -79,7 +79,7 @@ export const howCommand = defineCommand({
 
           <div className="space-y-2 text-muted text-xs">
             <p>A typical company: "Here's what earns us the most commission."</p>
-            <p>A good friend: "Here's what's best for you—even if we earn nothing."</p>
+            <p>A good friend: "Here's what's best for you – even if we earn nothing."</p>
           </div>
 
           <div className="text-muted text-xs mt-2">
@@ -166,7 +166,7 @@ export const missionCommand = defineCommand({
       content: (
         <div className="space-y-3 font-mono text-sm">
           <div className="text-primary font-bold border-b border-default pb-1">PHILOSOPHY :: WHY / HOW / WHAT</div>
-          <div className="text-muted text-xs italic mb-2">(We start with WHY — it's the reason we exist)</div>
+          <div className="text-muted text-xs italic mb-2">(We start with WHY – it's the reason we exist)</div>
 
           <div>
             <div className="text-section-focus font-bold">WHY: Marktfairänderung</div>
@@ -655,7 +655,7 @@ export const roleCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-2">
-            As AI shifts the bottleneck from "how to build" to "what to build"—these roles converge.
+            As AI shifts the bottleneck from "how to build" to "what to build" – these roles converge.
           </div>
 
           <div className="mt-3 p-3 border border-default rounded">
@@ -714,7 +714,7 @@ export const stackCommand = defineCommand({
       content: (
         <div className="space-y-3 font-mono text-sm">
           <div className="text-primary font-bold border-b border-default pb-1">STACK :: ENGINEERING BETS</div>
-          <div className="text-muted text-xs italic mb-2">("Can I challenge this?" — Yes. Always. That's the point.)</div>
+          <div className="text-muted text-xs italic mb-2">("Can I challenge this?" – Yes. Always. That's the point.)</div>
 
           <div>
             <div className="text-terminal-green font-bold">[CORE] Windmill.dev</div>

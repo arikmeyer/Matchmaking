@@ -111,7 +111,7 @@ export const feedbackCommand = defineCommand({
             {Object.entries(FEEDBACK_CATEGORIES).map(([key, cat]) => (
               <div key={key} className="pl-2 flex items-start gap-2">
                 <span className="text-terminal-green font-bold w-20">feedback {key}</span>
-                <span className="text-muted">— {cat.description} {cat.emoji}</span>
+                <span className="text-muted"> – {cat.description} {cat.emoji}</span>
               </div>
             ))}
           </div>

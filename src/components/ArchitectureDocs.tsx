@@ -20,7 +20,7 @@ import {
 export const ChallengeContent = () => (
     <div className="space-y-8 animate-in fade-in duration-500">
         <p className="text-sm text-secondary">
-            Each subscription we manage is like a <strong>game of puzzle</strong>—and we're playing hundreds of thousands of these games simultaneously.
+            Each subscription we manage is like a <strong>game of puzzle</strong> – and we're playing hundreds of thousands of these games simultaneously.
         </p>
 
         {/* The Puzzle Metaphor */}
@@ -96,7 +96,7 @@ export const ChallengeContent = () => (
             <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-nested border border-border">
                     <div className="text-xs font-medium text-primary mb-1">Unstructured Data at the Core</div>
-                    <div className="text-[10px] text-secondary">The puzzle pieces arrive as emails, PDFs, portal screenshots—not clean API responses. Messy human communication, not structured data.</div>
+                    <div className="text-[10px] text-secondary">The puzzle pieces arrive as emails, PDFs, portal screenshots – not clean API responses. Messy human communication, not structured data.</div>
                 </div>
                 <div className="p-3 rounded bg-nested border border-border">
                     <div className="text-xs font-medium text-primary mb-1">Every Game Has Different Rules</div>
@@ -104,11 +104,11 @@ export const ChallengeContent = () => (
                 </div>
                 <div className="p-3 rounded bg-nested border border-border">
                     <div className="text-xs font-medium text-primary mb-1">Pieces Arrive Unpredictably</div>
-                    <div className="text-[10px] text-secondary">You can't batch-process puzzle games. Events arrive when they arrive—price increases at month-end, renewals on anniversaries.</div>
+                    <div className="text-[10px] text-secondary">You can't batch-process puzzle games. Events arrive when they arrive – price increases at month-end, renewals on anniversaries.</div>
                 </div>
                 <div className="p-3 rounded bg-nested border border-border">
                     <div className="text-xs font-medium text-primary mb-1">Errors Compound</div>
-                    <div className="text-[10px] text-secondary">Misidentify one piece, run the wrong workflow—the user gets bad advice. At scale, small error rates become large problems.</div>
+                    <div className="text-[10px] text-secondary">Misidentify one piece, run the wrong workflow – the user gets bad advice. At scale, small error rates become large problems.</div>
                 </div>
             </div>
         </div>
@@ -121,7 +121,7 @@ export const ChallengeContent = () => (
             <div className="grid md:grid-cols-2 gap-6 items-center">
                 <div className="space-y-3">
                     <p className="text-sm text-secondary">
-                        Our service colleagues shouldn't be <strong>puzzle processors</strong>—they should be <strong>relationship builders</strong>.
+                        Our service colleagues shouldn't be <strong>puzzle processors</strong> – they should be <strong>relationship builders</strong>.
                     </p>
                     <p className="text-xs text-secondary">
                         The repetitive work of identifying events and executing workflows is exactly what should be automated. Humans excel at what machines can't do: empathy, complex judgment, building trust.
@@ -130,7 +130,7 @@ export const ChallengeContent = () => (
                 <div className="p-4 rounded-lg bg-nested-deep border border-border text-center">
                     <div className="text-xs font-mono text-section-success mb-2">THE PURPOSE</div>
                     <p className="text-sm text-primary italic">
-                        "Free our colleagues to focus on what matters most: building trust-based relationships with our users—for life."
+                        "Free our colleagues to focus on what matters most: building trust-based relationships with our users – for life."
                     </p>
                 </div>
             </div>
@@ -143,13 +143,13 @@ export const ChallengeContent = () => (
             </h4>
             <div className="space-y-4">
                 <p className="text-sm text-secondary">
-                    We believe <strong>AI can play the puzzle games</strong>—identifying events in unstructured data, orchestrating the right workflows—while humans supervise and handle what machines can't.
+                    We believe <strong>AI can play the puzzle games</strong> – identifying events in unstructured data, orchestrating the right workflows – while humans supervise and handle what machines can't.
                 </p>
                 <p className="text-sm text-secondary">
                     This is why <strong>architecture matters</strong>. The system needs to be structured so AI can operate safely at scale: clear boundaries, constrained operations, human oversight where it counts.
                 </p>
                 <p className="text-xs text-muted italic">
-                    We don't know if this works yet. That's why we're building to learn—measuring outcomes, expanding scope gradually, always keeping humans in the loop.
+                    We don't know if this works yet. That's why we're building to learn – measuring outcomes, expanding scope gradually, always keeping humans in the loop.
                 </p>
             </div>
         </div>
@@ -162,7 +162,7 @@ export const ChallengeContent = () => (
 export const TargetStateContent = () => (
     <div className="space-y-8 animate-in fade-in duration-500">
         <p className="text-sm text-secondary">
-            Our vision: a <strong>Subscription Operating System</strong> that protects users at the micro level—and transforms markets at the macro level.
+            Our vision: a <strong>Subscription Operating System</strong> that protects users at the micro level – and transforms markets at the macro level.
         </p>
 
         {/* The OS Concept */}
@@ -171,7 +171,7 @@ export const TargetStateContent = () => (
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     <p className="text-sm text-secondary">
-                        Not a switching service. Not an app. An <strong>operating system</strong> for all your subscriptions—running quietly in the background, managing complexity so you don't have to.
+                        Not a switching service. Not an app. An <strong>operating system</strong> for all your subscriptions – running quietly in the background, managing complexity so you don't have to.
                     </p>
                     <div className="space-y-2">
                         <div className="flex items-center gap-2 text-xs text-secondary">
@@ -180,7 +180,7 @@ export const TargetStateContent = () => (
                         </div>
                         <div className="flex items-center gap-2 text-xs text-secondary">
                             <Layers size={14} className="text-secondary shrink-0" />
-                            <span><strong className="text-primary">Market-agnostic:</strong> Energy, telco, insurance, streaming—all subscriptions</span>
+                            <span><strong className="text-primary">Market-agnostic:</strong> Energy, telco, insurance, streaming – all subscriptions</span>
                         </div>
                         <div className="flex items-center gap-2 text-xs text-secondary">
                             <Zap size={14} className="text-secondary shrink-0" />
@@ -236,7 +236,7 @@ export const TargetStateContent = () => (
             </div>
             <div className="p-3 rounded bg-nested border border-border">
                 <p className="text-xs text-secondary text-center italic">
-                    "You set the goals and constraints. The OS handles the rest—optimizing continuously, acting when needed, always on your side."
+                    "You set the goals and constraints. The OS handles the rest – optimizing continuously, acting when needed, always on your side."
                 </p>
             </div>
         </div>
@@ -303,7 +303,7 @@ export const TargetStateContent = () => (
                     When millions of users have an operating system watching their subscriptions, the <strong>laziness bet stops working</strong>.
                 </p>
                 <p className="text-sm text-secondary">
-                    Providers can no longer profit from inattention. They must compete on <strong>actual value</strong>—better service, better prices, genuine loyalty rewards.
+                    Providers can no longer profit from inattention. They must compete on <strong>actual value</strong> – better service, better prices, genuine loyalty rewards.
                 </p>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
@@ -313,7 +313,7 @@ export const TargetStateContent = () => (
                         <div>
                             <div className="text-xs font-medium text-primary mb-2">The Ripple Effect</div>
                             <p className="text-[10px] text-secondary leading-relaxed">
-                                Individual empowerment creates collective change. When customers can't be exploited through inattention, the entire market must adapt. Fair treatment becomes the winning strategy—not because providers become altruistic, but because the game has changed.
+                                Individual empowerment creates collective change. When customers can't be exploited through inattention, the entire market must adapt. Fair treatment becomes the winning strategy – not because providers become altruistic, but because the game has changed.
                             </p>
                         </div>
                     </div>
@@ -347,7 +347,7 @@ export const TargetStateContent = () => (
             </h4>
             <div className="space-y-4">
                 <p className="text-sm text-secondary">
-                    We believe <strong>markets can be transformed toward fairness</strong>—not through regulation alone, but through technology that shifts the power balance back to consumers.
+                    We believe <strong>markets can be transformed toward fairness</strong> – not through regulation alone, but through technology that shifts the power balance back to consumers.
                 </p>
                 <p className="text-sm text-secondary">
                     A subscription operating system, running for millions of users, creates a new reality: one where paying attention is no longer required to be treated fairly.
@@ -772,7 +772,7 @@ export const SystemOverviewContent = () => (
             {/* The Bet */}
             <div className="mt-6 pt-4 border-t border-border">
                 <p className="text-xs text-secondary text-center">
-                    <span className="text-primary font-medium">The Architectural Bet:</span> This separation enables progressive AI autonomy. An AI can orchestrate while being constrained by golden rules—safe operations through the System of Record, well-defined tools through Capability Domains.
+                    <span className="text-primary font-medium">The Architectural Bet:</span> This separation enables progressive AI autonomy. An AI can orchestrate while being constrained by golden rules – safe operations through the System of Record, well-defined tools through Capability Domains.
                 </p>
             </div>
         </motion.div>
@@ -895,7 +895,7 @@ export const DomainsContent = () => (
             {/* Note about Case - Orchestrator = AMBER */}
             <div className="p-3 rounded bg-section-focus border border-section-focus text-center">
                 <span className="text-xs text-secondary">
-                    <strong className="text-section-focus">/case</strong> orchestrates across these contexts but doesn't own domain data—it coordinates the story.
+                    <strong className="text-section-focus">/case</strong> orchestrates across these contexts but doesn't own domain data – it coordinates the story.
                 </span>
             </div>
         </motion.div>
@@ -1003,7 +1003,7 @@ export const DomainsContent = () => (
 export const EvolutionContent = () => (
     <div className="space-y-8 animate-in fade-in duration-500">
         <p className="text-sm text-secondary">
-            We believe AI can help scale operations—but we're experimenting to find out how, and where it breaks down.
+            We believe AI can help scale operations – but we're experimenting to find out how, and where it breaks down.
         </p>
 
         {/* The Trust Gradient */}
@@ -1061,7 +1061,7 @@ export const EvolutionContent = () => (
             <div className="p-5 rounded-xl bg-section-problem border border-section-problem">
                 <h4 className="text-sm font-bold text-section-problem mb-3">The Danger of Raw APIs</h4>
                 <p className="text-xs text-secondary mb-3">
-                    If you give AI access to generic REST endpoints (<code>PATCH /contract/123</code>), it <em>can</em> do anything—which means it <em>might</em> do anything wrong.
+                    If you give AI access to generic REST endpoints (<code>PATCH /contract/123</code>), it <em>can</em> do anything – which means it <em>might</em> do anything wrong.
                 </p>
                 <ul className="space-y-2 text-xs text-secondary">
                     <li className="flex gap-2">
@@ -1095,7 +1095,7 @@ export const EvolutionContent = () => (
                     </li>
                     <li className="flex gap-2">
                         <span className="text-section-success">•</span>
-                        AI can't create invalid states—only the allowed outcomes
+                        AI can't create invalid states – only the allowed outcomes
                     </li>
                 </ul>
             </div>
@@ -1133,7 +1133,7 @@ export const EvolutionContent = () => (
         {/* The Mindset */}
         <div className="p-4 rounded-lg bg-surface border border-default text-center">
             <p className="text-sm text-secondary italic">
-                "We're not trying to replace human judgment. We're trying to amplify it—giving experts leverage to handle more, while preserving the nuance that makes them valuable."
+                "We're not trying to replace human judgment. We're trying to amplify it – giving experts leverage to handle more, while preserving the nuance that makes them valuable."
             </p>
             <p className="text-xs text-muted mt-2">
                 This is an experiment. We're building to learn.
@@ -1223,7 +1223,7 @@ export const PhilosophyContent = () => (
                     </div>
                     <div className="text-center md:text-left">
                         <p className="text-xs font-mono text-section-success uppercase tracking-wider mb-2">A good friend says</p>
-                        <p className="text-sm text-primary italic">"Here's what's best for you — even if don't earn anything."</p>
+                        <p className="text-sm text-primary italic">"Here's what's best for you – even if don't earn anything."</p>
                     </div>
                 </div>
                 <p className="text-center text-xs text-muted mt-6 max-w-lg mx-auto">
@@ -1279,7 +1279,7 @@ export const PhilosophyContent = () => (
                     <span className="text-muted hidden md:inline">↻</span>
                 </div>
                 <p className="text-center text-xs text-muted mt-4">
-                    Your subscriptions, managed over time—so you can forget about them.
+                    Your subscriptions, managed over time – so you can forget about them.
                 </p>
             </div>
         </div>
@@ -1315,7 +1315,7 @@ export const BeliefsContent = () => (
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     <p className="text-sm text-secondary">
-                        We believe <strong>markets can be transformed toward fairness</strong>—not through regulation alone, but through technology that shifts power back to consumers.
+                        We believe <strong>markets can be transformed toward fairness</strong> – not through regulation alone, but through technology that shifts power back to consumers.
                     </p>
                     <p className="text-xs text-secondary">
                         Today's subscription markets reward providers who exploit customer inattention. We're building the infrastructure to flip that equation. When users have a system watching out for them, the laziness bet stops working.
@@ -1327,7 +1327,7 @@ export const BeliefsContent = () => (
                         "Market fairness transformation"
                     </p>
                     <p className="text-[10px] text-secondary">
-                        Individual empowerment creates collective change. If we succeed, providers must compete on actual value—not on customers forgetting to cancel.
+                        Individual empowerment creates collective change. If we succeed, providers must compete on actual value – not on customers forgetting to cancel.
                     </p>
                 </div>
             </div>
@@ -1341,7 +1341,7 @@ export const BeliefsContent = () => (
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-3">
                     <p className="text-sm text-secondary">
-                        We believe a <strong>small, high-trust team can have outsized impact</strong>—able to flip entire markets if energy is channeled correctly.
+                        We believe a <strong>small, high-trust team can have outsized impact</strong> – able to flip entire markets if energy is channeled correctly.
                     </p>
                     <p className="text-xs text-secondary">
                         Not "we're small and growing." We <em>choose</em> to stay small. Closely knit. High context. Fast decisions. Every person matters.
@@ -1379,7 +1379,7 @@ export const BeliefsContent = () => (
                     <div className="p-4 rounded-lg bg-nested-deep border border-border">
                         <div className="text-sm font-medium text-primary mb-2">Share Everything</div>
                         <div className="text-[10px] text-secondary">
-                            Best practices AND things that didn't work. Failures aren't shameful—they're the fuel for learning. Hiding mistakes prevents the team from improving.
+                            Best practices AND things that didn't work. Failures aren't shameful – they're the fuel for learning. Hiding mistakes prevents the team from improving.
                         </div>
                     </div>
                     <div className="p-4 rounded-lg bg-nested-deep border border-border">
@@ -1433,7 +1433,7 @@ export const BeliefsContent = () => (
         {/* The Bet */}
         <div className="p-4 rounded-lg bg-surface border border-default text-center">
             <p className="text-sm text-secondary italic">
-                "A small team of talented people, learning fast, channeling their energy correctly—can flip entire markets."
+                "A small team of talented people, learning fast, channeling their energy correctly – can flip entire markets."
             </p>
             <p className="text-xs text-muted mt-2">
                 This is our bet. We don't know if we're right. But we're committed to finding out.
@@ -1448,7 +1448,7 @@ export const BeliefsContent = () => (
 export const TeamSetupContent = () => (
     <div className="space-y-8 animate-in fade-in duration-500">
         <p className="text-sm text-secondary">
-            A small, closely knit team where each person owns problem spaces end-to-end—orchestrating AI to achieve outcomes.
+            A small, closely knit team where each person owns problem spaces end-to-end – orchestrating AI to achieve outcomes.
         </p>
 
         {/* Small by Design */}
@@ -1457,7 +1457,7 @@ export const TeamSetupContent = () => (
             <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-4">
                     <p className="text-sm text-secondary">
-                        We're not a small team that's "scaling up." We <strong>choose to stay small</strong>—a closely knit group of highly talented individuals who trust each other deeply.
+                        We're not a small team that's "scaling up." We <strong>choose to stay small</strong> – a closely knit group of highly talented individuals who trust each other deeply.
                     </p>
                     <p className="text-xs text-secondary">
                         Small means everyone knows everything. No information silos. No coordination overhead. No politics. Just people who trust each other, moving fast toward a shared goal.
@@ -1466,7 +1466,7 @@ export const TeamSetupContent = () => (
                 <div className="p-4 rounded-lg bg-nested-deep border border-border">
                     <div className="text-xs font-mono text-section-planning mb-3">THE HYPOTHESIS</div>
                     <p className="text-sm text-primary italic mb-3">
-                        A small team can flip entire markets—if energy is channeled correctly.
+                        A small team can flip entire markets – if energy is channeled correctly.
                     </p>
                     <p className="text-[10px] text-secondary">
                         AI changes the math. What once required hundreds can now be accomplished by a focused few with the right tools and the right mindset.
@@ -1488,7 +1488,7 @@ export const TeamSetupContent = () => (
                     <div className="space-y-3">
                         <div className="p-3 rounded bg-nested border border-border">
                             <div className="text-xs text-primary font-medium mb-1">Not "I'm a Developer" or "I'm an Analyst"</div>
-                            <div className="text-[10px] text-secondary">You own a problem space. You're responsible for understanding it deeply, defining what success looks like, and making it happen—using whatever tools and skills that requires.</div>
+                            <div className="text-[10px] text-secondary">You own a problem space. You're responsible for understanding it deeply, defining what success looks like, and making it happen – using whatever tools and skills that requires.</div>
                         </div>
                         <div className="p-3 rounded bg-nested border border-border">
                             <div className="text-xs text-primary font-medium mb-1">End-to-End Means End-to-End</div>
@@ -1513,7 +1513,7 @@ export const TeamSetupContent = () => (
             </h4>
             <div className="space-y-4">
                 <p className="text-sm text-secondary">
-                    In this model, each of us acts as an <strong>AI orchestrator</strong> for our problem spaces. Your job is to direct AI capabilities toward solving problems—not to do everything yourself.
+                    In this model, each of us acts as an <strong>AI orchestrator</strong> for our problem spaces. Your job is to direct AI capabilities toward solving problems – not to do everything yourself.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                     <div className="p-4 rounded-lg bg-nested-deep border border-border">
@@ -1577,7 +1577,7 @@ export const TeamSetupContent = () => (
             </h4>
             <div className="space-y-4">
                 <p className="text-sm text-secondary">
-                    This model requires <strong>new skills—particularly meta skills</strong>. The ability to think clearly about problems matters more than the ability to execute any specific task.
+                    This model requires <strong>new skills – particularly meta skills</strong>. The ability to think clearly about problems matters more than the ability to execute any specific task.
                 </p>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
                     <div className="p-3 rounded bg-nested border border-border">
@@ -1599,7 +1599,7 @@ export const TeamSetupContent = () => (
                 </div>
                 <div className="p-3 rounded bg-nested border border-border mt-4">
                     <p className="text-xs text-secondary text-center italic">
-                        "The skill isn't doing the work—it's knowing what work needs to be done and directing AI to do it well."
+                        "The skill isn't doing the work – it's knowing what work needs to be done and directing AI to do it well."
                     </p>
                 </div>
             </div>
@@ -1616,7 +1616,7 @@ export const TeamSetupContent = () => (
                         We operate in <strong>fast, experiment-based loops</strong> that facilitate rapid learning. Ship quickly. Measure. Learn. Adjust. Repeat.
                     </p>
                     <p className="text-xs text-secondary">
-                        This only works in a mutually inspiring environment where we share best practices—<em>including things that didn't work</em>. Failures aren't shameful. They're part of experimenting.
+                        This only works in a mutually inspiring environment where we share best practices – <em>including things that didn't work</em>. Failures aren't shameful. They're part of experimenting.
                     </p>
                 </div>
                 <div className="space-y-2">
@@ -1639,7 +1639,7 @@ export const TeamSetupContent = () => (
         {/* The Invitation */}
         <div className="p-4 rounded-lg bg-surface border border-default text-center">
             <p className="text-sm text-secondary italic">
-                "This is a new way of working. We're figuring it out as we go. If you're excited by end-to-end ownership, AI orchestration, and the challenge of flipping markets with a small team—we should talk."
+                "This is a new way of working. We're figuring it out as we go. If you're excited by end-to-end ownership, AI orchestration, and the challenge of flipping markets with a small team – we should talk."
             </p>
             <p className="text-xs text-muted mt-2">
                 If this resonates, maybe we should explore whether we'd enjoy building together.
@@ -1795,7 +1795,7 @@ export const RoleConvergenceContent = () => (
         {/* The Invitation */}
         <div className="p-4 rounded-lg bg-surface border border-default text-center">
             <p className="text-sm text-secondary italic">
-                "We don't know exactly what this role becomes. We're discovering it together. If you want to help define the future of product engineering—let's talk."
+                "We don't know exactly what this role becomes. We're discovering it together. If you want to help define the future of product engineering – let's talk."
             </p>
         </div>
     </div>

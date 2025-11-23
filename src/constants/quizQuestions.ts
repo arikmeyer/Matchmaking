@@ -36,7 +36,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
         b: "Reverse engineer the network traffic, trial-and-error the payload, and write the docs yourself.",
         correct: 'b',
         feedback_pass: "CLICK. The API is the truth. Documentation is just a hint.",
-        feedback_fail: "TENSION. 'Blocked' is a state of mind here. There's always a way—if you dig."
+        feedback_fail: "TENSION. 'Blocked' is a state of mind here. There's always a way – if you dig."
     },
     {
         q: "You are using an AI coding assistant, but it keeps generating subtle bugs in a complex module.",
