@@ -1223,7 +1223,7 @@ export const PhilosophyContent = () => (
                     </div>
                     <div className="text-center md:text-left">
                         <p className="text-xs font-mono text-section-success uppercase tracking-wider mb-2">A good friend says</p>
-                        <p className="text-sm text-primary italic">"Here's what's best for you – even if don't earn anything."</p>
+                        <p className="text-sm text-primary italic">"Here's what's best for you – even if we don't earn anything."</p>
                     </div>
                 </div>
                 <p className="text-center text-xs text-muted mt-6 max-w-lg mx-auto">

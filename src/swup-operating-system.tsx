@@ -60,12 +60,12 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
             ) : (
                 <div className="space-y-2">
                     <div className="text-red-400 font-bold">&gt;&gt; MOSTLY TENSION</div>
-                    <div className="text-primary">We seem to have different philosophies about building things.</div>
-                    <div className="text-secondary">You might enjoy an environment with:</div>
-                    <div className="text-muted text-sm pl-4">• Clear product specs and defined roadmaps</div>
-                    <div className="text-muted text-sm pl-4">• Predictable scope and stable deliverables</div>
-                    <div className="text-muted text-sm pl-4">• Separation between 'building' and 'deciding what to build'</div>
-                    <div className="text-amber-500 text-xs mt-3">Neither approach is wrong – different people thrive in different environments. Thanks for exploring with us.</div>
+                    <div className="text-primary">Our approaches seem to diverge on a few things.</div>
+                    <div className="text-secondary">Honestly, we might not be the right place for what you're looking for:</div>
+                    <div className="text-muted text-sm pl-4">• We don't have a product layer – scope is fluid and often unclear</div>
+                    <div className="text-muted text-sm pl-4">• We expect people to define 'what' alongside 'how'</div>
+                    <div className="text-muted text-sm pl-4">• Our processes change constantly – stability isn't our strength</div>
+                    <div className="text-amber-500 text-xs mt-3">10 questions can't capture everything. If you think we're reading this wrong, we're open to being surprised. Run <span className="text-primary">apply</span>.</div>
                 </div>
             )}
         </div>

@@ -8,9 +8,9 @@ import type { QuizQuestion } from '../types';
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
     {
         q: "You need to migrate 500 legacy integration files. The AI model gets it 80% right but hallucinates on edge cases.",
-        a: "Trust but verify. Review every change to ensure correctness.",
-        b: "Automate the reviewer. Build a secondary 'Linter Agent' to catch the hallucinations, then run the migration again.",
-        correct: 'b',
+        a: "Automate the reviewer. Build a secondary 'Linter Agent' to catch the hallucinations, then run the migration again.",
+        b: "Trust but verify. Review every change to ensure correctness.",
+        correct: 'a',
         feedback_pass: "CLICK. Don't just write code. Build the system that writes the code.",
         feedback_fail: "TENSION. Manual review scales linearly. Here we chase exponential leverage."
     },
@@ -32,9 +32,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     },
     {
         q: "A critical 3rd-party API is undocumented and returns cryptic errors. Support isn't responding.",
-        a: "Flag it as a blocker. Work on the next prioritized task until we get documentation.",
-        b: "Reverse engineer the network traffic, trial-and-error the payload, and write the docs yourself.",
-        correct: 'b',
+        a: "Reverse engineer the network traffic, trial-and-error the payload, and write the docs yourself.",
+        b: "Flag it as a blocker. Work on the next prioritized task until we get documentation.",
+        correct: 'a',
         feedback_pass: "CLICK. The API is the truth. Documentation is just a hint.",
         feedback_fail: "TENSION. 'Blocked' is a state of mind here. There's always a way – if you dig."
     },
@@ -48,9 +48,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     },
     {
         q: "You shipped a new onboarding flow. How do you define success?",
-        a: "Zero errors in production. The flow completed without exceptions.",
-        b: "User activation increased by 30%. I know because I built the dashboard first.",
-        correct: 'b',
+        a: "User activation increased by 30%. I know because I built the dashboard first.",
+        b: "Zero errors in production. The flow completed without exceptions.",
+        correct: 'a',
         feedback_pass: "CLICK. Code that works but doesn't move metrics is just expensive art.",
         feedback_fail: "TENSION. Technical excellence is necessary but not sufficient. Impact matters here."
     },
@@ -64,9 +64,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     },
     {
         q: "You have an unproven hypothesis about automating a manual process. It might not work.",
-        a: "Spec it out fully. Build a robust solution that handles all edge cases from day one.",
-        b: "Build a 4-hour prototype that handles the happy path. Test with real users tomorrow.",
-        correct: 'b',
+        a: "Build a 4-hour prototype that handles the happy path. Test with real users tomorrow.",
+        b: "Spec it out fully. Build a robust solution that handles all edge cases from day one.",
+        correct: 'a',
         feedback_pass: "CLICK. Learn fast, fail cheap. Certainty comes from iteration, not planning.",
         feedback_fail: "TENSION. Over-engineering unvalidated ideas is waste. Experimental velocity wins."
     },
@@ -80,9 +80,9 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
     },
     {
         q: "You see an opportunity to automate a painful manual process, but it's not on any roadmap.",
-        a: "Propose it as a project for next quarter. Wait for prioritization and approval.",
-        b: "Block out Friday afternoon. Ship a working prototype. Show the team Monday morning.",
-        correct: 'b',
+        a: "Block out Friday afternoon. Ship a working prototype. Show the team Monday morning.",
+        b: "Propose it as a project for next quarter. Wait for prioritization and approval.",
+        correct: 'a',
         feedback_pass: "CLICK. Here, people create leverage. They don't wait for permission.",
         feedback_fail: "TENSION. Initiative and ownership are core here. 'Go rogue' is a feature, not a bug."
     }

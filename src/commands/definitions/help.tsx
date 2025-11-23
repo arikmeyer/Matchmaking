@@ -24,25 +24,40 @@ const CATEGORY_CONFIG: Record<CommandCategory, { label: string; order: number }>
 };
 
 /**
- * Primary commands shown with descriptions in main help
+ * Command groups for terminal-native help display
+ * Structure inspired by git help / npm help - lowercase section labels, indented commands
  */
-const PRIMARY_HELP_COMMANDS = [
-  'mission', 'why', 'how', 'what',                    // Philosophy
-  'puzzle', 'architecture', 'domains',                 // Architecture
-  'beliefs', 'team', 'role', 'evolution', 'warts',    // Team
-  'stack',                                             // Tools
-  'whoami', 'culture', 'apply',                        // Matchmaking
+const HELP_SECTIONS = [
+  {
+    label: 'philosophy',
+    commands: ['mission', 'why', 'how', 'what'],
+  },
+  {
+    label: 'architecture',
+    commands: ['puzzle', 'architecture', 'domains'],
+  },
+  {
+    label: 'team',
+    commands: ['beliefs', 'team', 'role', 'evolution', 'warts'],
+  },
+  {
+    label: 'tools',
+    commands: ['stack'],
+  },
+  {
+    label: 'matchmaking',
+    commands: ['whoami', 'culture', 'apply', 'feedback'],
+  },
+  {
+    label: 'terminal',
+    commands: ['theme', 'exit'],
+  },
 ];
 
 /**
  * Utility commands shown compactly (no descriptions needed)
  */
-const UTILITY_COMMANDS = ['ls', 'cat', 'cd', 'pwd', 'env', 'theme', 'feedback', 'clear', 'help'];
-
-/**
- * All commands shown in help (for --all mode reference)
- */
-const ALL_HELP_COMMANDS = [...PRIMARY_HELP_COMMANDS, ...UTILITY_COMMANDS];
+const UTILITY_COMMANDS = ['ls', 'cat', 'cd', 'pwd', 'env', 'history', 'clear', 'help'];
 
 export const helpCommand = defineCommand({
   name: 'help',
@@ -70,7 +85,7 @@ export const helpCommand = defineCommand({
         type: 'output',
         content: (
           <div className="space-y-3 font-mono text-sm">
-            <div className="text-primary font-bold">All Commands ({visibleCommands.length} total):</div>
+            <div className="text-primary font-bold">All Commands:</div>
             {Object.entries(grouped).sort(([a], [b]) => {
               const orderA = CATEGORY_CONFIG[a as CommandCategory]?.order ?? 50;
               const orderB = CATEGORY_CONFIG[b as CommandCategory]?.order ?? 50;
@@ -160,34 +175,36 @@ export const helpCommand = defineCommand({
       return { handled: true };
     }
 
-    // Show grouped commands with the new structure
+    // Show grouped commands with terminal-native section labels
     ctx.addOutput({
       type: 'output',
       content: (
-        <div className="space-y-3 font-mono text-sm">
-          <div className="text-cyan-400 font-bold border-b border-default pb-1">
-            HELP :: EXPLORE SWITCHUP
-          </div>
-          <div className="text-muted text-xs italic mb-2">
+        <div className="space-y-2 font-mono text-sm">
+          <div className="text-muted text-xs mb-3">
             Start with <span className="text-terminal-green">mission</span> or <span className="text-terminal-green">whoami</span>. Dig deeper from there.
           </div>
 
-          {/* Primary commands - flat list */}
-          <div className="grid grid-cols-[110px_1fr] gap-y-0.5">
-            {PRIMARY_HELP_COMMANDS
-              .map((name) => commandRegistry.get(name))
-              .filter((cmd): cmd is NonNullable<typeof cmd> => cmd !== undefined)
-              .map((cmd) => (
-                <React.Fragment key={cmd.name}>
-                  <span className="text-terminal-green">{cmd.name}</span>
-                  <span className="text-muted">{cmd.description}</span>
-                </React.Fragment>
-              ))}
-          </div>
+          {/* Sectioned commands - terminal-native style */}
+          {HELP_SECTIONS.map((section) => (
+            <div key={section.label} className="space-y-0.5">
+              <div className="text-muted text-xs uppercase">{section.label}</div>
+              <div className="pl-2">
+                {section.commands
+                  .map((name) => commandRegistry.get(name))
+                  .filter((cmd): cmd is NonNullable<typeof cmd> => cmd !== undefined)
+                  .map((cmd) => (
+                    <div key={cmd.name} className="grid grid-cols-[100px_1fr] gap-1">
+                      <span className="text-terminal-green">{cmd.name}</span>
+                      <span className="text-secondary">{cmd.description}</span>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          ))}
 
           {/* Utilities - compact inline list */}
-          <div className="text-muted text-xs pt-2 border-t border-default">
-            <span className="text-secondary">Utilities: </span>
+          <div className="text-secondary text-xs pt-2 border-t border-default">
+            <span className="text-muted uppercase">utilities: </span>
             {UTILITY_COMMANDS.map((name, i) => (
               <span key={name}>
                 <span className="text-terminal-green">{name}</span>
