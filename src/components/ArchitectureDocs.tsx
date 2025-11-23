@@ -723,7 +723,7 @@ export const SystemOverviewContent = () => (
                 <div className="flex flex-wrap items-center justify-between gap-2 text-[9px]">
                     <span className="text-muted">Total capability calls: 6</span>
                     <span className="text-muted">State changes recorded: 4</span>
-                    <span className="text-section-success font-medium">User saves €30/month automatically</span>
+                    <span className="text-muted">User saves €473/year automatically</span>
                 </div>
             </div>
         </motion.div>
@@ -733,47 +733,44 @@ export const SystemOverviewContent = () => (
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="p-5 rounded-xl bg-nested-deep border border-border"
+            className="p-6 rounded-xl bg-surface border border-default"
         >
-            <div className="text-[10px] font-mono text-muted uppercase tracking-wider mb-4">Key Insights: Why This Architecture Works</div>
+            <h4 className="text-sm font-mono text-muted uppercase tracking-wider mb-4">Key Insights: Why This Architecture Works</h4>
 
             <div className="grid md:grid-cols-3 gap-4">
                 {/* Safety Guarantee 1 */}
-                <div className="p-3 rounded-lg bg-surface border border-section-planning/30">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Shield size={14} className="text-section-planning" />
-                        <span className="text-[10px] font-bold text-section-planning uppercase">Guardrails</span>
-                    </div>
-                    <p className="text-[10px] text-secondary leading-relaxed">
+                <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                    <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                        <Shield size={16} /> Guardrails
+                    </h5>
+                    <p className="text-xs text-secondary leading-relaxed">
                         Every state change passes through the System of Record. Business rules are enforced at one place, not scattered across services.
                     </p>
                 </div>
 
                 {/* Safety Guarantee 2 */}
-                <div className="p-3 rounded-lg bg-surface border border-section-focus/30">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Clock size={14} className="text-section-focus" />
-                        <span className="text-[10px] font-bold text-section-focus uppercase">Human Override</span>
-                    </div>
-                    <p className="text-[10px] text-secondary leading-relaxed">
+                <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                    <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                        <Clock size={16} /> Human Override
+                    </h5>
+                    <p className="text-xs text-secondary leading-relaxed">
                         The 7-day window isn't arbitrary. It's a designed safety buffer where users can review, modify, or cancel any automated decision.
                     </p>
                 </div>
 
                 {/* Safety Guarantee 3 */}
-                <div className="p-3 rounded-lg bg-surface border border-section-success/30">
-                    <div className="flex items-center gap-2 mb-2">
-                        <Eye size={14} className="text-section-success" />
-                        <span className="text-[10px] font-bold text-section-success uppercase">Full Auditability</span>
-                    </div>
-                    <p className="text-[10px] text-secondary leading-relaxed">
+                <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                    <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                        <Eye size={16} /> Full Auditability
+                    </h5>
+                    <p className="text-xs text-secondary leading-relaxed">
                         Every decision, recommendation, and action is recorded with timestamp and rationale. Complete traceability from trigger to execution.
                     </p>
                 </div>
             </div>
 
             {/* The Bet */}
-            <div className="mt-4 pt-4 border-t border-border">
+            <div className="mt-6 pt-4 border-t border-border">
                 <p className="text-xs text-secondary text-center">
                     <span className="text-primary font-medium">The Architectural Bet:</span> This separation enables progressive AI autonomy. An AI can orchestrate while being constrained by golden rules—safe operations through the System of Record, well-defined tools through Capability Domains.
                 </p>
@@ -797,9 +794,9 @@ export const DomainsContent = () => (
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
-                className="p-4 rounded-xl bg-section-problem/10 border border-section-problem/30"
+                className="p-5 rounded-xl bg-section-problem border border-section-problem"
             >
-                <div className="text-[10px] font-mono text-section-problem uppercase tracking-wider mb-3">Without Boundaries</div>
+                <h5 className="text-sm font-bold text-section-problem mb-3">Without Boundaries</h5>
                 <div className="space-y-2">
                     <div className="flex items-start gap-2">
                         <span className="text-section-problem text-xs">✗</span>
@@ -820,9 +817,9 @@ export const DomainsContent = () => (
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: 0.1 }}
-                className="p-4 rounded-xl bg-section-success/10 border border-section-success/30"
+                className="p-5 rounded-xl bg-section-success border border-section-success"
             >
-                <div className="text-[10px] font-mono text-section-success uppercase tracking-wider mb-3">With Bounded Contexts</div>
+                <h5 className="text-sm font-bold text-section-success mb-3">With Bounded Contexts</h5>
                 <div className="space-y-2">
                     <div className="flex items-start gap-2">
                         <span className="text-section-success text-xs">✓</span>
@@ -853,13 +850,13 @@ export const DomainsContent = () => (
             </div>
 
             {/* System of Record - Foundation */}
-            <div className="mb-4 p-3 rounded-lg bg-section-planning/10 border border-section-planning/30">
+            <div className="mb-4 p-4 rounded-lg bg-section-planning border border-section-planning">
                 <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                         <Database size={14} className="text-section-planning" />
                         <span className="text-sm font-bold text-section-planning">/lifecycle</span>
                     </div>
-                    <span className="text-[9px] font-mono text-section-planning bg-section-planning/20 px-2 py-0.5 rounded">SYSTEM OF RECORD</span>
+                    <span className="text-[9px] font-mono text-primary bg-nested px-2 py-0.5 rounded border border-border">SYSTEM OF RECORD</span>
                 </div>
                 <div className="text-[10px] text-secondary">
                     <strong className="text-primary">Owns:</strong> Contracts, Users, Tasks, all core business state
@@ -868,36 +865,36 @@ export const DomainsContent = () => (
 
             {/* Capability Domains Grid - All GREEN */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-4">
-                <div className="p-2.5 rounded bg-nested border border-border hover:border-section-success/50 transition-colors">
+                <div className="p-2.5 rounded bg-section-success border border-section-success">
                     <Database size={12} className="text-section-success mb-1" />
-                    <div className="text-[10px] font-mono text-primary">/offer</div>
-                    <div className="text-[8px] text-muted leading-tight mt-1">Owns: Market data, pricing, tariffs</div>
+                    <div className="text-[10px] font-mono text-section-success">/offer</div>
+                    <div className="text-[8px] text-secondary leading-tight mt-1">Owns: Market data, pricing, tariffs</div>
                 </div>
-                <div className="p-2.5 rounded bg-nested border border-border hover:border-section-success/50 transition-colors">
+                <div className="p-2.5 rounded bg-section-success border border-section-success">
                     <TrendingUp size={12} className="text-section-success mb-1" />
-                    <div className="text-[10px] font-mono text-primary">/optimisation</div>
-                    <div className="text-[8px] text-muted leading-tight mt-1">Owns: Algorithms, recommendations</div>
+                    <div className="text-[10px] font-mono text-section-success">/optimisation</div>
+                    <div className="text-[8px] text-secondary leading-tight mt-1">Owns: Algorithms, recommendations</div>
                 </div>
-                <div className="p-2.5 rounded bg-nested border border-border hover:border-section-success/50 transition-colors">
+                <div className="p-2.5 rounded bg-section-success border border-section-success">
                     <Server size={12} className="text-section-success mb-1" />
-                    <div className="text-[10px] font-mono text-primary">/provider</div>
-                    <div className="text-[8px] text-muted leading-tight mt-1">Owns: API integrations, provider rules</div>
+                    <div className="text-[10px] font-mono text-section-success">/provider</div>
+                    <div className="text-[8px] text-secondary leading-tight mt-1">Owns: API integrations, provider rules</div>
                 </div>
-                <div className="p-2.5 rounded bg-nested border border-border hover:border-section-success/50 transition-colors">
+                <div className="p-2.5 rounded bg-section-success border border-section-success">
                     <User size={12} className="text-section-success mb-1" />
-                    <div className="text-[10px] font-mono text-primary">/service</div>
-                    <div className="text-[8px] text-muted leading-tight mt-1">Owns: Messaging, notifications</div>
+                    <div className="text-[10px] font-mono text-section-success">/service</div>
+                    <div className="text-[8px] text-secondary leading-tight mt-1">Owns: Messaging, notifications</div>
                 </div>
-                <div className="p-2.5 rounded bg-nested border border-border hover:border-section-success/50 transition-colors">
+                <div className="p-2.5 rounded bg-section-success border border-section-success">
                     <Zap size={12} className="text-section-success mb-1" />
-                    <div className="text-[10px] font-mono text-primary">/growth</div>
-                    <div className="text-[8px] text-muted leading-tight mt-1">Owns: Acquisition, onboarding</div>
+                    <div className="text-[10px] font-mono text-section-success">/growth</div>
+                    <div className="text-[8px] text-secondary leading-tight mt-1">Owns: Acquisition, onboarding</div>
                 </div>
             </div>
 
             {/* Note about Case - Orchestrator = AMBER */}
-            <div className="p-2.5 rounded bg-section-focus/5 border border-section-focus/20 text-center">
-                <span className="text-[9px] text-muted">
+            <div className="p-3 rounded bg-section-focus border border-section-focus text-center">
+                <span className="text-xs text-secondary">
                     <strong className="text-section-focus">/case</strong> orchestrates across these contexts but doesn't own domain data—it coordinates the story.
                 </span>
             </div>
@@ -911,64 +908,61 @@ export const DomainsContent = () => (
             className="grid md:grid-cols-3 gap-4"
         >
             {/* Ubiquitous Language */}
-            <div className="p-4 rounded-xl bg-section-focus/10 border border-section-focus/30">
-                <div className="flex items-center gap-2 mb-3">
-                    <Globe size={14} className="text-section-focus" />
-                    <span className="text-[10px] font-bold text-section-focus uppercase">Ubiquitous Language</span>
-                </div>
-                <p className="text-[10px] text-secondary leading-relaxed mb-3">
+            <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                    <Globe size={16} /> Ubiquitous Language
+                </h5>
+                <p className="text-xs text-secondary leading-relaxed mb-4">
                     Code speaks the same language as the business. No translation needed.
                 </p>
-                <div className="space-y-1 text-[9px] font-mono">
+                <div className="space-y-2 text-[10px] font-mono">
                     <div className="flex justify-between">
                         <span className="text-muted">Business says:</span>
                         <span className="text-primary">"Price Increase"</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted">Code says:</span>
-                        <span className="text-section-focus">PriceIncreaseDetected</span>
+                        <span className="text-primary">PriceIncreaseDetected</span>
                     </div>
                 </div>
             </div>
 
             {/* Bounded Contexts */}
-            <div className="p-4 rounded-xl bg-section-planning/10 border border-section-planning/30">
-                <div className="flex items-center gap-2 mb-3">
-                    <Layers size={14} className="text-section-planning" />
-                    <span className="text-[10px] font-bold text-section-planning uppercase">Bounded Contexts</span>
-                </div>
-                <p className="text-[10px] text-secondary leading-relaxed mb-3">
+            <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                    <Layers size={16} /> Bounded Contexts
+                </h5>
+                <p className="text-xs text-secondary leading-relaxed mb-4">
                     Each domain owns its definitions. "Contract" in /lifecycle ≠ "Contract" in /provider.
                 </p>
-                <div className="space-y-1 text-[9px] font-mono">
+                <div className="space-y-2 text-[10px] font-mono">
                     <div className="flex justify-between">
-                        <span className="text-muted">/lifecycle:</span>
+                        <span className="text-section-planning">/lifecycle:</span>
                         <span className="text-primary">Our record of truth</span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-muted">/provider:</span>
-                        <span className="text-section-planning">Their API response</span>
+                        <span className="text-section-success">/provider:</span>
+                        <span className="text-primary">Their API response</span>
                     </div>
                 </div>
             </div>
 
             {/* Anti-Corruption Layer */}
-            <div className="p-4 rounded-xl bg-section-problem/10 border border-section-problem/30">
-                <div className="flex items-center gap-2 mb-3">
-                    <Shield size={14} className="text-section-problem" />
-                    <span className="text-[10px] font-bold text-section-problem uppercase">Anti-Corruption Layer</span>
-                </div>
-                <p className="text-[10px] text-secondary leading-relaxed mb-3">
+            <div className="p-5 rounded-xl bg-nested-deep border border-border">
+                <h5 className="text-sm font-bold text-primary mb-3 flex items-center gap-2">
+                    <Shield size={16} /> Anti-Corruption Layer
+                </h5>
+                <p className="text-xs text-secondary leading-relaxed mb-4">
                     External chaos stays external. Provider quirks don't leak into our model.
                 </p>
-                <div className="space-y-1 text-[9px] font-mono">
+                <div className="space-y-2 text-[10px] font-mono">
                     <div className="flex justify-between">
                         <span className="text-muted">Vattenfall API:</span>
-                        <span className="text-section-problem">XML mess</span>
+                        <span className="text-primary">XML mess</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted">Our domain:</span>
-                        <span className="text-section-success">Clean model</span>
+                        <span className="text-primary">Clean model</span>
                     </div>
                 </div>
             </div>
@@ -979,24 +973,23 @@ export const DomainsContent = () => (
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.25 }}
-            className="p-5 rounded-xl bg-nested-deep border border-border"
+            className="p-6 rounded-xl bg-surface border border-default"
         >
-            <div className="flex items-center gap-2 mb-4">
-                <Bot size={14} className="text-section-planning" />
-                <span className="text-[10px] font-mono text-muted uppercase tracking-wider">Why This Matters for AI</span>
-            </div>
+            <h4 className="text-sm font-bold text-primary mb-4 flex items-center gap-2">
+                <Bot size={16} /> Why This Matters for AI
+            </h4>
             <div className="grid md:grid-cols-3 gap-4">
-                <div className="space-y-1">
-                    <div className="text-xs font-medium text-primary">Clear Boundaries = Clear Tools</div>
-                    <div className="text-[10px] text-secondary">AI gets domain-specific tool groups. No confusion about which capabilities to use.</div>
+                <div className="p-4 rounded-lg bg-nested border border-border">
+                    <div className="text-xs font-medium text-primary mb-2">Clear Boundaries = Clear Tools</div>
+                    <div className="text-xs text-secondary">AI gets domain-specific tool groups. No confusion about which capabilities to use.</div>
                 </div>
-                <div className="space-y-1">
-                    <div className="text-xs font-medium text-primary">Shared Language = Better Prompts</div>
-                    <div className="text-[10px] text-secondary">When code matches business terms, AI reasoning becomes more natural and accurate.</div>
+                <div className="p-4 rounded-lg bg-nested border border-border">
+                    <div className="text-xs font-medium text-primary mb-2">Shared Language = Better Prompts</div>
+                    <div className="text-xs text-secondary">When code matches business terms, AI reasoning becomes more natural and accurate.</div>
                 </div>
-                <div className="space-y-1">
-                    <div className="text-xs font-medium text-primary">Bounded Risk = Safe Experimentation</div>
-                    <div className="text-[10px] text-secondary">AI errors in /optimisation can't corrupt /lifecycle. Golden rules enforce isolation.</div>
+                <div className="p-4 rounded-lg bg-nested border border-border">
+                    <div className="text-xs font-medium text-primary mb-2">Bounded Risk = Safe Experimentation</div>
+                    <div className="text-xs text-secondary">AI errors in /optimisation can't corrupt /lifecycle. Golden rules enforce isolation.</div>
                 </div>
             </div>
         </motion.div>
@@ -1028,7 +1021,7 @@ export const EvolutionContent = () => (
                         <div className="text-sm font-medium text-primary">AI as Tool</div>
                         <div className="text-[10px] text-secondary">Human decides what to do, AI helps execute. Example: AI drafts an email, human reviews and sends.</div>
                     </div>
-                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-section-success border border-border">PROVEN</div>
+                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-primary border border-border">PROVEN</div>
                 </div>
                 <div className="flex items-center gap-4 p-3 rounded bg-nested border border-border">
                     <div className="w-16 text-center">
@@ -1038,7 +1031,7 @@ export const EvolutionContent = () => (
                         <div className="text-sm font-medium text-primary">AI as Assistant</div>
                         <div className="text-[10px] text-secondary">AI suggests actions, human approves each one. Example: AI recommends "switch to provider X", human confirms.</div>
                     </div>
-                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-section-focus border border-border">TESTING</div>
+                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-primary border border-border">TESTING</div>
                 </div>
                 <div className="flex items-center gap-4 p-3 rounded bg-nested border border-border">
                     <div className="w-16 text-center">
@@ -1048,7 +1041,7 @@ export const EvolutionContent = () => (
                         <div className="text-sm font-medium text-primary">AI as Copilot</div>
                         <div className="text-[10px] text-secondary">AI handles routine cases end-to-end, humans handle exceptions. Example: AI processes standard switches, escalates edge cases.</div>
                     </div>
-                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-section-planning border border-border">HYPOTHESIS</div>
+                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-primary border border-border">HYPOTHESIS</div>
                 </div>
                 <div className="flex items-center gap-4 p-3 rounded bg-nested border border-border">
                     <div className="w-16 text-center">
@@ -1058,7 +1051,7 @@ export const EvolutionContent = () => (
                         <div className="text-sm font-medium text-primary">AI as Colleague</div>
                         <div className="text-[10px] text-secondary">AI operates autonomously within defined boundaries. Humans set goals and constraints, review outcomes periodically.</div>
                     </div>
-                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-section-focus border border-border">FUTURE?</div>
+                    <div className="px-2 py-1 rounded bg-nested-deep text-[10px] font-mono text-primary border border-border">FUTURE?</div>
                 </div>
             </div>
         </div>
@@ -1649,7 +1642,7 @@ export const TeamSetupContent = () => (
                 "This is a new way of working. We're figuring it out as we go. If you're excited by end-to-end ownership, AI orchestration, and the challenge of flipping markets with a small team—we should talk."
             </p>
             <p className="text-xs text-muted mt-2">
-                We're looking for people who want to shape what this becomes.
+                If this resonates, maybe we should explore whether we'd enjoy building together.
             </p>
         </div>
     </div>
@@ -1779,19 +1772,19 @@ export const RoleConvergenceContent = () => (
             </h4>
             <div className="grid md:grid-cols-3 gap-4">
                 <div className="p-4 rounded-lg bg-nested-deep border border-border">
-                    <div className="text-sm font-medium text-section-planning mb-2">Define the 'What'</div>
+                    <div className="text-sm font-medium text-primary mb-2">Define the 'What'</div>
                     <div className="text-[10px] text-secondary">
                         Understand user problems deeply. Translate needs into clear requirements. Own the product vision for your space.
                     </div>
                 </div>
                 <div className="p-4 rounded-lg bg-nested-deep border border-border">
-                    <div className="text-sm font-medium text-section-problem mb-2">Design the 'How'</div>
+                    <div className="text-sm font-medium text-primary mb-2">Design the 'How'</div>
                     <div className="text-[10px] text-secondary">
                         Shape the user experience. Make technical decisions with empathy. Create solutions that feel right.
                     </div>
                 </div>
                 <div className="p-4 rounded-lg bg-nested-deep border border-border">
-                    <div className="text-sm font-medium text-section-success mb-2">Orchestrate the 'Execution'</div>
+                    <div className="text-sm font-medium text-primary mb-2">Orchestrate the 'Execution'</div>
                     <div className="text-[10px] text-secondary">
                         Direct AI to build. Verify quality. Iterate rapidly. Ship outcomes, not just code.
                     </div>

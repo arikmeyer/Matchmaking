@@ -101,7 +101,7 @@ export const TerminalOutput: React.FC<TerminalOutputProps> = ({
   return (
     <div
       ref={scrollRef}
-      className={`flex-1 min-h-0 overflow-y-auto scrollbar-hide ${spacingClass} ${className}`}
+      className={`flex-1 min-h-0 overflow-y-auto overflow-x-hidden scrollbar-hide break-words ${spacingClass} ${className}`}
       role="log"
       aria-live="polite"
       aria-label="Terminal output"

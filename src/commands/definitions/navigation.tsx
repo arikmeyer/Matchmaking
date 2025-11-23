@@ -166,7 +166,7 @@ export const catCommand = defineCommand({
 // Virtual Filesystem Helpers
 // ============================================================================
 
-const HOME_DIR = '/home/candidate/switchup';
+const HOME_DIR = '/home/explorer/switchup';
 
 /**
  * Valid paths in our virtual filesystem
@@ -174,8 +174,8 @@ const HOME_DIR = '/home/candidate/switchup';
 const VALID_PATHS = new Set([
   '/',
   '/home',
-  '/home/candidate',
-  '/home/candidate/switchup',
+  '/home/explorer',
+  '/home/explorer/switchup',
   HOME_DIR,
   `${HOME_DIR}/flows`,
   `${HOME_DIR}/core`,
@@ -189,8 +189,8 @@ const VALID_PATHS = new Set([
 const DIRECTORIES = new Set([
   '/',
   '/home',
-  '/home/candidate',
-  '/home/candidate/switchup',
+  '/home/explorer',
+  '/home/explorer/switchup',
   HOME_DIR,
   `${HOME_DIR}/flows`,
   `${HOME_DIR}/core`,
@@ -271,26 +271,30 @@ function getFileContent(path: string): string | null {
  * File contents for cat command
  */
 const FILE_CONTENTS: Record<string, string> = {
-  [`${HOME_DIR}/README.md`]: `# Welcome to Switchup
+  [`${HOME_DIR}/README.md`]: `# Welcome, Explorer
 
-We're building the Universal Adapter for subscriptions.
+We're building a Subscription Operating System.
+You're exploring whether we'd be a good match. (We're doing the same.)
 
 ## Quick Start
-- Run \`stack\` to see our tech choices
-- Run \`mission\` to understand what we're building
-- Run \`culture\` to test your fit
-- Run \`apply\` when you're ready
+- Run \`mission\` to understand WHY / HOW / WHAT
+- Run \`architecture\` or \`puzzle\` to see what we're building
+- Run \`warts\` to see our honest self-portrait
+- Run \`culture\` for mutual discovery (not a test)
+- Run \`apply\` if something clicks
 
-## The Problem We Solve
-Switching subscriptions is broken. Whether it's energy, insurance,
-or telecom - the process is fragmented, frustrating, and designed
-to keep you stuck.
+## WHY: Marktfairänderung (Market Fairness Transformation)
+Why is loyalty punished, not rewarded? We believe markets can be
+transformed toward fairness—through technology that shifts power
+back to consumers.
 
-## Our Solution
-One API. Any subscription. Seamless switching.
+## HOW: Freundschaftsprinzip (Friendship Principle)
+What would a good friend do? A good friend recommends what's best
+for you—even if they don't earn anything.
 
-We're not just building another comparison site. We're building
-infrastructure that makes switching as easy as a single API call.
+## WHAT: Never Overcharged Again
+Not a switching service. An operating system that monitors, detects,
+acts, and protects. Continuously. So you can forget about them.
 
 Questions? future-colleagues@switchup.tech`,
 
@@ -329,29 +333,30 @@ echo "  - What excites you about Switchup"
 echo "  - A project you're proud of"
 echo "  - Your GitHub/portfolio (optional but nice)"
 echo ""
-echo "We read every application. No AI screening."
+echo "We read every message. No AI screening."
 echo "Real humans, real conversations."
 echo ""
 echo "See you on the other side."`,
 
-  [`${HOME_DIR}/flows/eon-bot.ts`]: `// The legendary E.ON reverse-engineering
-// This took us 4 hours when they changed their login flow
+  [`${HOME_DIR}/flows/eon-bot.ts`]: `// Provider portal integration
+// When providers don't have APIs, we build our own access
 
 import { Playwright } from 'playwright';
 import { Windmill } from '@windmill/sdk';
 
-export async function loginToEon(credentials: Credentials) {
-  // They use a multi-step auth flow with dynamic tokens
-  // We figured it out. Ask us about it in your interview.
+export async function connectToProvider(credentials: Credentials) {
+  // Many providers use multi-step auth with dynamic tokens
+  // We reverse-engineer their flows and make them reliable
 
   const browser = await Playwright.chromium.launch();
-  // ... 200 more lines of battle-tested code
+  // ... battle-tested automation code
 
-  // Fun fact: Their "API" is actually screen scraping.
-  // We made it reliable. 98% success rate.
+  // The bet: Self-healing scripts
+  // Playwright captures failures → AI analyzes → suggests fixes
+  // We're experimenting with autonomous repair. It's working.
 }
 
-// Want to build stuff like this? Run 'apply'`,
+// Designed for 100+ provider portals. Run 'apply' to help build it`,
 
   [`${HOME_DIR}/flows/subscription-switch.ts`]: `// Core subscription switching flow
 // This is what we do all day
@@ -461,7 +466,7 @@ import { Langfuse } from 'langfuse';
 
 // We use AI where it adds real value:
 // - Understanding user preferences from natural language
-// - Matching complex plan features
+// - Matching complex plan features across domains
 // - Predicting satisfaction with recommendations
 
 export async function findBestMatch(
@@ -486,9 +491,9 @@ export async function findBestMatch(
   };
 }
 
-// Not just AI for AI's sake
-// Measurable improvement in match quality: 34%
-// User satisfaction increase: 28%`,
+// The bet: AI craft matters
+// We experiment with prompting techniques, share what works.
+// Langfuse gives us observability into every decision.`,
 
   [`${HOME_DIR}/monitoring/langfuse-traces.ts`]: `// We believe in radical observability
 
@@ -509,10 +514,10 @@ export const langfuse = new Langfuse({
 // - Measure actual business impact
 // - Build trust with users
 
-// Current stats:
-// - 200k LLM calls/week
-// - €2.3k/month spend (we track every penny)
-// - 99.2% accuracy on document parsing
+// The bet: AI craft matters
+// - Prompting techniques, sub-agent architectures, context patterns
+// - When someone discovers what works (or fails), we share it
+// - We track everything to learn faster
 
 // "If you can't measure it, you can't improve it"
 // We take this seriously.`,
@@ -539,80 +544,85 @@ export const alertConfig = {
   // No alert fatigue, only actionable notifications
 };`,
 
-  [`${HOME_DIR}/docs/culture.md`]: `# Engineering Culture at Switchup
+  [`${HOME_DIR}/docs/culture.md`]: `# Team Setup at Switchup
 
-## Our Principles
+## Small by Design
+We choose to stay small—a closely knit team of talented people
+who trust each other deeply. No silos. No politics. High context.
 
-### 1. Ownership Over Tasks
-You don't just write code. You own outcomes.
-- You deploy it, you monitor it, you fix it
-- No "throwing over the wall" to ops
-- Direct connection between your work and user impact
+## Problem Space Ownership
+You don't hand off tickets. You own problem spaces end-to-end.
+Not "I'm a developer" but "I own this domain."
+From grasping the problem to shipping solutions to measuring impact.
 
-### 2. Pragmatism Over Perfection
-- Ship it, measure it, improve it
-- Perfect is the enemy of good
-- Technical debt is okay if we know we're taking it
+## You as AI Orchestrator
+Each of us acts as an AI orchestrator for our problem spaces.
+Your job is to direct AI capabilities toward solving problems.
+AI executes at scale. You provide judgment and direction.
 
-### 3. Transparency By Default
-- All decisions documented
-- All metrics visible
-- All code reviewed
+## Our Beliefs
 
-### 4. AI as Force Multiplier
-We use AI to write code. Yes, really.
-Claude Code + sub-agents = 3x velocity.
+### Small Team Belief
+A small team can flip entire markets—if energy is channeled
+correctly. AI changes the math. What once required hundreds
+can now be done by a focused few.
 
-## What We Look For
-- Curiosity about how things work
-- Comfort with ambiguity
-- Bias toward action
-- Actually good at AI (not just buzzwords)
+### Learning Belief
+Build to learn, not to prove we're right. Everything is a
+hypothesis until the data says otherwise. Fast loops. Share
+what works AND what fails. Change direction when evidence
+says we're wrong.
 
-Ready to test your fit? Run 'culture'`,
+### AI Trust Gradient
+- Level 1: AI as Tool (human decides, AI executes)
+- Level 2: AI as Assistant (AI suggests, human approves)
+- Level 3: AI as Copilot (AI handles routine, humans handle exceptions)
+- Level 4: AI as Colleague (future—we're experimenting)
+
+Curious if we'd click? Run 'culture' for mutual discovery.`,
 
   [`${HOME_DIR}/docs/architecture.md`]: `# Switchup Architecture
 
-## Overview
+## Three-Layer Model
 
 ┌─────────────────────────────────────────────────────┐
-│                    Client Apps                       │
-│              (Web, Mobile, Partners)                 │
+│         PROCESS ORCHESTRATOR (/case)                │
+│   Coordinates the story. Runs Flows & Playbooks.    │
+│   ⚡ Golden Rule: ONLY layer that orchestrates      │
 └─────────────────────┬───────────────────────────────┘
-                      │
+                      │ coordinates
                       ▼
 ┌─────────────────────────────────────────────────────┐
-│                  API Gateway                         │
-│               (Rate limiting, Auth)                  │
+│           CAPABILITY DOMAINS                         │
+│  /offer     - Models the market                     │
+│  /optimisation - Finds best choices                 │
+│  /provider  - Talks to provider APIs                │
+│  /service   - User communication                    │
+│  /growth    - Acquires users                        │
+│   ⚡ Golden Rule: Never orchestrate. Specialize.    │
 └─────────────────────┬───────────────────────────────┘
-                      │
+                      │ queries for truth
                       ▼
 ┌─────────────────────────────────────────────────────┐
-│              Universal Adapter Core                  │
-│    ┌─────────┐ ┌─────────┐ ┌─────────────────┐     │
-│    │ Matcher │ │ Switcher│ │ Provider Manager│     │
-│    └─────────┘ └─────────┘ └─────────────────┘     │
-└─────────────────────┬───────────────────────────────┘
-                      │
-        ┌─────────────┼─────────────┐
-        ▼             ▼             ▼
-┌───────────┐ ┌───────────┐ ┌───────────┐
-│  Windmill │ │   Neon    │ │ Langfuse  │
-│  (Flows)  │ │   (DB)    │ │(Tracing)  │
-└───────────┘ └───────────┘ └───────────┘
+│      SYSTEM OF RECORD (/lifecycle)                  │
+│  Contracts, Users, Tasks. Single source of truth.   │
+│  Validates operations. Enforces business rules.     │
+│   ⚡ Golden Rule: Calls NO ONE. Everyone calls it.  │
+└─────────────────────────────────────────────────────┘
 
-## Key Decisions
+## Why This Architecture?
 
-1. **Windmill for orchestration** - Visual flows, easy debugging
-2. **Neon for data** - Serverless Postgres, branching for dev
-3. **Langfuse for AI ops** - Full observability into AI decisions
+This separation enables progressive AI autonomy:
+- AI can orchestrate while constrained by golden rules
+- Safe operations through the System of Record
+- Well-defined tools through Capability Domains
+- Business rules encoded in operations, not scattered
 
-## Why This Stack?
+## Domain-Driven Design
 
-We optimize for:
-- Developer velocity (small team, big goals)
-- Debuggability (production issues are inevitable)
-- Flexibility (requirements change constantly)`,
+Each domain owns its vocabulary. "Contract" in /lifecycle
+is different from "Contract" in /provider.
+Bounded contexts prevent chaos from leaking across boundaries.`,
 
   [`${HOME_DIR}/docs/failures.md`]: `# Things That Didn't Work
 (And what we learned)
@@ -647,7 +657,7 @@ We share this because:
   [`${HOME_DIR}/.env`]: `# Nice try!
 
 # But seriously, we don't commit secrets.
-# Ask us about our security practices in your interview.
+# Ask us about our security practices when we chat.
 
 DATABASE_URL=postgresql://[REDACTED]
 API_KEY=[REDACTED]
@@ -679,13 +689,13 @@ function getDirectoryListing(path: string): React.ReactNode | null {
   if (path === HOME_DIR || path === `${HOME_DIR}/`) {
     return (
       <div className="font-mono text-sm space-y-1">
-        <div className="text-muted mb-2">total 47 files (and counting)</div>
-        <div className="text-blue-400">drwxr-xr-x  .git/                    (3 months of commits, some regrettable)</div>
-        <div className="text-primary">-rw-r--r--  README.md                2.3kb   "How to ship your first flow"</div>
+        <div className="text-muted mb-2">total 14 files (problem spaces expanding daily)</div>
+        <div className="text-blue-400">drwxr-xr-x  .git/                    (experiments in progress)</div>
+        <div className="text-primary">-rw-r--r--  README.md                2.3kb   "WHY / HOW / WHAT"</div>
         <div className="text-primary">-rw-r--r--  package.json             1.8kb   Dependencies & scripts</div>
         <div className="text-terminal-green">-rwxr-xr-x  apply.sh                 127b    Your future starts here</div>
         <div className="text-blue-400 mt-2">drwxr-xr-x  flows/</div>
-        <div className="text-secondary pl-4">-rw-r--r--  eon-bot.ts               4.2kb   The legendary reverse-eng</div>
+        <div className="text-secondary pl-4">-rw-r--r--  eon-bot.ts               4.2kb   Provider portal automation</div>
         <div className="text-secondary pl-4">-rw-r--r--  subscription-switch.ts   3.2kb   Core switching flow</div>
         <div className="text-amber-400 pl-4">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
         <div className="text-blue-400 mt-2">drwxr-xr-x  core/</div>
@@ -693,14 +703,14 @@ function getDirectoryListing(path: string): React.ReactNode | null {
         <div className="text-secondary pl-4">-rw-r--r--  matching.ts              2.9kb   AI-powered matching</div>
         <div className="text-blue-400 mt-2">drwxr-xr-x  monitoring/</div>
         <div className="text-secondary pl-4">-rw-r--r--  langfuse-traces.ts       1.6kb   LLM observability</div>
-        <div className="text-secondary pl-4">-rw-r--r--  alerting.ts              892b    Slack webhooks</div>
+        <div className="text-secondary pl-4">-rw-r--r--  alerting.ts              892b    Smart alerting</div>
         <div className="text-blue-400 mt-2">drwxr-xr-x  docs/</div>
-        <div className="text-secondary pl-4">-rw-r--r--  architecture.md          3.1kb   System design</div>
-        <div className="text-secondary pl-4">-rw-r--r--  culture.md               2.4kb   Engineering culture</div>
+        <div className="text-secondary pl-4">-rw-r--r--  architecture.md          3.1kb   Three-layer model</div>
+        <div className="text-secondary pl-4">-rw-r--r--  culture.md               2.4kb   Team setup & beliefs</div>
         <div className="text-secondary pl-4">-rw-r--r--  failures.md              3.8kb   Things that didn't work</div>
         <div className="text-muted mt-2">-rw-r--r--  .env                       REDACTED (nice try)</div>
         <div className="text-muted text-xs mt-2">
-          Hint: Try 'cat README.md' or 'cat core/matching.ts'
+          Hint: Try 'cat README.md' or 'cat docs/architecture.md'
         </div>
       </div>
     );
@@ -711,7 +721,7 @@ function getDirectoryListing(path: string): React.ReactNode | null {
     return (
       <div className="font-mono text-sm space-y-1">
         <div className="text-muted mb-2">total 3 files</div>
-        <div className="text-secondary">-rw-r--r--  eon-bot.ts               4.2kb   The legendary reverse-eng</div>
+        <div className="text-secondary">-rw-r--r--  eon-bot.ts               4.2kb   Provider portal automation</div>
         <div className="text-secondary">-rw-r--r--  subscription-switch.ts   3.2kb   Core switching flow</div>
         <div className="text-amber-400">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
       </div>
@@ -742,8 +752,8 @@ function getDirectoryListing(path: string): React.ReactNode | null {
     return (
       <div className="font-mono text-sm space-y-1">
         <div className="text-muted mb-2">total 3 files</div>
-        <div className="text-secondary">-rw-r--r--  architecture.md   3.1kb   System design</div>
-        <div className="text-secondary">-rw-r--r--  culture.md        2.4kb   Engineering culture</div>
+        <div className="text-secondary">-rw-r--r--  architecture.md   3.1kb   Three-layer model</div>
+        <div className="text-secondary">-rw-r--r--  culture.md        2.4kb   Team setup & beliefs</div>
         <div className="text-secondary">-rw-r--r--  failures.md       3.8kb   Things that didn't work</div>
       </div>
     );

@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { TerminalWindowHeader } from './TerminalWindowHeader';
 import { FullscreenModal } from './FullscreenModal';
 import { ExitConfirmDialog } from './ExitConfirmDialog';
+import { TerminalGlowEffect } from './TerminalGlowEffect';
 
 /**
  * Context to provide fullscreen state to children of TerminalWindow.
@@ -100,6 +101,8 @@ export interface TerminalWindowProps {
     restoreDelay?: number;
     /** Custom content to display on the right side of the header (e.g., status indicators) */
     headerRightContent?: ReactNode;
+    /** Whether to show the chromatic glow effect around the window (default: true) */
+    showGlow?: boolean;
 }
 
 /**
@@ -137,6 +140,7 @@ export function TerminalWindow({
     minimizeDelay = 250,
     restoreDelay = 750,
     headerRightContent,
+    showGlow = true,
 }: TerminalWindowProps) {
     // If custom fullscreen handler provided, don't use internal fullscreen state
     const useInternalFullscreen = !onFullscreenClick;
@@ -152,11 +156,53 @@ export function TerminalWindow({
     // Timer ref for cleanup on unmount
     const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // Cleanup timer on unmount
+    // Glow visibility management for smooth transitions
+    // Hide immediately, show only after window animation completes
+    const glowTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const wasHiddenRef = useRef(false);
+    const [glowReady, setGlowReady] = useState(true);
+
+    // Window is "visible" when not minimized and not in internal fullscreen
+    const windowShouldBeVisible = !isMinimized && !(useInternalFullscreen && isFullscreen);
+
+    useEffect(() => {
+        // Clear any pending glow timer
+        if (glowTimerRef.current) {
+            clearTimeout(glowTimerRef.current);
+            glowTimerRef.current = null;
+        }
+
+        if (windowShouldBeVisible) {
+            if (wasHiddenRef.current) {
+                // Coming back from hidden state - delay glow until animation completes
+                // AnimatePresence mode="wait" means: exit animation (300ms) + enter animation (500ms) = 800ms total
+                glowTimerRef.current = setTimeout(() => {
+                    setGlowReady(true);
+                    wasHiddenRef.current = false;
+                }, 850); // 800ms animation + 50ms buffer
+            }
+            // If already visible (initial render), keep glow ready
+        } else {
+            // Going hidden - hide glow immediately
+            setGlowReady(false);
+            wasHiddenRef.current = true;
+        }
+
+        return () => {
+            if (glowTimerRef.current) {
+                clearTimeout(glowTimerRef.current);
+            }
+        };
+    }, [windowShouldBeVisible]);
+
+    // Cleanup timers on unmount
     useEffect(() => {
         return () => {
             if (timerRef.current) {
                 clearTimeout(timerRef.current);
+            }
+            if (glowTimerRef.current) {
+                clearTimeout(glowTimerRef.current);
             }
         };
     }, []);
@@ -287,8 +333,12 @@ export function TerminalWindow({
         </div>
     );
 
+    // Glow is visible when: showGlow enabled, window visible, AND glow animation ready
+    // glowReady is delayed when transitioning from hidden to visible
+    const glowVisible = showGlow && windowShouldBeVisible && glowReady;
+
     return (
-        <div className={`relative ${className}`}>
+        <TerminalGlowEffect isVisible={glowVisible} className={className}>
             {/* Main window or minimized state */}
             <AnimatePresence mode="wait" initial={false}>
                 {isMinimized ? (
@@ -350,6 +400,6 @@ export function TerminalWindow({
                 title={exitDialogTitle}
                 description={exitDialogDescription}
             />
-        </div>
+        </TerminalGlowEffect>
     );
 }

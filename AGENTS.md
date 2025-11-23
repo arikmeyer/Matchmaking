@@ -4,7 +4,7 @@ Guidance for Claude Code when working with this repository.
 
 ## Project Overview
 
-Interactive job board for Switchup - a client-side React app with terminal/OS theme. No backend.
+Interactive matchmaking page for Switchup - a client-side React app with terminal/OS theme. No backend.
 
 **Stack**: React 19, TypeScript, Vite, Tailwind CSS v4, Framer Motion
 
@@ -21,30 +21,25 @@ npm run preview  # Preview production build
 | What                     | Where                                              |
 | ------------------------ | -------------------------------------------------- |
 | Main component           | `src/swup-operating-system.tsx`                    |
-| Terminal commands        | `handleCommand` function in main component         |
-| System logs              | `src/constants/logMessages.ts`                     |
-| Tech stack data          | `src/constants/techStack.ts`                       |
+| Terminal commands        | `src/commands/definitions/`                        |
+| Problem spaces data      | `src/constants/problemSpaces.ts`                   |
 | Quiz questions           | `src/constants/quizQuestions.ts`                   |
-| Engineering bets         | `src/constants/engineeringBets.ts`                 |
-| Behind the scenes videos | `src/constants/behindTheScenes.ts`                 |
-| Type definitions         | `src/types/terminal.types.ts`                      |
+| Tech stack + bets        | `src/constants/techStack.ts`                       |
+| System logs              | `src/constants/logMessages.ts`                     |
+| Type definitions         | `src/types/`                                       |
 | Tailwind config          | `src/index.css` (CSS-first, no tailwind.config.js) |
 | Boot password            | `src/components/BootSequence.tsx`                  |
 
 ## Import Patterns
 
 ```typescript
-// Components - barrel export
-import { BootSequence, ApplicationModal, TerminalWindow } from './components';
-
-// Hooks - barrel export
-import { useTheme, useQuizState, useWindowControls } from './hooks';
-
-// Constants - barrel export
-import { LOG_MESSAGES, TECH_STACK, QUIZ_QUESTIONS } from './constants';
+// Components, Hooks, Constants - barrel exports from each directory
+import { BootSequence, ApplicationModal, TerminalWindow, ProblemSpaces } from './components';
+import { useTheme, useQuizState, useTerminalCore } from './hooks';
+import { LOG_MESSAGES, TECH_STACK, QUIZ_QUESTIONS, PROBLEM_SPACES } from './constants';
 
 // Types - use 'type' keyword
-import type { LogEntry, QuizQuestion, BehindTheScenesVideo } from './types';
+import type { LogEntry, QuizQuestion, ProblemSpace, ExplorerItem, CommandDefinition } from './types';
 ```
 
 ## Architecture
@@ -53,6 +48,7 @@ import type { LogEntry, QuizQuestion, BehindTheScenesVideo } from './types';
 
 ```
 src/
+├── commands/       # Terminal command system (definitions/, registry, parser)
 ├── components/     # UI components (export via index.ts)
 ├── constants/      # Data files (export via index.ts)
 ├── hooks/          # Custom hooks (export via index.ts)
@@ -67,11 +63,17 @@ src/
 ```
 SwitchupOperatingSystem (root)
 ├── BootSequence           # Password gate
-├── InteractiveTerminal    # Inline in main component
+├── InteractiveTerminal    # Hero terminal (uses useTerminalCore)
 │   └── Quiz mode          # useQuizState hook
+├── ProblemSpaces          # System Architecture Explorer
+│   ├── ExplorerSidebar    # Left navigation
+│   └── ExplorerMainContent
+│       └── ArchitectureDocs
+├── TechStackCard          # Tech stack with flip animation
 ├── BehindTheScenesModal   # Vimeo videos
 ├── ApplicationModal       # Application flow
-└── Content sections       # Tech stack, logs, bets, footer
+├── DecisionTerminal       # Footer terminal (uses useTerminalCore)
+└── Content sections       # Logs, convergence, mutual fit
 ```
 
 ### State Management
@@ -94,6 +96,24 @@ The hooks use React 19 concurrent features:
 | `useTheme`        | `useTransition`    | Non-blocking theme changes |
 | `useTerminalLogs` | `useDeferredValue` | Deferred log rendering     |
 | `useQuizState`    | `useOptimistic`    | Instant UI feedback        |
+
+**Terminal-specific hooks** (shared between InteractiveTerminal and DecisionTerminal):
+
+| Hook                 | Purpose                                                                   |
+| -------------------- | ------------------------------------------------------------------------- |
+| `useTerminalCore`    | **Main hook** - unified terminal logic (commands, history, tab completion)|
+| `useTerminalFocus`   | Manages input refs for normal/fullscreen modes, auto-focus                |
+| `useTerminalKeyboard`| Shared keyboard shortcuts (ArrowUp/Down, Ctrl+L/C)                        |
+
+The `useTerminalCore` hook centralizes ALL terminal logic and is used by both InteractiveTerminal and DecisionTerminal. Configuration options:
+- `enablePathCompletion` - Path completion for cd/cat/ls (InteractiveTerminal only)
+- `enableAdvancedShortcuts` - Ctrl+U/K/A/E/W shortcuts (InteractiveTerminal only)
+- `customApplyHandler` - Custom apply command behavior (DecisionTerminal's progress bar)
+- `quiz` - Quiz integration with `useQuizState`
+
+**Context-aware wrappers** (for TerminalWindow children):
+- `ContextAwareInput` - Input that auto-selects correct ref based on fullscreen mode
+- `ContextAwareClickArea` - Click area that auto-selects correct focus handler
 
 ## Tailwind CSS v4
 
@@ -123,15 +143,29 @@ This project uses Tailwind v4's CSS-first approach. All config is in `src/index.
 
 ### Add Terminal Command
 
-In `src/swup-operating-system.tsx`, find `handleCommand` switch statement:
+Commands organized by category in `src/commands/definitions/`:
+- `business.tsx` - Core Switchup content (mission, beliefs, architecture, stack)
+- `easter-eggs.tsx` - Hidden fun commands
+- `help.tsx` - Help command + `HELP_GROUPS` config
 
 ```typescript
-case 'mycommand':
-  addLine({ type: 'output', content: 'Output text' });
-  break;
+// src/commands/definitions/my-command.tsx
+import { defineCommand } from '../registry';
+
+export const myCommand = defineCommand({
+  name: 'mycommand',
+  aliases: ['mc'],
+  description: 'Does something cool',
+  category: 'info', // info, navigation, system, action, theme, quiz, easter-egg, dev
+  hidden: false,    // true for easter eggs
+  handler: (parsed, ctx) => {
+    ctx.addOutput({ type: 'output', content: 'Hello!' });
+    return { handled: true };
+  },
+});
 ```
 
-Also add to help text output in the `'help'` case.
+Then export from `definitions/index.ts` and add to `ALL_COMMANDS`.
 
 ### Add System Log
 
@@ -141,7 +175,7 @@ Also add to help text output in the `'help'` case.
 // Levels: INFO, WARN, ERROR, SUCCESS, SYSTEM
 ```
 
-### Add Tech Stack Item
+### Add Tech Stack Item (with Engineering Bet)
 
 ```typescript
 // src/constants/techStack.ts
@@ -151,9 +185,16 @@ Also add to help text output in the `'help'` case.
   rationale: 'Why we use it',
   specs: ['Use case 1', 'Use case 2'],
   status: 'CORE',  // or 'EXPLORING'
-  icon: LucideIcon
+  icon: LucideIcon,
+  bet: {  // Optional - shows on card flip
+    title: 'Bet Title',
+    context: 'Background info',
+    tradeoff: 'Trade-offs'
+  }
 }
 ```
+
+Tech stack cards flip on hover to reveal the engineering bet. Uses `FlipCard` and `TechStackCard` components with Framer Motion 3D transforms.
 
 ### Add Quiz Question
 
@@ -169,17 +210,31 @@ Also add to help text output in the `'help'` case.
 }
 ```
 
-### Add Engineering Bet
+### Add Problem Space
 
 ```typescript
-// src/constants/engineeringBets.ts
+// src/constants/problemSpaces.ts - Add to existing domain or create new domain
 {
   id: 'unique-id',
-  title: 'Bet Title',
-  context: 'Background info',
-  tradeoff: 'Trade-offs'
+  title: 'Problem Space Title',
+  subtitle: 'Short Description',
+  problem: 'The problem statement...',
+  outcome: 'The desired outcome...',
+  intermediate: {
+    role: 'Admin as Operator',
+    description: 'How humans currently handle this...',
+    activities: ['Activity 1', 'Activity 2', 'Activity 3']
+  },
+  target: {
+    role: 'Admin as Supervisor',
+    description: 'How AI will assist...',
+    activities: ['AI activity 1', 'AI activity 2', 'Human oversight']
+  },
+  prerequisites: ['Prereq 1', 'Prereq 2', 'Prereq 3']
 }
 ```
+
+To add a new domain or doc: update types in `problemSpaces.types.ts`, add data/content, add to `EXPLORER_ITEMS` in `ProblemSpaces.tsx`.
 
 ### Add Behind the Scenes Video
 
@@ -187,7 +242,7 @@ Also add to help text output in the `'help'` case.
 // src/constants/behindTheScenes.ts
 {
   id: 'unique-slug',
-  vimeoId: '1139421319',  // From vimeo.com URL
+  vimeoId: '1139231458',  // From vimeo.com URL
   title: 'Title',
   description: 'Description',
   author: { name: 'Name', role: 'Role', avatarInitials: 'XX' },
@@ -233,11 +288,19 @@ if (password === 'NewPassword') {
 
 ### Terminal Commands
 
-Standard: `help`, `stack`, `mission`, `challenges`, `culture`/`quiz`, `ls`, `whoami`, `apply`, `clear`, `exit`
+**Philosophy (The Soul):** `mission`, `why`, `how`, `what`
 
-Theme: `theme`, `theme default`, `theme matrix`, `theme cyberpunk`, `theme light`
+**Beliefs & Team (The Heart):** `beliefs`, `team`, `role`, `evolution`, `warts`
 
-Easter eggs: `konami`, `health`, `matrix`, `salary`, `hire me`, `sudo`
+**Architecture (The Brain):** `puzzle`, `architecture`, `domains`
+
+**Tools (The Hands):** `stack`
+
+**Matchmaking:** `whoami`, `culture`, `apply`
+
+**Utilities:** `help`, `ls`, `cat`, `cd`, `pwd`, `env`, `theme`, `feedback`, `clear`, `exit`
+
+**Easter eggs:** `konami`, `health`, `matrix`, `hire me`, `sudo`, `42`, `vim`, `nano`, `emacs`, `coffee`, `git`, `npm`, `make`, `neofetch`, `fortune`, `cowsay`, `sl`, `ping`, `ssh`, `man`, `ps`, `reboot`, `please`
 
 ### Quiz Scoring
 
@@ -291,14 +354,19 @@ Check:
 ## Type Definitions
 
 ```typescript
-type LogEntry = { id, timestamp, level, message }
-type StackItem = { category, tool, rationale, specs[], status, icon }
-type EngineeringBet = { id, title, context, tradeoff }
-type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
-type BehindTheScenesVideo = { id, vimeoId, title, description, author, topics[], duration, featured? }
-type TerminalLine = { type: 'input' | 'output' | 'system', content }
+// Terminal
 type TerminalTheme = 'default' | 'matrix' | 'cyberpunk' | 'light'
-type ShutdownPhase = 'idle' | 'initiating' | 'shutting-down' | 'complete'
+type LogEntry = { id, timestamp, level, message }
+
+// Content
+type StackItem = { category, tool, rationale, specs[], status, icon, bet? }
+type QuizQuestion = { q, a, b, correct, feedback_pass, feedback_fail }
+
+// Problem Spaces (discriminated union)
+type DomainId = 'lifecycle' | 'offer' | 'optimisation' | 'case' | 'provider' | 'service' | 'growth'
+type DocId = 'challenge' | 'target' | 'overview' | 'domains' | 'philosophy' | 'beliefs' | 'team-setup' | 'role-convergence' | 'evolution'
+type ExplorerCategory = 'Architecture' | 'Organisation' | 'Domains'
+type ExplorerItem = DocItem | DomainItem
 ```
 
 ## Code Conventions

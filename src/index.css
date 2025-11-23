@@ -25,6 +25,32 @@
   initial-value: 0deg;
 }
 
+/* Chromatic Depth Field - CSS @property for animatable glow
+   Using @property allows CSS transitions/animations on these values */
+@property --glow-rotation {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --glow-rotation-counter {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --glow-breathe {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+@property --glow-color-shift {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
 /* @theme for Tailwind v4 - colors reference CSS variables for theme-awareness */
 @theme {
   /* Colors reference CSS variables defined in :root (enables theme switching) */
@@ -92,6 +118,28 @@
         0 0 40px var(--terminal-green-glow);
     }
   }
+
+  /* Chromatic Depth Field - Pure CSS Animation Keyframes
+     Using prime-number durations prevents repeating patterns */
+  @keyframes chromatic-rotate {
+    from { --glow-rotation: 0deg; }
+    to { --glow-rotation: 360deg; }
+  }
+
+  @keyframes chromatic-rotate-counter {
+    from { --glow-rotation-counter: 0deg; }
+    to { --glow-rotation-counter: -360deg; }
+  }
+
+  @keyframes chromatic-breathe {
+    0%, 100% { --glow-breathe: 0.97; }
+    50% { --glow-breathe: 1.03; }
+  }
+
+  @keyframes chromatic-color-shift {
+    0%, 100% { --glow-color-shift: 0; }
+    50% { --glow-color-shift: 1; }
+  }
 }
 
 /* Custom Utilities using @utility */
@@ -156,6 +204,161 @@
 
 @variant crt (&.crt-effect) {
   /* Applied when CRT mode is active */
+}
+
+/* ===========================================
+   CHROMATIC DEPTH FIELD - Apple-Inspired Glow Effect
+   Pure CSS animation using @property for smooth, flicker-free rendering.
+
+   Architecture:
+   - Layer 0: Ambient Field (atmospheric presence, radial breathing)
+   - Layer 1: Primary Aurora (main color movement, conic gradient)
+   - Layer 2: Secondary Harmonic (iridescence, counter-rotation)
+   - Layer 3: Edge Accent (crisp dynamism, fast rotation)
+   - Fresnel Edge: Static inner glow at contact points
+
+   Design principles:
+   - Prime number animation durations (7, 13, 17, 23s) = never repeats
+   - Layered blur depths create z-axis perception
+   - Color harmonics via CSS variables for theme consistency
+   =========================================== */
+.chromatic-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+
+  /* Run all animations with prime-number durations */
+  animation:
+    chromatic-rotate 13s linear infinite,
+    chromatic-rotate-counter 17s linear infinite,
+    chromatic-breathe 23s ease-in-out infinite,
+    chromatic-color-shift 29s ease-in-out infinite;
+}
+
+/* Layer 0: Ambient Field - Atmospheric Presence */
+/* Uses large border-radius to create smooth, organic edges that blend with terminal corners */
+.chromatic-glow::before {
+  content: '';
+  position: absolute;
+  inset: -32px;
+  border-radius: 9999px; /* Fully rounded - creates smooth organic shape */
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    var(--glow-primary) 0%,
+    var(--glow-harmonic-1) 20%,
+    var(--glow-harmonic-2) 40%,
+    transparent 70%
+  );
+  filter: blur(48px);
+  opacity: calc(0.10 + 0.05 * var(--glow-breathe));
+  transform: scale(var(--glow-breathe));
+}
+
+/* Layer 1-3: Rotating conic gradients via pseudo-element + background layers */
+.chromatic-glow::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+
+  /* Layered backgrounds for different rotation speeds and effects */
+  background:
+    /* Layer 3: Edge Accent - Fast rotation, sparse highlights */
+    conic-gradient(
+      from var(--glow-rotation),
+      transparent 0deg,
+      var(--glow-primary) 15deg,
+      transparent 30deg,
+      transparent 90deg,
+      var(--glow-harmonic-1) 105deg,
+      transparent 120deg,
+      transparent 180deg,
+      var(--glow-primary) 195deg,
+      transparent 210deg,
+      transparent 270deg,
+      var(--glow-warm) 285deg,
+      transparent 300deg,
+      transparent 360deg
+    ),
+    /* Layer 2: Secondary Harmonic - Counter-rotation iridescence */
+    conic-gradient(
+      from calc(72deg + var(--glow-rotation-counter)),
+      var(--glow-harmonic-2) 0deg,
+      transparent 45deg,
+      var(--glow-harmonic-1) 90deg,
+      transparent 135deg,
+      var(--glow-warm) 180deg,
+      transparent 225deg,
+      var(--glow-harmonic-2) 270deg,
+      transparent 315deg,
+      var(--glow-harmonic-2) 360deg
+    ),
+    /* Layer 1: Primary Aurora - Main color movement */
+    conic-gradient(
+      from var(--glow-rotation),
+      var(--glow-primary) 0deg,
+      var(--glow-harmonic-1) 60deg,
+      var(--glow-primary) 120deg,
+      var(--glow-harmonic-2) 180deg,
+      var(--glow-primary) 240deg,
+      var(--glow-warm) 300deg,
+      var(--glow-primary) 360deg
+    );
+
+  /* Blend the layers with increasing blur depths */
+  background-blend-mode: screen;
+  filter: blur(16px);
+  opacity: 0.18;
+
+  /* Mask to create the ring effect (glow only at edges) */
+  mask: linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0);
+}
+
+/* Fresnel Edge Glow - Static highlight at contact points */
+.chromatic-glow-fresnel {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    var(--glow-primary) 0%,
+    transparent 20%,
+    transparent 80%,
+    var(--glow-harmonic-1) 100%
+  );
+  opacity: 0.08;
+  filter: blur(2px);
+}
+
+/* Inner Edge Highlight - Subtle brightness at terminal border */
+.chromatic-glow-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 1px 0 var(--glow-primary),
+    inset 0 0 8px -2px var(--glow-harmonic-1);
+  opacity: 0.25;
+}
+
+/* Reduced motion: disable animations, show static glow */
+@media (prefers-reduced-motion: reduce) {
+  .chromatic-glow {
+    animation: none;
+  }
+
+  .chromatic-glow::before {
+    transform: none;
+    opacity: 0.15;
+  }
+
+  .chromatic-glow::after {
+    opacity: 0.12;
+  }
 }
 
 /* Enhanced CRT Monitor Effect with CSS Variables */
@@ -419,6 +622,12 @@
   --terminal-green-dark: oklch(45% 0.15 142);
   --terminal-green-glow: oklch(70% 0.2 142 / 0.2);
 
+  /* Chromatic Depth Field - Harmonic colors for glow effect */
+  --glow-primary: oklch(70% 0.2 142);          /* Base green */
+  --glow-harmonic-1: oklch(65% 0.15 175);      /* Cyan shift */
+  --glow-harmonic-2: oklch(60% 0.12 200);      /* Blue shift */
+  --glow-warm: oklch(68% 0.16 130);            /* Yellow-green accent */
+
   /* Text colors */
   --text-primary: oklch(95% 0 0);
   --text-secondary: oklch(70% 0 0);
@@ -503,6 +712,12 @@
   --terminal-green: oklch(80% 0.28 142);
   --terminal-green-dark: oklch(55% 0.2 142);
   --terminal-green-glow: oklch(80% 0.28 142 / 0.3);
+
+  /* Chromatic Depth Field - Saturated green family */
+  --glow-primary: oklch(80% 0.28 142);          /* Bright green */
+  --glow-harmonic-1: oklch(75% 0.25 135);       /* Lime shift */
+  --glow-harmonic-2: oklch(70% 0.22 150);       /* Emerald shift */
+  --glow-warm: oklch(78% 0.26 125);             /* Yellow-lime accent */
   --terminal-bg: oklch(2% 0.05 142);
   --terminal-surface: oklch(12% 0.05 142);
   --terminal-border: oklch(20% 0.1 142);
@@ -557,6 +772,12 @@
   --terminal-green: oklch(75% 0.25 330);
   --terminal-green-dark: oklch(50% 0.2 330);
   --terminal-green-glow: oklch(75% 0.25 330 / 0.3);
+
+  /* Chromatic Depth Field - Magenta/purple/pink spectrum */
+  --glow-primary: oklch(75% 0.25 330);          /* Magenta */
+  --glow-harmonic-1: oklch(70% 0.22 290);       /* Purple shift */
+  --glow-harmonic-2: oklch(72% 0.20 350);       /* Pink shift */
+  --glow-warm: oklch(70% 0.18 25);              /* Coral accent */
   --terminal-bg: oklch(8% 0.04 280);
   --terminal-surface: oklch(20% 0.05 280);
   --terminal-border: oklch(30% 0.1 300);
@@ -625,6 +846,12 @@
   --terminal-green: oklch(40% 0.2 142);
   --terminal-green-dark: oklch(30% 0.18 142);
   --terminal-green-glow: oklch(40% 0.2 142 / 0.15);
+
+  /* Chromatic Depth Field - Very subtle for light backgrounds */
+  --glow-primary: oklch(60% 0.06 142);          /* Very subtle green */
+  --glow-harmonic-1: oklch(58% 0.05 175);       /* Very subtle cyan */
+  --glow-harmonic-2: oklch(55% 0.04 200);       /* Very subtle blue */
+  --glow-warm: oklch(62% 0.05 130);             /* Very subtle yellow-green */
   --text-primary: oklch(10% 0 0);
   --text-secondary: oklch(25% 0 0);
   --text-muted: oklch(45% 0 0);

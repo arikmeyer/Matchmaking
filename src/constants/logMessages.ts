@@ -73,7 +73,7 @@ export const LOG_MESSAGES = [
     { level: 'WARN', message: 'Provider "O2" API returning 418 I\'m a teapot. Retrying...' },
     { level: 'INFO', message: 'Coffee machine needs descaling. Notifying Office Manager.' },
     { level: 'WARN', message: 'Developer forgot to mock API. Sending real request to production... Just kidding.' },
-    { level: 'SYSTEM', message: 'Recruiting more engineers. Apply now via terminal.' },
+    { level: 'SYSTEM', message: 'Problem space ownership available. Run "apply" to start the conversation.' },
     { level: 'INFO', message: 'AI Agent [Switch-AI-02] is bored. Reading Wikipedia.' },
     { level: 'SUCCESS', message: 'Successfully ignored 500 spam emails about "SEO Optimization".' },
     { level: 'WARN', message: 'Detected excessive usage of "console.log". Cleaning up...' },

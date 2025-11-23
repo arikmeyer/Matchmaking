@@ -24,26 +24,25 @@ const CATEGORY_CONFIG: Record<CommandCategory, { label: string; order: number }>
 };
 
 /**
- * Primary commands to show in help (in display order)
- * These match the original help output + navigation basics
+ * Primary commands shown with descriptions in main help
  */
-const PRIMARY_COMMANDS = [
-  'help',
-  'stack',
-  'mission',
-  'challenges',
-  'culture',
-  'ls',
-  'cat',
-  'cd',
-  'pwd',
-  'whoami',
-  'env',
-  'theme',
-  'apply',
-  'feedback',
-  'clear',
+const PRIMARY_HELP_COMMANDS = [
+  'mission', 'why', 'how', 'what',                    // Philosophy
+  'puzzle', 'architecture', 'domains',                 // Architecture
+  'beliefs', 'team', 'role', 'evolution', 'warts',    // Team
+  'stack',                                             // Tools
+  'whoami', 'culture', 'apply',                        // Matchmaking
 ];
+
+/**
+ * Utility commands shown compactly (no descriptions needed)
+ */
+const UTILITY_COMMANDS = ['ls', 'cat', 'cd', 'pwd', 'env', 'theme', 'feedback', 'clear', 'help'];
+
+/**
+ * All commands shown in help (for --all mode reference)
+ */
+const ALL_HELP_COMMANDS = [...PRIMARY_HELP_COMMANDS, ...UTILITY_COMMANDS];
 
 export const helpCommand = defineCommand({
   name: 'help',
@@ -57,21 +56,21 @@ export const helpCommand = defineCommand({
     const specificCommand = parsed.args[0];
     const showAll = parsed.flags['all'] || parsed.flags['a'] || specificCommand === '--all';
 
-    // Show all commands including hidden ones
+    // Show all visible commands (excludes hidden easter eggs)
     if (showAll) {
-      const allCommands = commandRegistry.getAll();
-      const grouped = allCommands.reduce((acc, cmd) => {
+      const visibleCommands = commandRegistry.getAll().filter(cmd => !cmd.hidden);
+      const grouped = visibleCommands.reduce((acc, cmd) => {
         const cat = cmd.category || 'other';
         if (!acc[cat]) acc[cat] = [];
         acc[cat].push(cmd);
         return acc;
-      }, {} as Record<string, typeof allCommands>);
+      }, {} as Record<string, typeof visibleCommands>);
 
       ctx.addOutput({
         type: 'output',
         content: (
           <div className="space-y-3 font-mono text-sm">
-            <div className="text-primary font-bold">All Commands ({allCommands.length} total):</div>
+            <div className="text-primary font-bold">All Commands ({visibleCommands.length} total):</div>
             {Object.entries(grouped).sort(([a], [b]) => {
               const orderA = CATEGORY_CONFIG[a as CommandCategory]?.order ?? 50;
               const orderB = CATEGORY_CONFIG[b as CommandCategory]?.order ?? 50;
@@ -84,16 +83,13 @@ export const helpCommand = defineCommand({
                 <div className="grid grid-cols-[120px_1fr] gap-1 pl-2">
                   {cmds.map((cmd) => (
                     <React.Fragment key={cmd.name}>
-                      <span className={cmd.hidden ? 'text-amber-500' : 'text-terminal-green'}>{cmd.name}</span>
+                      <span className="text-terminal-green">{cmd.name}</span>
                       <span className="text-muted">{cmd.description}</span>
                     </React.Fragment>
                   ))}
                 </div>
               </div>
             ))}
-            <div className="text-muted text-xs border-t border-default pt-2">
-              <span className="text-amber-500">●</span> Hidden commands (easter eggs)
-            </div>
           </div>
         ),
       });
@@ -164,53 +160,45 @@ export const helpCommand = defineCommand({
       return { handled: true };
     }
 
-    // Show primary commands in a flat list matching original style
-    const commands = PRIMARY_COMMANDS
-      .map((name) => commandRegistry.get(name))
-      .filter((cmd): cmd is NonNullable<typeof cmd> => cmd !== undefined);
-
+    // Show grouped commands with the new structure
     ctx.addOutput({
       type: 'output',
       content: (
-        <div className="space-y-3">
-          <div className="text-primary font-bold">Available Commands:</div>
-          <div className="grid grid-cols-[120px_1fr] gap-2 text-secondary">
-            {commands.map((cmd) => (
-              <React.Fragment key={cmd.name}>
-                <span className="text-terminal-green">{cmd.name}</span>
-                <span>{cmd.description}</span>
-              </React.Fragment>
+        <div className="space-y-3 font-mono text-sm">
+          <div className="text-cyan-400 font-bold border-b border-default pb-1">
+            HELP :: EXPLORE SWITCHUP
+          </div>
+          <div className="text-muted text-xs italic mb-2">
+            Start with <span className="text-terminal-green">mission</span> or <span className="text-terminal-green">whoami</span>. Dig deeper from there.
+          </div>
+
+          {/* Primary commands - flat list */}
+          <div className="grid grid-cols-[110px_1fr] gap-y-0.5">
+            {PRIMARY_HELP_COMMANDS
+              .map((name) => commandRegistry.get(name))
+              .filter((cmd): cmd is NonNullable<typeof cmd> => cmd !== undefined)
+              .map((cmd) => (
+                <React.Fragment key={cmd.name}>
+                  <span className="text-terminal-green">{cmd.name}</span>
+                  <span className="text-muted">{cmd.description}</span>
+                </React.Fragment>
+              ))}
+          </div>
+
+          {/* Utilities - compact inline list */}
+          <div className="text-muted text-xs pt-2 border-t border-default">
+            <span className="text-secondary">Utilities: </span>
+            {UTILITY_COMMANDS.map((name, i) => (
+              <span key={name}>
+                <span className="text-terminal-green">{name}</span>
+                {i < UTILITY_COMMANDS.length - 1 && ', '}
+              </span>
             ))}
           </div>
-          <div className="text-muted text-xs mt-3 border-t border-default pt-2 space-y-2">
-            <div className="font-bold text-secondary">Keyboard Shortcuts:</div>
-            <div className="grid grid-cols-[80px_1fr] gap-x-2 gap-y-1">
-              <span className="text-terminal-green">Tab</span>
-              <span>Autocomplete command</span>
-              <span className="text-terminal-green">↑/↓</span>
-              <span>Navigate command history</span>
-              <span className="text-terminal-green">Ctrl+L</span>
-              <span>Clear terminal</span>
-              <span className="text-terminal-green">Ctrl+C</span>
-              <span>Cancel input</span>
-              <span className="text-terminal-green">Ctrl+U</span>
-              <span>Clear line before cursor</span>
-              <span className="text-terminal-green">Ctrl+K</span>
-              <span>Clear line after cursor</span>
-              <span className="text-terminal-green">Ctrl+A</span>
-              <span>Move cursor to start</span>
-              <span className="text-terminal-green">Ctrl+E</span>
-              <span>Move cursor to end</span>
-              <span className="text-terminal-green">Ctrl+W</span>
-              <span>Delete word before cursor</span>
-              <span className="text-terminal-green">Ctrl+D</span>
-              <span>Exit (when empty)</span>
-              <span className="text-terminal-green">!!</span>
-              <span>Repeat last command</span>
-              <span className="text-terminal-green">cd -</span>
-              <span>Go to previous directory</span>
-            </div>
-            <div className="mt-2 italic">Hint: There are hidden commands. Explore.</div>
+
+          {/* Quick tips */}
+          <div className="text-muted text-xs">
+            <span className="text-terminal-green">Tab</span> autocomplete · <span className="text-terminal-green">↑/↓</span> history · <span className="text-terminal-green">help [cmd]</span> details · <span className="text-terminal-green">help --all</span> everything
           </div>
         </div>
       ),

@@ -1,6 +1,6 @@
 /**
  * ApplicationModal Component
- * Modal for job application with role selection and token generation
+ * Modal for starting a conversation with role selection and token generation
  */
 
 import { useState, useEffect } from 'react';
@@ -102,11 +102,11 @@ export function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
                                 </div>
                             </div>
                             <div className="text-primary text-sm leading-relaxed">
-                                <p className="mb-4">Access granted. To finalize your application:</p>
+                                <p className="mb-4">Access granted. Let's start the conversation:</p>
                                 <ol className="text-left list-decimal list-inside space-y-2 text-secondary max-w-md mx-auto">
                                     <li>Email <a href={mailtoUrl} className="text-primary underline hover:text-terminal-green">future-colleagues@switchup.tech</a></li>
                                     <li>Include your GitHub or LinkedIn.</li>
-                                    <li>Share any thoughts or ideas you may have.</li>
+                                    <li>Share what resonated (or what questions you have).</li>
                                 </ol>
                             </div>
                             <a

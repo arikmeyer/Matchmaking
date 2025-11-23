@@ -8,12 +8,12 @@ import { defineCommand } from '../registry';
 import type { TerminalTheme } from '../../types';
 
 /**
- * APPLY - Start application process
+ * APPLY - Start a conversation about working together
  */
 export const applyCommand = defineCommand({
   name: 'apply',
   aliases: ['./apply.sh', 'join'],
-  description: 'Start your application',
+  description: 'Start a conversation',
   category: 'action',
 
   handler: (_parsed, ctx) => {
@@ -145,7 +145,7 @@ export const exitCommand = defineCommand({
           <div className="text-red-400 font-bold">INITIATING SHUTDOWN SEQUENCE...</div>
           <div className="text-muted text-xs">Disconnecting neural links...</div>
           <div className="text-muted text-xs">Saving session state...</div>
-          <div className="text-amber-500 text-xs">Warning: Unsaved applications will be lost.</div>
+          <div className="text-amber-500 text-xs">Warning: Unsaved explorations will be lost.</div>
           <div className="text-terminal-green mt-2">See you on the inside.</div>
         </div>
       ),
