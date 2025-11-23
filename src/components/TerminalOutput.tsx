@@ -31,7 +31,7 @@ const getLineClassName = (line: TerminalLine): string => {
     case 'command':
       return 'text-primary';
     case 'error':
-      return 'text-red-400';
+      return 'text-section-problem';
     case 'system':
       return 'text-muted italic';
     case 'success':
@@ -53,7 +53,7 @@ const getLinePrefix = (line: TerminalLine): ReactNode => {
     case 'input':
       return <span className="text-terminal-green mr-2">➜</span>;
     case 'error':
-      return <span className="text-red-500 mr-2">✗</span>;
+      return <span className="text-section-problem mr-2">✗</span>;
     default:
       return null;
   }

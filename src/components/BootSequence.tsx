@@ -75,10 +75,10 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
             {showPassword && (
                 <form onSubmit={handlePasswordSubmit} className="mt-4">
                     <div className="mb-2">
-                        <span className="text-amber-500">&gt; AUTHENTICATION REQUIRED</span>
+                        <span className="text-section-focus">&gt; AUTHENTICATION REQUIRED</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <span className={error ? 'text-red-500' : ''}>PASSWORD:</span>
+                        <span className={error ? 'text-section-problem' : ''}>PASSWORD:</span>
                         <input
                             type="password"
                             value={password}
@@ -89,7 +89,7 @@ export function BootSequence({ onComplete }: BootSequenceProps) {
                         />
                     </div>
                     {error && (
-                        <div className="text-red-500 mt-2 animate-pulse">
+                        <div className="text-section-problem mt-2 animate-pulse">
                             &gt; ACCESS DENIED. TRY AGAIN.
                         </div>
                     )}

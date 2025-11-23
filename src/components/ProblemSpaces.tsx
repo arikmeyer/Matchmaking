@@ -242,7 +242,7 @@ export const ProblemSpaces = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-blue-500/80 text-[11px] leading-tight font-mono"
+                className="text-section-planning/80 text-[11px] leading-tight font-mono"
             >
                 {SLEEPING_ROBOT}
             </motion.pre>

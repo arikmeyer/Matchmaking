@@ -327,7 +327,7 @@ export const TargetStateContent = () => (
                             <div className="text-sm font-medium text-section-success">Provider Wins</div>
                             <div className="text-[10px] text-secondary">by offering real value</div>
                         </div>
-                        <div className="text-green-500/50">⟷</div>
+                        <div className="text-terminal-green/50">⟷</div>
                         <div className="text-center flex-1">
                             <div className="text-sm font-medium text-section-success">You Win</div>
                             <div className="text-[10px] text-secondary">by having an OS on your side</div>

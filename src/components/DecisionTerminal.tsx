@@ -71,7 +71,7 @@ const PhaseIndicator = ({ phase }: { phase: Phase }) => {
       <motion.span
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 1.5, repeat: Infinity }}
-        className="text-amber-500 text-xs font-mono"
+        className="text-section-focus text-xs font-mono"
       >
         LOADING
       </motion.span>
@@ -87,7 +87,7 @@ const PhaseIndicator = ({ phase }: { phase: Phase }) => {
       <motion.span
         animate={{ opacity: [0.5, 1, 0.5] }}
         transition={{ duration: 0.8, repeat: Infinity }}
-        className="text-blue-400 text-xs font-mono"
+        className="text-section-planning text-xs font-mono"
       >
         PROCESSING
       </motion.span>
@@ -104,7 +104,7 @@ const MinimizedContent = () => (
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.2 }}
-      className="text-blue-500/80 text-[10px] leading-tight font-mono"
+      className="text-section-planning/80 text-[10px] leading-tight font-mono"
     >
       {ROCKET_ASCII}
     </motion.pre>
@@ -356,8 +356,8 @@ export const DecisionTerminal: React.FC<DecisionTerminalProps> = ({ onApply }) =
             {/* Input Area */}
             <form onSubmit={terminal.handleSubmit} className="mt-3 pt-3 border-t border-default">
               <div className={`flex items-center gap-2 ${inputDisabled ? 'opacity-50' : ''}`}>
-                <span className="text-blue-500">switchup</span>
-                <span className="text-terminal-green"> {'>'}</span>
+                <span className="text-muted">switchup</span>
+                <span className="text-muted"> {'>'}</span>
                 <div className="flex-1 relative">
                   <ContextAwareInput
                     getInputRef={terminal.getInputRef}

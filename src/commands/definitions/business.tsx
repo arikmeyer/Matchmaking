@@ -24,7 +24,7 @@ export const whyCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-3 font-mono text-sm">
-          <div className="text-section-focus font-bold border-b border-default pb-1">WHY :: MARKTFAIRÄNDERUNG</div>
+          <div className="text-primary font-bold border-b border-default pb-1">WHY :: MARKTFAIRÄNDERUNG</div>
           <div className="text-muted text-xs italic">(German. Roughly: "market fairness transformation")</div>
 
           <div className="text-secondary">
@@ -48,7 +48,7 @@ export const whyCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             Big claim? Yes. Naive? Maybe. Worth pursuing? We think so.<br />
-            Run <span className="text-primary">how</span> to see how we approach this. Run <span className="text-primary">what</span> to see what we're building.
+            Run <span className="text-terminal-green">how</span> to see how we approach this. Run <span className="text-terminal-green">what</span> to see what we're building.
           </div>
         </div>
       ),
@@ -70,7 +70,7 @@ export const howCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-3 font-mono text-sm">
-          <div className="text-section-success font-bold border-b border-default pb-1">HOW :: FREUNDSCHAFTSPRINZIP</div>
+          <div className="text-primary font-bold border-b border-default pb-1">HOW :: FREUNDSCHAFTSPRINZIP</div>
           <div className="text-muted text-xs italic">(German. "The friendship principle")</div>
 
           <div className="text-secondary">
@@ -86,7 +86,7 @@ export const howCommand = defineCommand({
             This question guides every decision. Product features. Business model. How we talk to users.
           </div>
 
-          <div className="text-amber-400 text-xs mt-2">
+          <div className="text-section-focus text-xs mt-2">
             It's harder than it sounds.
           </div>
 
@@ -97,7 +97,7 @@ export const howCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run <span className="text-primary">why</span> to see why we care. Run <span className="text-primary">what</span> to see what we're building.
+            Run <span className="text-terminal-green">why</span> to see why we care. Run <span className="text-terminal-green">what</span> to see what we're building.
           </div>
         </div>
       ),
@@ -119,7 +119,7 @@ export const whatCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-3 font-mono text-sm">
-          <div className="text-section-problem font-bold border-b border-default pb-1">WHAT :: SUBSCRIPTION OPERATING SYSTEM</div>
+          <div className="text-primary font-bold border-b border-default pb-1">WHAT :: SUBSCRIPTION OPERATING SYSTEM</div>
           <div className="text-muted text-xs italic">(Not a comparison site. Not a switching service. An operating system.)</div>
 
           <div className="text-secondary">
@@ -141,8 +141,8 @@ export const whatCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run <span className="text-primary">puzzle</span> to understand the problem deeper.
-            Run <span className="text-primary">architecture</span> to see how we're building this.
+            Run <span className="text-terminal-green">puzzle</span> to understand the problem deeper.
+            Run <span className="text-terminal-green">architecture</span> to see how we're building this.
           </div>
         </div>
       ),
@@ -169,26 +169,26 @@ export const missionCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">(We start with WHY – it's the reason we exist)</div>
 
           <div>
-            <div className="text-section-focus font-bold">WHY: Marktfairänderung</div>
+            <div className="text-primary font-bold">WHY: Marktfairänderung</div>
             <div className="pl-4 text-secondary text-xs">Markets should reward value, not exploit inattention.</div>
-            <div className="pl-4 text-muted text-xs">Run <span className="text-primary">why</span> for the full story.</div>
+            <div className="pl-4 text-muted text-xs">Run <span className="text-terminal-green">why</span> for the full story.</div>
           </div>
 
           <div>
-            <div className="text-section-success font-bold">HOW: Freundschaftsprinzip</div>
+            <div className="text-primary font-bold">HOW: Freundschaftsprinzip</div>
             <div className="pl-4 text-secondary text-xs">What would a good friend do?</div>
-            <div className="pl-4 text-muted text-xs">Run <span className="text-primary">how</span> for the full story.</div>
+            <div className="pl-4 text-muted text-xs">Run <span className="text-terminal-green">how</span> for the full story.</div>
           </div>
 
           <div>
-            <div className="text-section-problem font-bold">WHAT: Subscription Operating System</div>
+            <div className="text-primary font-bold">WHAT: Subscription Operating System</div>
             <div className="pl-4 text-secondary text-xs">Never overcharged again.</div>
-            <div className="pl-4 text-muted text-xs">Run <span className="text-primary">what</span> for the full story.</div>
+            <div className="pl-4 text-muted text-xs">Run <span className="text-terminal-green">what</span> for the full story.</div>
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             Yes, we use German words. We're based in Germany. Deal with it.<br />
-            Run <span className="text-primary">beliefs</span> to see what we think is true (but might be wrong).
+            Run <span className="text-terminal-green">beliefs</span> to see what we think is true (but might be wrong).
           </div>
         </div>
       ),
@@ -218,27 +218,27 @@ export const beliefsCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">(Until evidence says otherwise. We change our minds.)</div>
 
           <div>
-            <div className="text-terminal-green font-bold">1. MARKET BELIEF</div>
+            <div className="text-primary font-bold">1. MARKET BELIEF</div>
             <div className="pl-4 text-secondary text-xs">Markets CAN be transformed. The "laziness bet" doesn't have to win.</div>
             <div className="pl-4 text-muted text-xs">Technology can shift power back to consumers. Not through regulation. Through capability.</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">2. SMALL TEAM BELIEF</div>
+            <div className="text-primary font-bold">2. SMALL TEAM BELIEF</div>
             <div className="pl-4 text-secondary text-xs">AI changes the math. What once took hundreds can be done by a focused few.</div>
             <div className="pl-4 text-muted text-xs">We choose to stay small. Not because we can't grow. Because we don't want to.</div>
             <div className="pl-4 text-muted text-xs">Small = high trust, no politics.</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">3. LEARNING BELIEF</div>
+            <div className="text-primary font-bold">3. LEARNING BELIEF</div>
             <div className="pl-4 text-secondary text-xs">Build to learn, not to prove we're right.</div>
             <div className="pl-4 text-muted text-xs">Everything is a hypothesis until the data disagrees.</div>
             <div className="pl-4 text-muted text-xs">Share what works AND what fails spectacularly. Both are valuable.</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">4. INSPIRATION BELIEF</div>
+            <div className="text-primary font-bold">4. INSPIRATION BELIEF</div>
             <div className="pl-4 text-secondary text-xs">Work should matter. Life's too short for "just a job."</div>
             <div className="pl-4 text-muted text-xs">We're not building the next ad platform. We're trying to make markets fairer.</div>
             <div className="pl-4 text-muted text-xs">That either resonates with you or it doesn't. Both are fine.</div>
@@ -246,7 +246,7 @@ export const beliefsCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             These beliefs might be wrong. We're open to being convinced otherwise.<br />
-            Run <span className="text-primary">warts</span> to see what we're NOT good at.
+            Run <span className="text-terminal-green">warts</span> to see what we're NOT good at.
           </div>
         </div>
       ),
@@ -295,8 +295,8 @@ export const teamCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run <span className="text-primary">evolution</span> to see how we think about AI collaboration.
-            Run <span className="text-primary">warts</span> to see the downsides of working this way.
+            Run <span className="text-terminal-green">evolution</span> to see how we think about AI collaboration.
+            Run <span className="text-terminal-green">warts</span> to see the downsides of working this way.
           </div>
         </div>
       ),
@@ -336,13 +336,13 @@ export const evolutionCommand = defineCommand({
             </div>
 
             <div>
-              <div className="text-terminal-green font-bold">Level 3: AI as Copilot ← We're mostly here</div>
+              <div className="text-primary font-bold">Level 3: AI as Copilot ← We're mostly here</div>
               <div className="pl-4 text-muted text-xs">AI handles routine. Humans handle exceptions.</div>
               <div className="pl-4 text-muted text-xs italic">"Monitor this, escalate if something looks wrong."</div>
             </div>
 
             <div>
-              <div className="text-amber-400 font-bold">Level 4: AI as Colleague ← Experimenting</div>
+              <div className="text-primary font-bold">Level 4: AI as Colleague ← Experimenting</div>
               <div className="pl-4 text-muted text-xs">AI owns problem spaces. Humans provide judgment and direction.</div>
               <div className="pl-4 text-muted text-xs italic">"Here's the goal. Figure out how to get there."</div>
             </div>
@@ -355,7 +355,7 @@ export const evolutionCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             We talk to AI models more than humans some days. That's either your jam or a red flag.<br />
-            Run <span className="text-primary">stack</span> to see what we're actually using.
+            Run <span className="text-terminal-green">stack</span> to see what we're actually using.
           </div>
         </div>
       ),
@@ -378,43 +378,43 @@ export const wartsCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-3 font-mono text-sm">
-          <div className="text-amber-400 font-bold border-b border-default pb-1">WARTS :: HONEST SELF-PORTRAIT</div>
+          <div className="text-primary font-bold border-b border-default pb-1">WARTS :: HONEST SELF-PORTRAIT</div>
           <div className="text-muted text-xs italic mb-2">(Because you're evaluating us too. Here's the real story.)</div>
 
           <div className="space-y-2 text-muted text-xs">
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">We're small.</span> Sometimes that means agile. Sometimes it means "wait, who owns this again?"
+              <span className="text-muted">▸</span> <span className="text-secondary">We're small.</span> Sometimes that means agile. Sometimes it means "wait, who owns this again?"
             </div>
 
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">We change our minds.</span> When evidence says we should. If you need stability and certainty, we're probably not it.
+              <span className="text-muted">▸</span> <span className="text-secondary">We change our minds.</span> When evidence says we should. If you need stability and certainty, we're probably not it.
             </div>
 
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">We use AI for everything.</span> Like, everything. Some people find this exciting. Others find it unsettling. Know which one you are.
+              <span className="text-muted">▸</span> <span className="text-secondary">We use AI for everything.</span> Like, everything. Some people find this exciting. Others find it unsettling. Know which one you are.
             </div>
 
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">Small teams move fast.</span> Nobody will tap your shoulder when you're stuck. You need to ask. Loudly. Proactive communication is non-negotiable.
+              <span className="text-muted">▸</span> <span className="text-secondary">Small teams move fast.</span> Nobody will tap your shoulder when you're stuck. You need to ask. Loudly. Proactive communication is non-negotiable.
             </div>
 
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">No PMs. No detailed specs.</span> You'll define your own problems. That's either freedom or terror.
+              <span className="text-muted">▸</span> <span className="text-secondary">No PMs. No detailed specs.</span> You'll define your own problems. That's either freedom or terror.
             </div>
 
             <div>
-              <span className="text-amber-400">▸</span> <span className="text-secondary">We're building hypotheses.</span> Not proven systems. Most of what we believe might be wrong.
+              <span className="text-muted">▸</span> <span className="text-secondary">We're building hypotheses.</span> Not proven systems. Most of what we believe might be wrong.
             </div>
 
           </div>
 
-          <div className="text-terminal-green text-xs mt-3">
+          <div className="text-secondary text-xs mt-3">
             Still here? Interesting.
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             This isn't reverse psychology. These are real trade-offs.<br />
-            Run <span className="text-primary">match</span> to explore if we're right for each other.
+            Run <span className="text-terminal-green">match</span> to explore if we're right for each other.
           </div>
         </div>
       ),
@@ -473,8 +473,8 @@ export const puzzleCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run <span className="text-primary">architecture</span> to see our hypothesis for solving this.
-            Run <span className="text-primary">domains</span> to see the specific problem spaces.
+            Run <span className="text-terminal-green">architecture</span> to see our hypothesis for solving this.
+            Run <span className="text-terminal-green">domains</span> to see the specific problem spaces.
           </div>
         </div>
       ),
@@ -501,31 +501,31 @@ export const architectureCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">(Our hypothesis for organizing complexity. Challenge it.)</div>
 
           <div>
-            <div className="text-section-focus font-bold">LAYER 1: Process Orchestrator (/case)</div>
+            <div className="text-primary font-bold">LAYER 1: Process Orchestrator (/case)</div>
             <div className="pl-4 text-secondary text-xs">Coordinates the story without doing specialized work.</div>
             <div className="pl-4 text-muted text-xs">Runs Flows and Playbooks. Knows the narrative, not the details.</div>
-            <div className="pl-4 text-terminal-green text-xs">Golden rule: ONLY layer allowed to coordinate across domains.</div>
+            <div className="pl-4 text-muted text-xs">Golden rule: ONLY layer allowed to coordinate across domains.</div>
           </div>
 
           <div>
-            <div className="text-section-success font-bold">LAYER 2: Capability Domains</div>
+            <div className="text-primary font-bold">LAYER 2: Capability Domains</div>
             <div className="pl-4 text-secondary text-xs">Stateless. Specialized. Independent. Each owns one thing well.</div>
             <div className="pl-4 text-muted text-xs">
               /offer (market models) · /optimisation (best choices) · /provider (external APIs)<br />
               /service (user communication) · /growth (user acquisition)
             </div>
-            <div className="pl-4 text-terminal-green text-xs">Golden rule: Never orchestrate. Only specialize.</div>
+            <div className="pl-4 text-muted text-xs">Golden rule: Never orchestrate. Only specialize.</div>
           </div>
 
           <div>
-            <div className="text-section-planning font-bold">LAYER 3: System of Record (/lifecycle)</div>
+            <div className="text-primary font-bold">LAYER 3: System of Record (/lifecycle)</div>
             <div className="pl-4 text-secondary text-xs">Single source of truth. Contracts, Users, Tasks.</div>
             <div className="pl-4 text-muted text-xs">Validates operations. Enforces business rules. The arbiter of reality.</div>
-            <div className="pl-4 text-terminal-green text-xs">Golden rule: Calls NO ONE. Everyone calls it for the truth.</div>
+            <div className="pl-4 text-muted text-xs">Golden rule: Calls NO ONE. Everyone calls it for the truth.</div>
           </div>
 
           <div>
-            <div className="text-amber-400 font-bold">WHY THIS SEPARATION?</div>
+            <div className="text-primary font-bold">WHY THIS SEPARATION?</div>
             <div className="pl-4 text-muted text-xs">Enables progressive AI autonomy:</div>
             <div className="pl-4 text-muted text-xs">• AI can orchestrate (Layer 1) while constrained by golden rules</div>
             <div className="pl-4 text-muted text-xs">• Safe operations through System of Record (Layer 3)</div>
@@ -534,7 +534,7 @@ export const architectureCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             This is a hypothesis, not gospel. We're building to learn if it works.<br />
-            Run <span className="text-primary">domains</span> to explore the 21 problem spaces across 7 domains.
+            Run <span className="text-terminal-green">domains</span> to explore the 21 problem spaces across 7 domains.
           </div>
         </div>
       ),
@@ -562,43 +562,43 @@ export const domainsCommand = defineCommand({
 
           <div className="grid grid-cols-1 gap-2 text-xs">
             <div>
-              <span className="text-section-focus font-bold">/case</span>
+              <span className="text-terminal-green font-bold">/case</span>
               <span className="text-muted"> (Orchestrator)</span>
               <div className="pl-4 text-muted">Event Monitoring · Workflow Orchestration · Task Management</div>
             </div>
 
             <div>
-              <span className="text-section-success font-bold">/offer</span>
+              <span className="text-terminal-green font-bold">/offer</span>
               <span className="text-muted"> (Capability)</span>
               <div className="pl-4 text-muted">Offer Modelling · Normalisation · Matching</div>
             </div>
 
             <div>
-              <span className="text-section-success font-bold">/optimisation</span>
+              <span className="text-terminal-green font-bold">/optimisation</span>
               <span className="text-muted"> (Capability)</span>
               <div className="pl-4 text-muted">Optimal Offer Selection · Switch Decision Assessment</div>
             </div>
 
             <div>
-              <span className="text-section-success font-bold">/provider</span>
+              <span className="text-terminal-green font-bold">/provider</span>
               <span className="text-muted"> (Capability)</span>
               <div className="pl-4 text-muted">Provider Configuration · API/Bot Automation · Data Extraction</div>
             </div>
 
             <div>
-              <span className="text-section-success font-bold">/service</span>
+              <span className="text-terminal-green font-bold">/service</span>
               <span className="text-muted"> (Capability)</span>
               <div className="pl-4 text-muted">Self-Servicing · Service Interactions</div>
             </div>
 
             <div>
-              <span className="text-section-success font-bold">/growth</span>
+              <span className="text-terminal-green font-bold">/growth</span>
               <span className="text-muted"> (Capability)</span>
               <div className="pl-4 text-muted">Expert Guidance · User Onboarding</div>
             </div>
 
             <div>
-              <span className="text-section-planning font-bold">/lifecycle</span>
+              <span className="text-terminal-green font-bold">/lifecycle</span>
               <span className="text-muted"> (System of Record)</span>
               <div className="pl-4 text-muted">State Integrity · Business Intent Catalog · Temporal Projections</div>
             </div>
@@ -611,7 +611,7 @@ export const domainsCommand = defineCommand({
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
             Explore these in detail in the System Architecture Explorer (the other window).<br />
-            Run <span className="text-primary">architecture</span> to see how these layers connect.
+            Run <span className="text-terminal-green">architecture</span> to see how these layers connect.
           </div>
         </div>
       ),
@@ -651,7 +651,7 @@ export const roleCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">(The barriers are dissolving. We're figuring out what comes next.)</div>
 
           <div className="text-secondary text-xs">
-            Traditional silos: <span className="text-section-planning">Product</span> • <span className="text-section-success">Engineering</span> • <span className="text-section-problem">Design</span>
+            Traditional silos: Product • Engineering • Design
           </div>
 
           <div className="text-muted text-xs mt-2">
@@ -659,7 +659,7 @@ export const roleCommand = defineCommand({
           </div>
 
           <div className="mt-3 p-3 border border-default rounded">
-            <div className="text-center text-terminal-green font-bold mb-2">PRODUCT ENGINEERING</div>
+            <div className="text-center text-primary font-bold mb-2">PRODUCT ENGINEERING</div>
             <div className="grid grid-cols-3 gap-2 text-xs">
               <div className="text-center">
                 <div className="text-primary font-bold">Define 'What'</div>
@@ -676,7 +676,7 @@ export const roleCommand = defineCommand({
             </div>
           </div>
 
-          <div className="text-amber-400 text-xs mt-3">
+          <div className="text-muted text-xs mt-3">
             STATUS: ACTIVE_EXPERIMENTATION
           </div>
 
@@ -685,8 +685,8 @@ export const roleCommand = defineCommand({
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            Run <span className="text-primary">team</span> to see how we organize.
-            Run <span className="text-primary">evolution</span> to see how AI collaboration works.
+            Run <span className="text-terminal-green">team</span> to see how we organize.
+            Run <span className="text-terminal-green">evolution</span> to see how AI collaboration works.
           </div>
         </div>
       ),
@@ -717,45 +717,45 @@ export const stackCommand = defineCommand({
           <div className="text-muted text-xs italic mb-2">("Can I challenge this?" – Yes. Always. That's the point.)</div>
 
           <div>
-            <div className="text-terminal-green font-bold">[CORE] Windmill.dev</div>
+            <div className="text-primary font-bold">[CORE] Windmill.dev</div>
             <div className="pl-4 text-secondary text-xs">Workflow engine. Portal integrations, service classification, order automation.</div>
             <div className="pl-4 text-muted text-xs">Bet: Self-hostable + script-based = no vendor lock-in. Open question: organizing hundreds of flows?</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">[CORE] TypeScript + ZOD</div>
+            <div className="text-primary font-bold">[CORE] TypeScript + ZOD</div>
             <div className="pl-4 text-secondary text-xs">Schema-driven development. Every provider response validated at runtime.</div>
             <div className="pl-4 text-muted text-xs">Bet: TypeScript catches compile errors, ZOD catches runtime chaos from providers.</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">[CORE] Playwright</div>
+            <div className="text-primary font-bold">[CORE] Playwright</div>
             <div className="pl-4 text-secondary text-xs">Browser automation. For when providers don't have APIs (most of them).</div>
             <div className="pl-4 text-muted text-xs">Bet: AI self-healing scripts. Playwright fails → AI analyzes → generates fix → commits for review.</div>
           </div>
 
           <div>
-            <div className="text-terminal-green font-bold">[CORE] Multi-Model AI</div>
+            <div className="text-primary font-bold">[CORE] Multi-Model AI</div>
             <div className="pl-4 text-secondary text-xs">Gemini, Claude, specialized sub-agents, Langfuse for observability.</div>
             <div className="pl-4 text-muted text-xs">Bet: AI craft matters. Prompting techniques, context engineering, agent architectures.</div>
           </div>
 
           <div>
-            <div className="text-amber-500 font-bold">[EXPLORING] Neon DB</div>
+            <div className="text-secondary font-bold">[EXPLORING] Neon DB</div>
             <div className="pl-4 text-secondary text-xs">Serverless Postgres. Branch-per-feature for schema evolution.</div>
             <div className="pl-4 text-muted text-xs">Bet: Test schema changes like git branches. Still validating this approach.</div>
           </div>
 
           <div>
-            <div className="text-amber-500 font-bold">[EXPLORING] Vision Pipeline</div>
+            <div className="text-secondary font-bold">[EXPLORING] Vision Pipeline</div>
             <div className="pl-4 text-secondary text-xs">Vision models extracting structured data from provider PDFs.</div>
             <div className="pl-4 text-muted text-xs">Bet: Custom schemas per doc type vs. generic? Exploring hybrid approaches.</div>
           </div>
 
           <div className="text-muted text-xs mt-3 border-t border-default pt-2">
-            <span className="text-terminal-green">CORE</span> = battle-tested.{' '}
-            <span className="text-amber-500">EXPLORING</span> = hypothesis under investigation.<br />
-            Run <span className="text-primary">evolution</span> to see how we think about AI collaboration.
+            <span className="text-primary">[CORE]</span> = battle-tested.{' '}
+            <span className="text-secondary">[EXPLORING]</span> = hypothesis under investigation.<br />
+            Run <span className="text-terminal-green">evolution</span> to see how we think about AI collaboration.
           </div>
         </div>
       ),

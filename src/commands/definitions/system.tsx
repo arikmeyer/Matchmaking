@@ -198,7 +198,7 @@ export const whoamiCommand = defineCommand({
       type: 'output',
       content: (
         <div className="font-mono text-sm space-y-2">
-          <div className="text-cyan-400 font-bold border-b border-default pb-1">WHOAMI :: EXPLORER PROFILE</div>
+          <div className="text-primary font-bold border-b border-default pb-1">WHOAMI :: EXPLORER PROFILE</div>
           <div className="text-muted text-xs italic mb-2">(We're both figuring out if this makes sense. No pressure.)</div>
 
           <div className="space-y-1">
@@ -209,23 +209,23 @@ export const whoamiCommand = defineCommand({
           </div>
 
           <div className="mt-3 border-t border-default pt-2">
-            <div className="text-cyan-400 font-bold mb-1">WHAT YOU'RE EXPLORING:</div>
-            <div className="pl-4 text-terminal-green text-xs">✓ Our architecture (is this sane?)</div>
-            <div className="pl-4 text-terminal-green text-xs">✓ Our bets (would you make the same ones?)</div>
-            <div className="pl-4 text-terminal-green text-xs">✓ Our warts (we have them, see 'warts')</div>
-            <div className="pl-4 text-terminal-green text-xs">✓ Our team (would you enjoy working with us?)</div>
+            <div className="text-primary font-bold mb-1">WHAT YOU'RE EXPLORING:</div>
+            <div className="pl-4 text-secondary text-xs">• Our architecture (is this sane?)</div>
+            <div className="pl-4 text-secondary text-xs">• Our bets (would you make the same ones?)</div>
+            <div className="pl-4 text-secondary text-xs">• Our warts (we have them, run <span className="text-terminal-green">warts</span>)</div>
+            <div className="pl-4 text-secondary text-xs">• Our team (would you enjoy working with us?)</div>
           </div>
 
           <div className="mt-3 border-t border-default pt-2">
-            <div className="text-cyan-400 font-bold mb-1">WHAT WE'RE EXPLORING:</div>
-            <div className="pl-4 text-amber-400 text-xs">◇ Your meta skills (how you think)</div>
-            <div className="pl-4 text-amber-400 text-xs">◇ Your AI craft (how you work with AI)</div>
-            <div className="pl-4 text-amber-400 text-xs">◇ Your builder DNA (how you ship)</div>
-            <div className="pl-4 text-amber-400 text-xs">◇ Your mission resonance (does our "why" matter to you?)</div>
+            <div className="text-primary font-bold mb-1">WHAT WE'RE EXPLORING:</div>
+            <div className="pl-4 text-secondary text-xs">• Your meta skills (how you think)</div>
+            <div className="pl-4 text-secondary text-xs">• Your AI craft (how you work with AI)</div>
+            <div className="pl-4 text-secondary text-xs">• Your builder DNA (how you ship)</div>
+            <div className="pl-4 text-secondary text-xs">• Your mission resonance (does our "why" matter to you?)</div>
           </div>
 
           <div className="mt-3 border-t border-default pt-2">
-            <div className="text-cyan-400 font-bold mb-1">MUTUAL FIT SIGNALS:</div>
+            <div className="text-primary font-bold mb-1">MUTUAL FIT SIGNALS:</div>
 
             <div className="pl-4 text-secondary text-xs font-bold mt-2">You might love it here if:</div>
             <div className="pl-6 text-muted text-xs">• You already tinker with AI outside of work</div>
@@ -241,7 +241,7 @@ export const whoamiCommand = defineCommand({
           </div>
 
           <div className="mt-3 border-t border-default pt-2 text-muted text-xs">
-            <span className="text-cyan-400">Explore:</span> 'mission' 'team' 'warts' 'culture' – then decide if you want to 'apply'
+            Explore: <span className="text-terminal-green">mission</span>, <span className="text-terminal-green">team</span>, <span className="text-terminal-green">warts</span>, <span className="text-terminal-green">culture</span> – then decide if you want to <span className="text-terminal-green">apply</span>
           </div>
         </div>
       ),
