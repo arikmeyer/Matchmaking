@@ -49,8 +49,12 @@ const HELP_SECTIONS = [
     commands: ['whoami', 'culture', 'apply', 'feedback'],
   },
   {
+    label: 'navigation',
+    commands: ['ls', 'cd', 'cat', 'pwd'],
+  },
+  {
     label: 'terminal',
-    commands: ['theme', 'exit'],
+    commands: ['help', 'history', 'clear', 'theme', 'exit'],
   },
 ];
 
@@ -87,10 +91,10 @@ export const helpCommand = defineCommand({
               return orderA - orderB;
             }).map(([category, cmds]) => (
               <div key={category} className="space-y-1">
-                <div className="text-secondary font-bold text-xs uppercase tracking-wider">
+                <div className="text-muted text-xs uppercase tracking-wider">
                   {CATEGORY_CONFIG[category as CommandCategory]?.label || category}
                 </div>
-                <div className="grid grid-cols-[120px_1fr] gap-1 pl-2">
+                <div className="grid grid-cols-[120px_1fr] gap-2 pl-2">
                   {cmds.map((cmd) => (
                     <React.Fragment key={cmd.name}>
                       <span className="text-terminal-green">{cmd.name}</span>
@@ -100,6 +104,11 @@ export const helpCommand = defineCommand({
                 </div>
               </div>
             ))}
+
+            {/* Quick tips */}
+            <div className="text-muted text-xs pt-2 border-t border-default">
+              <span className="text-terminal-green">Tab</span> autocomplete · <span className="text-terminal-green">↑/↓</span> history · <span className="text-terminal-green">⌘⇧F</span> fullscreen · <span className="text-terminal-green">Ctrl+L</span> clear
+            </div>
           </div>
         ),
       });
@@ -124,11 +133,13 @@ export const helpCommand = defineCommand({
           type: 'error',
           content: suggestions.length > 0 ? (
             <span>
-              Unknown command: <span className="text-amber-400">{specificCommand}</span>.{' '}
+              Unknown command: <span className="text-primary">{specificCommand}</span>.{' '}
               Did you mean <span className="text-terminal-green">{suggestions[0]}</span>?
             </span>
           ) : (
-            `Unknown command: ${specificCommand}. Run 'help' to see available commands.`
+            <span>
+              Unknown command: {specificCommand}. Run <span className="text-terminal-green">help</span> to see available commands.
+            </span>
           ),
         });
         return { handled: true };
@@ -188,9 +199,9 @@ export const helpCommand = defineCommand({
                   .map((name) => commandRegistry.get(name))
                   .filter((cmd): cmd is NonNullable<typeof cmd> => cmd !== undefined)
                   .map((cmd) => (
-                    <div key={cmd.name} className="grid grid-cols-[100px_1fr] gap-1">
+                    <div key={cmd.name} className="grid grid-cols-[120px_1fr] gap-2">
                       <span className="text-terminal-green">{cmd.name}</span>
-                      <span className="text-secondary">{cmd.description}</span>
+                      <span className="text-muted">{cmd.description}</span>
                     </div>
                   ))}
               </div>

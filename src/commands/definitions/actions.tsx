@@ -142,11 +142,11 @@ export const exitCommand = defineCommand({
       type: 'output',
       content: (
         <div className="space-y-2">
-          <div className="text-red-400 font-bold">INITIATING SHUTDOWN SEQUENCE...</div>
+          <div className="text-primary font-bold">INITIATING SHUTDOWN SEQUENCE...</div>
           <div className="text-muted text-xs">Disconnecting neural links...</div>
           <div className="text-muted text-xs">Saving session state...</div>
-          <div className="text-amber-500 text-xs">Warning: Unsaved explorations will be lost.</div>
-          <div className="text-terminal-green mt-2">See you on the inside.</div>
+          <div className="text-muted text-xs">Warning: Unsaved explorations will be lost.</div>
+          <div className="text-secondary mt-2">See you on the inside.</div>
         </div>
       ),
     });

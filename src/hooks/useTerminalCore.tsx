@@ -251,7 +251,7 @@ export function useTerminalCore(options: UseTerminalCoreOptions = {}): UseTermin
             type: 'output',
             content: isCorrect
               ? <span className="text-terminal-green">{currentQuestion.feedback_pass}</span>
-              : <span className="text-amber-500">{currentQuestion.feedback_fail}</span>
+              : <span className="text-section-focus">{currentQuestion.feedback_fail}</span>
           });
 
           // Show next question or results
@@ -417,7 +417,7 @@ export function useTerminalCore(options: UseTerminalCoreOptions = {}): UseTermin
         type: 'error',
         content: (
           <span>
-            Command not found: <span className="text-amber-400">{cmd}</span>.{' '}
+            Command not found: <span className="text-section-focus">{cmd}</span>.{' '}
             Did you mean <span className="text-terminal-green">{suggestions[0]}</span>?
             {suggestions.length > 1 && (
               <span className="text-muted"> (or: {suggestions.slice(1, 3).join(', ')})</span>

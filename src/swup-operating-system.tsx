@@ -38,7 +38,7 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
     // Quiz results renderer - mutual discovery framing
     const renderQuizResults = (finalScore: number) => (
         <div className="mt-4 p-4 border border-default rounded bg-card-subtle">
-            <div className="text-cyan-400 font-bold mb-2 text-lg">DISCOVERY COMPLETE</div>
+            <div className="text-section-planning font-bold mb-2 text-lg">DISCOVERY COMPLETE</div>
             <div className="font-mono mb-4 text-muted">Clicks: {finalScore}/{QUIZ_QUESTIONS.length}</div>
 
             {finalScore >= 8 ? (
@@ -46,26 +46,26 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
                     <div className="text-terminal-green font-bold">&gt;&gt; LOTS OF CLICKS ({Math.round((finalScore / QUIZ_QUESTIONS.length) * 100)}%)</div>
                     <div className="text-primary">Looks like we think similarly about building things.</div>
                     <div className="text-muted text-xs">(That's rare. We notice.)</div>
-                    <div className="mt-2 p-2 bg-nested border border-border rounded text-green-300">
+                    <div className="mt-2 p-2 bg-nested border border-border rounded text-terminal-green">
                         Curious to explore further? Run <span className="text-primary font-bold">apply</span> to start the conversation.
                     </div>
                 </div>
             ) : finalScore >= 6 ? (
                 <div className="space-y-2">
-                    <div className="text-amber-400 font-bold">&gt;&gt; SOME CLICKS, SOME TENSION</div>
+                    <div className="text-section-focus font-bold">&gt;&gt; SOME CLICKS, SOME TENSION</div>
                     <div className="text-primary">We agree on some things, differ on others.</div>
                     <div className="text-secondary">That's not necessarily bad – diverse perspectives can strengthen a team.</div>
                     <div className="text-muted text-sm mt-2">If the tension feels interesting rather than exhausting, let's talk. Run <span className="text-primary">apply</span>.</div>
                 </div>
             ) : (
                 <div className="space-y-2">
-                    <div className="text-red-400 font-bold">&gt;&gt; MOSTLY TENSION</div>
+                    <div className="text-section-problem font-bold">&gt;&gt; MOSTLY TENSION</div>
                     <div className="text-primary">Our approaches seem to diverge on a few things.</div>
                     <div className="text-secondary">Honestly, we might not be the right place for what you're looking for:</div>
                     <div className="text-muted text-sm pl-4">• We don't have a product layer – scope is fluid and often unclear</div>
                     <div className="text-muted text-sm pl-4">• We expect people to define 'what' alongside 'how'</div>
                     <div className="text-muted text-sm pl-4">• Our processes change constantly – stability isn't our strength</div>
-                    <div className="text-amber-500 text-xs mt-3">10 questions can't capture everything. If you think we're reading this wrong, we're open to being surprised. Run <span className="text-primary">apply</span>.</div>
+                    <div className="text-section-focus text-xs mt-3">10 questions can't capture everything. If you think we're reading this wrong, we're open to being surprised. Run <span className="text-primary">apply</span>.</div>
                 </div>
             )}
         </div>
@@ -165,8 +165,8 @@ const InteractiveTerminal = ({ onMinimizedChange, onFullscreenChange, onShowExit
                     scrollRef={terminal.scrollRef}
                 />
                 <form onSubmit={terminal.handleSubmit} className="mt-2 flex items-center gap-2 border-t border-default pt-2">
-                    <span className="text-cyan-500">switchup{terminal.currentDirectory === HOME_DIR ? '' : `/${terminal.currentDirectory.replace(HOME_DIR, '').replace(/^\//, '')}`}</span>
-                    <span className="text-terminal-green"> {'>'}</span>
+                    <span className="text-muted">switchup{terminal.currentDirectory === HOME_DIR ? '' : `/${terminal.currentDirectory.replace(HOME_DIR, '').replace(/^\//, '')}`}</span>
+                    <span className="text-muted"> {'>'}</span>
                     <ContextAwareInput
                         getInputRef={terminal.getInputRef}
                         type="text"
@@ -425,7 +425,7 @@ export default function SwitchupOperatingSystem() {
                         animate={{ opacity: 1, y: 0 }}
                         className="text-center space-y-4"
                     >
-                        <div className="text-red-400 text-2xl font-bold mb-8">SYSTEM SHUTDOWN IN PROGRESS</div>
+                        <div className="text-section-problem text-2xl font-bold mb-8">SYSTEM SHUTDOWN IN PROGRESS</div>
                         <div className="space-y-2 text-secondary">
                             {shutdownMessages.map((msg, i) => {
                                 const msgProgress = ((i + 1) / shutdownMessages.length) * 100;
@@ -437,7 +437,7 @@ export default function SwitchupOperatingSystem() {
                                             animate={{ opacity: 1, x: 0 }}
                                             className="flex items-center gap-3"
                                         >
-                                            <X className="text-red-500" size={16} />
+                                            <X className="text-section-problem" size={16} />
                                             <span>{msg}</span>
                                         </motion.div>
                                     );
@@ -562,14 +562,14 @@ export default function SwitchupOperatingSystem() {
                     </span>
                 </div>
                 <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 text-amber-500 animate-pulse">
+                    <div className="flex items-center gap-2 text-section-focus animate-pulse">
                         <AlertTriangle size={12} />
                         <span>SCALING_BOTTLENECK_DETECTED</span>
                     </div>
                     <span className="text-muted">root@switchup:~</span>
                     <button
                         onClick={handleShutdown}
-                        className="flex items-center gap-2 px-2 py-1 rounded hover:bg-surface-dark hover:text-red-400 transition-colors text-muted"
+                        className="flex items-center gap-2 px-2 py-1 rounded hover:bg-surface-dark hover:text-section-problem transition-colors text-muted"
                         title="Power down system"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -659,7 +659,7 @@ export default function SwitchupOperatingSystem() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.2 }}
-                                    className="text-amber-500/80 text-xs leading-tight"
+                                    className="text-section-focus/80 text-xs leading-tight"
                                 >
                                     {`
       ) )
@@ -712,10 +712,10 @@ export default function SwitchupOperatingSystem() {
                                             textShadow: ['0 0 20px currentColor', '0 0 0px currentColor']
                                         }}
                                         transition={{ duration: 0.3, ease: "easeOut" }}
-                                        className={`flex gap-3 ${log.level === 'WARN' ? 'text-amber-500' :
-                                            log.level === 'ERROR' ? 'text-red-500' :
+                                        className={`flex gap-3 ${log.level === 'WARN' ? 'text-section-focus' :
+                                            log.level === 'ERROR' ? 'text-section-problem' :
                                                 log.level === 'SUCCESS' ? 'text-terminal-green' :
-                                                    log.level === 'SYSTEM' ? 'text-blue-400' : 'text-muted'
+                                                    log.level === 'SYSTEM' ? 'text-section-planning' : 'text-muted'
                                             }`}
                                     >
                                         <span className="opacity-30 shrink-0">[{log.timestamp}]</span>
@@ -770,7 +770,7 @@ export default function SwitchupOperatingSystem() {
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ delay: 0.2 }}
-                                    className="text-blue-400/80 text-xs leading-tight"
+                                    className="text-section-planning/80 text-xs leading-tight"
                                 >
                                     {`
     .----.
@@ -862,7 +862,7 @@ export default function SwitchupOperatingSystem() {
                         <FlipCard
                             front={
                                 <div className="h-full p-8 bg-surface border border-card-problem rounded-lg">
-                                    <h3 className="text-red-500 font-bold flex items-center gap-2 mb-2">
+                                    <h3 className="text-section-problem font-bold flex items-center gap-2 mb-2">
                                         <XCircle size={20} /> SKIP_IF
                                     </h3>
                                     <p className="text-muted text-sm mb-6 italic">
@@ -912,10 +912,10 @@ export default function SwitchupOperatingSystem() {
                                     <div className="space-y-6 max-w-sm">
                                         <div className="flex items-center justify-center">
                                             <div className="p-4 bg-nested rounded-full border border-card-problem">
-                                                <Heart size={32} className="text-red-400" />
+                                                <Heart size={32} className="text-section-problem" />
                                             </div>
                                         </div>
-                                        <h3 className="text-xl font-bold text-red-400">
+                                        <h3 className="text-xl font-bold text-section-problem">
                                             Different paths, same destination
                                         </h3>
                                         <p className="text-secondary leading-relaxed text-sm">

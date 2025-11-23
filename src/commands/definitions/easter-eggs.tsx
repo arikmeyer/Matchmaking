@@ -23,7 +23,7 @@ export const konamiCommand = defineCommand({
         <div className="text-terminal-green space-y-2">
           <div>Achievement Unlocked: "Konami Commander"</div>
           <div className="text-xs text-muted">You know the classics. We like that.</div>
-          <div className="text-amber-400 mt-2">+30 Curiosity Points (we track those)</div>
+          <div className="text-muted mt-2">+30 Curiosity Points (we track those)</div>
         </div>
       ),
     });
@@ -46,7 +46,7 @@ export const sudoCommand = defineCommand({
       content: (
         <div className="font-mono text-sm space-y-2">
           <div className="text-muted">[sudo] password for guest:</div>
-          <div className="text-red-400">Permission denied.</div>
+          <div className="text-section-problem">Permission denied.</div>
 
           <div className="mt-2 text-secondary">Access requires mutual agreement. Three paths:</div>
           <div className="pl-4 text-muted">1. Run 'apply' (email us directly)</div>
@@ -105,7 +105,7 @@ export const hireMeCommand = defineCommand({
         <div className="text-terminal-green space-y-2">
           <div>Confidence detected. We like it.</div>
           <div className="text-secondary">
-            Run <span className="text-primary">apply</span> to make it official.
+            Run <span className="text-terminal-green">apply</span> to make it official.
           </div>
         </div>
       ),
@@ -127,9 +127,9 @@ export const healthCommand = defineCommand({
     ctx.addOutput({
       type: 'output',
       content: (
-        <div className="text-amber-600">
+        <div className="text-secondary">
           Experimenting... <br />
-          <span className="text-secondary">
+          <span className="text-muted">
             Fun fact: We not only experiment with our ways of working, but also
             with innovative approaches to supporting health.
           </span>
@@ -156,9 +156,9 @@ export const vimCommand = defineCommand({
       content: (
         <div className="space-y-1">
           <div>You've entered vim.</div>
-          <div className="text-terminal-yellow">Good luck exiting.</div>
+          <div className="text-secondary">Good luck exiting.</div>
           <div className="text-muted text-sm mt-2">
-            (Just kidding. Type :q or press Escape then :q!)
+            (Just kidding. Type <span className="text-terminal-green">:q</span> or press Escape then <span className="text-terminal-green">:q!</span>)
           </div>
           <div className="text-muted text-sm">
             At Switchup, we don't judge your editor choice. Much.
@@ -215,7 +215,7 @@ export const coffeeCommand = defineCommand({
     ctx.addOutput({
       type: 'output',
       content: (
-        <pre className="whitespace-pre font-mono text-terminal-yellow">
+        <pre className="whitespace-pre font-mono text-secondary">
           {`
     ( (
      ) )
@@ -249,7 +249,7 @@ export const answerCommand = defineCommand({
       type: 'output',
       content: (
         <div>
-          <div className="text-terminal-yellow">
+          <div className="text-secondary">
             The Answer to Life, the Universe, and Everything.
           </div>
           <div className="text-muted mt-1">
@@ -339,7 +339,7 @@ export const hackCommand = defineCommand({
       content: (
         <div>
           <div className="text-terminal-green">ACCESS GRANTED</div>
-          <div className="text-red-400 mt-1">...Just kidding.</div>
+          <div className="text-section-problem mt-1">...Just kidding.</div>
           <div className="text-muted text-sm mt-1">
             We prefer ethical engineers. The real hack is running 'apply'.
           </div>
@@ -370,7 +370,7 @@ export const rmCommand = defineCommand({
       ctx.addOutput({
         type: 'output',
         content: (
-          <div className="text-red-400">
+          <div className="text-section-problem">
             <div>Nice try.</div>
             <div className="text-muted text-sm mt-1">
               We value engineers who don't destroy production.
@@ -386,7 +386,7 @@ export const rmCommand = defineCommand({
         type: 'output',
         content: (
           <div>
-            <div className="text-red-400">Error: Read-only file system</div>
+            <div className="text-section-problem">Error: Read-only file system</div>
             <div className="text-muted text-sm mt-1">
               This terminal is read-only. But you can 'touch' our hearts with
               'apply'.
@@ -414,7 +414,7 @@ export const touchCommand = defineCommand({
       type: 'output',
       content: (
         <div>
-          <div className="text-red-400">Error: Read-only file system</div>
+          <div className="text-section-problem">Error: Read-only file system</div>
           <div className="text-muted text-sm mt-1">
             This terminal is read-only. But you can 'touch' our hearts with
             'apply'.
@@ -538,7 +538,7 @@ Date:   Sep 2024
         ctx.addOutput({
           type: 'output',
           content: (
-            <div className="text-red-400">
+            <div className="text-section-problem">
               error: failed to push some refs to 'origin/your-career'
               <div className="text-muted text-sm mt-1">
                 hint: You need to 'apply' before you can push.
@@ -743,7 +743,7 @@ export const fortuneCommand = defineCommand({
       type: 'output',
       content: (
         <div className="border border-default p-3 my-2">
-          <div className="text-terminal-yellow italic">{randomFortune}</div>
+          <div className="text-secondary italic">{randomFortune}</div>
         </div>
       ),
     });
@@ -798,7 +798,7 @@ export const slCommand = defineCommand({
     ctx.addOutput({
       type: 'output',
       content: (
-        <pre className="whitespace-pre font-mono text-xs text-terminal-yellow">
+        <pre className="whitespace-pre font-mono text-xs text-terminal-green">
           {`
       ====        ________                ___________
   _D _|  |_______/        \\__I_I_____===__|_________|
@@ -999,11 +999,11 @@ Try: help stack
         type: 'output',
         content: (
           <div className="space-y-2">
-            <div className="text-amber-400 font-bold">
+            <div className="text-primary font-bold">
               {manPage.name.toUpperCase()}(1) - {manPage.shortDesc}
             </div>
             <div className="mt-2">
-              <span className="text-cyan-400">DESCRIPTION</span>
+              <span className="text-muted uppercase">DESCRIPTION</span>
               <div className="ml-4 whitespace-pre-wrap text-secondary">{manPage.description}</div>
             </div>
           </div>

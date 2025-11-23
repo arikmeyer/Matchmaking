@@ -70,8 +70,8 @@ export function ExitConfirmDialog({
                     >
                         {/* Header */}
                         <div className="warning-header px-4 py-2 flex items-center gap-2">
-                            <AlertTriangle size={16} className="text-red-500" />
-                            <span className="text-red-500 font-bold text-sm">SYSTEM WARNING</span>
+                            <AlertTriangle size={16} className="text-section-problem" />
+                            <span className="text-section-problem font-bold text-sm">SYSTEM WARNING</span>
                         </div>
 
                         {/* Content */}
@@ -82,7 +82,7 @@ export function ExitConfirmDialog({
 
                             {description || defaultDescription}
 
-                            <div className="text-amber-500 text-xs italic">
+                            <div className="text-section-focus text-xs italic">
                                 "With great power comes great responsibility to not click red buttons."
                                 <br /> – A wise developer, probably
                             </div>
@@ -97,7 +97,7 @@ export function ExitConfirmDialog({
                                 </button>
                                 <button
                                     onClick={onConfirm}
-                                    className="flex-1 px-4 py-2 bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30 transition-colors text-sm"
+                                    className="flex-1 px-4 py-2 bg-red-500/20 border border-red-500/50 text-section-problem hover:bg-red-500/30 transition-colors text-sm"
                                 >
                                     {confirmText}
                                 </button>

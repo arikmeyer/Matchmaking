@@ -60,9 +60,9 @@ export function TerminalWindowHeader({
                         >
                             <span className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                                 {isFullscreen ? (
-                                    <Minimize2 size={6} className="text-green-500" />
+                                    <Minimize2 size={6} className="text-terminal-green" />
                                 ) : (
-                                    <Maximize2 size={6} className="text-green-500" />
+                                    <Maximize2 size={6} className="text-terminal-green" />
                                 )}
                             </span>
                         </button>

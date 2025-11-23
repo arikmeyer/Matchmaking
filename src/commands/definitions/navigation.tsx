@@ -690,27 +690,27 @@ function getDirectoryListing(path: string): React.ReactNode | null {
     return (
       <div className="font-mono text-sm space-y-1">
         <div className="text-muted mb-2">total 14 files (problem spaces expanding daily)</div>
-        <div className="text-blue-400">drwxr-xr-x  .git/                    (experiments in progress)</div>
-        <div className="text-primary">-rw-r--r--  README.md                2.3kb   "WHY / HOW / WHAT"</div>
-        <div className="text-primary">-rw-r--r--  package.json             1.8kb   Dependencies & scripts</div>
+        <div className="text-muted">drwxr-xr-x  .git/                    (experiments in progress)</div>
+        <div className="text-secondary">-rw-r--r--  README.md                2.3kb   "WHY / HOW / WHAT"</div>
+        <div className="text-secondary">-rw-r--r--  package.json             1.8kb   Dependencies & scripts</div>
         <div className="text-terminal-green">-rwxr-xr-x  apply.sh                 127b    Your future starts here</div>
-        <div className="text-blue-400 mt-2">drwxr-xr-x  flows/</div>
+        <div className="text-muted mt-2">drwxr-xr-x  flows/</div>
         <div className="text-secondary pl-4">-rw-r--r--  eon-bot.ts               4.2kb   Provider portal automation</div>
         <div className="text-secondary pl-4">-rw-r--r--  subscription-switch.ts   3.2kb   Core switching flow</div>
-        <div className="text-amber-400 pl-4">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
-        <div className="text-blue-400 mt-2">drwxr-xr-x  core/</div>
-        <div className="text-red-400 pl-4">-rw-r--r--  universal-adapter.ts     BROKEN  This is your job</div>
+        <div className="text-muted pl-4">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
+        <div className="text-muted mt-2">drwxr-xr-x  core/</div>
+        <div className="text-section-problem pl-4">-rw-r--r--  universal-adapter.ts     BROKEN  This is your job</div>
         <div className="text-secondary pl-4">-rw-r--r--  matching.ts              2.9kb   AI-powered matching</div>
-        <div className="text-blue-400 mt-2">drwxr-xr-x  monitoring/</div>
+        <div className="text-muted mt-2">drwxr-xr-x  monitoring/</div>
         <div className="text-secondary pl-4">-rw-r--r--  langfuse-traces.ts       1.6kb   LLM observability</div>
         <div className="text-secondary pl-4">-rw-r--r--  alerting.ts              892b    Smart alerting</div>
-        <div className="text-blue-400 mt-2">drwxr-xr-x  docs/</div>
+        <div className="text-muted mt-2">drwxr-xr-x  docs/</div>
         <div className="text-secondary pl-4">-rw-r--r--  architecture.md          3.1kb   Three-layer model</div>
         <div className="text-secondary pl-4">-rw-r--r--  culture.md               2.4kb   Team setup & beliefs</div>
         <div className="text-secondary pl-4">-rw-r--r--  failures.md              3.8kb   Things that didn't work</div>
         <div className="text-muted mt-2">-rw-r--r--  .env                       REDACTED (nice try)</div>
         <div className="text-muted text-xs mt-2">
-          Hint: Try 'cat README.md' or 'cat docs/architecture.md'
+          Hint: Try <span className="text-terminal-green">cat README.md</span> or <span className="text-terminal-green">cat docs/architecture.md</span>
         </div>
       </div>
     );
@@ -723,7 +723,7 @@ function getDirectoryListing(path: string): React.ReactNode | null {
         <div className="text-muted mb-2">total 3 files</div>
         <div className="text-secondary">-rw-r--r--  eon-bot.ts               4.2kb   Provider portal automation</div>
         <div className="text-secondary">-rw-r--r--  subscription-switch.ts   3.2kb   Core switching flow</div>
-        <div className="text-amber-400">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
+        <div className="text-muted">-rw-r--r--  telco-adapter.ts         2.8kb   WIP: Your playground</div>
       </div>
     );
   }
@@ -732,7 +732,7 @@ function getDirectoryListing(path: string): React.ReactNode | null {
     return (
       <div className="font-mono text-sm space-y-1">
         <div className="text-muted mb-2">total 2 files</div>
-        <div className="text-red-400">-rw-r--r--  universal-adapter.ts   BROKEN  This is your job</div>
+        <div className="text-section-problem">-rw-r--r--  universal-adapter.ts   BROKEN  This is your job</div>
         <div className="text-secondary">-rw-r--r--  matching.ts            2.9kb   AI-powered matching</div>
       </div>
     );

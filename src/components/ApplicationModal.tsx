@@ -60,7 +60,7 @@ export function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
         <div className="fixed inset-0 z-[70] flex items-center justify-center bg-surface-dark/95 backdrop-blur-md p-4 font-mono">
             <div className="w-full max-w-2xl bg-surface-dark border border-border rounded-lg shadow-lg overflow-hidden flex flex-col h-[60vh]">
                 <div className="bg-surface px-4 py-2 border-b border-default flex-center justify-between">
-                    <span className="text-xs text-green-500 flex items-center gap-2 animate-pulse">
+                    <span className="text-xs text-terminal-green flex items-center gap-2 animate-pulse">
                         <Lock size={12} />
                         SECURE_CHANNEL_ESTABLISHED
                     </span>
@@ -71,7 +71,7 @@ export function ApplicationModal({ isOpen, onClose }: ApplicationModalProps) {
 
                 <div className="p-8 flex-1 overflow-y-auto space-y-4 text-sm md:text-base">
                     {lines.map((line, i) => (
-                        <div key={i} className="text-green-500">{`> ${line} `}</div>
+                        <div key={i} className="text-terminal-green">{`> ${line} `}</div>
                     ))}
 
                     {step === 'ROLE_SELECT' && (
